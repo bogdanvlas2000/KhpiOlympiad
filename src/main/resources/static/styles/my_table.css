@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.my_block {
+	margin: 100 px;
+	border: 4px double black; /* Параметры границы */
+	background: #F5FFFA; /* Цвет фона */
+	padding: 10px;
+}
+
+table {
+	width: 30%; /* Ширина таблицы */
+	background: #FFFFF0;
+	border: 4px double black;
+	/* Рамка вокруг таблицы */
+	border-collapse: collapse;
+	border: 4px double black; /* Отображать только одинарные линии */
+}
+
+th {
+	text-align: left; /* Выравнивание по левому краю */
+	background: #FFDEAD; /* Цвет фона ячеек */
+	padding: 5px; /* Поля вокруг содержимого ячеек */
+	border: 1px solid black; /* Граница вокруг ячеек */
+}
+
+td {
+	padding: 5px; /* Поля вокруг содержимого ячеек */
+	border: 1px solid black; /* Граница вокруг ячеек */
+}
+
+td a:hover {
+	backgroud: rgb(255, 202, 121);
+}

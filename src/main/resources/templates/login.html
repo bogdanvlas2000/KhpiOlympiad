@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Log in</title>
+<link rel="stylesheet" href="/styles/sign_form.css">
+</head>
+<body>
+<form name="f" th:action="@{/login}" method="post">
+    <div class="container">
+        <div th:if="${param.error}" class="error">Invalid credentials!</div>
+        <div th:if="${param.access}" class="error">Access denied!</div>
+
+
+        <h2>Please sign in</h2>
+        <label>Username
+            <input type="text" placeholder="Enter Username" name="username"
+                   required="required"> </label>
+        <label>Password
+            <input type="password"
+                   placeholder="Enter Password" name="password" required="required">
+        </label>
+        <button type="submit">Login</button>
+        <div class="line">
+            <div><a href="/signup">Do you have no account? Sign up</a></div>
+            <div><input type="checkbox" name="remember">
+                Remember me
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

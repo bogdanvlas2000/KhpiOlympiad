@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/styles/form.css">
+</head>
+<body>
+	<div class="my_block">
+		<h2>Create user</h2>
+		<form th:action="@{/users/add}" th:name="user" method="post">
+			<p>
+				Name: <input type="text" th:name="name" placeholder="name"
+					autofocus="autofocus">
+			<p>
+				Age: <input type="number" th:name="age">
+			<p>
+				Male <input id="m" type="radio" th:name="gender" th:value="male">
+				Female <input id="f" type="radio" th:name="gender" th:value="female">
+			<p>
+				<input type="submit" value="Create" class="button"
+					onclick="return checkForm()">
+		</form>
+	</div>
+	<script type="text/javascript" src="js/check_form.js"></script>
+</body>
+</html>

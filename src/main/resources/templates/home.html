@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Home page</title>
+<link rel="stylesheet" href="/styles/cnt.css">
+<link rel="stylesheet" href="/styles/navbar.css">
+</head>
+<body>
+	<header>
+		<div th:insert="fragments::navbar"></div>
+	</header>
+	<div class="cnt">
+		<h1 th:text="${message}"></h1>
+	</div>
+</body>
+</html>

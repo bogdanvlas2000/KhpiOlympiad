@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="/styles/sign_form.css">
+</head>
+<body>
+<form id="signup_form" th:object="${user}" th:action="@{/signup}" method="post"
+      onsubmit="return check()">
+    <div class="container">
+        <div id="error" class="error">
+            <span th:if="${username_exists}" th:text="${username_exists}"></span>
+        </div>
+
+        <h2>Please sign up</h2>
+        <div>Username
+            <input type="text" th:field="*{username}"
+                   id="username"
+                   placeholder="Letters, digits, _"
+                   pattern="[a-zA-Z0-9_]+"
+                   required="required">
+            <span id="username_msg"></span>
+        </div>
+        <div>Password
+            <input type="password" th:field="*{password}"
+                   id="password"
+                   pattern="[a-zA-Z0-9]{8,}"
+                   placeholder="At least 8 letters or digits"
+                   required="required">
+            <span id="password_msg"></span>
+        </div>
+        <div>Confirm password
+            <input type="password"
+                   id="confirm_password"
+                   pattern="[a-zA-Z0-9]{8,}"
+                   placeholder="At least 8 letters or digits"
+                   required="required">
+            <span id="confirm_msg"></span>
+        </div>
+        <div>Email
+            <input type="email" placeholder="example@mail.com" th:field="*{email}"
+                   required="required">
+        </div>
+        <div>Name
+            <input type="text" th:field="*{name}"
+                   pattern="^[a-zA-Zа-яёА-ЯЁ]+$"
+                   placeholder="Letters"
+                   required="required">
+        </div>
+        <div class="line">
+            <div>
+                <label> Age <input type="number" th:field="*{age}" min="1" max="150"
+                                   required="required">
+                </label>
+            </div>
+            <div>
+                Male <input id="m" type="radio" th:field="*{gender}" value="male" required>
+                Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
+            </div>
+        </div>
+        <button type="submit" value="Sign up">Sign Up</button>
+        <a href="/login">Do you have an account? Sign in</a>
+    </div>
+    <script>
+        function check() {
+            let password = document.getElementById('password').value
+            let confirm_passsword = document.getElementById('confirm_password').value
+            let msg = document.getElementById('error')
+            msg.innerText = ''
+
+            if (password != confirm_passsword) {
+                msg.innerHTML = 'Confirm password does not match!'
+                return false
+            } else {
+                msg.innerText = ''
+                return true
+            }
+        }
+    </script>
+</form>
+</body>
+</html>

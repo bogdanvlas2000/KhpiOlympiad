@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Notes list</title>
+<link rel="stylesheet" href="/styles/cnt.css">
+<link rel="stylesheet" href="/styles/notes.css">
+<link rel="stylesheet" href="/styles/navbar.css">
+<link rel="stylesheet" href="/styles/items.css">
+
+
+</head>
+
+<body>
+	<header>
+		<div th:insert="fragments::navbar"></div>
+	</header>
+	<div class="cnt">
+		<span> <a href="/notes/create">Create new note</a>
+		</span> <span><a href="/notes/create">Do something</a></span>
+		<div class="menu">
+			<form action="/notes/search" method="post" id="search-note">
+				<div class="search">
+					<input name="word" type='text' placeholder='Search...'
+						class='search-text-input' autofocus="autofocus" />
+					<div class="button-holder">
+						<img title="Search" onclick="search()" src="/img/search.png">
+					</div>
+				</div>
+			</form>
+		</div>
+		<h1>Notes list</h1>
+		<div class="container-2">
+			<div class="item" th:each="note : ${notes}">
+				<div class="container-3">
+					<div style="align-self: flex-start;">
+						#<span th:text="${note.id}"></span> <span th:text="${note.label}"></span>
+					</div>
+					<div style="align-self: flex-end;">
+						<a th:href="@{/notes/edit/{id}(id=${note.id})}" title="Edit"><img
+							src="/img/edit.png"></a> <a
+							th:href="@{/notes/delete/{id}(id=${note.id})}"
+							onclick="return confirm()" title="Delete"><img
+							src="/img/delete.png"></a>
+					</div>
+				</div>
+				<div style="">
+					<textarea th:text="${note.message}" readonly="readonly" rows="6"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function search() {
+			document.getElementById("search-note").submit()
+		}
+	</script>
+</body>
+
+</html>
