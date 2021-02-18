@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/login?access=true")
+                .and().rememberMe().userDetailsService(userDetailsService)
                 .and()
                 .csrf()
                 .disable();
