@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -33,9 +34,11 @@ public class NoteController {
 
     @GetMapping("/all")
     public String notes(Model model, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        List<Note> notes = user.getNotes();
-        model.addAttribute("notes", notes);
+        if (!model.containsAttribute("notes")) {
+            User user = userRepository.findByUsername(principal.getName());
+            List<Note> notes = user.getNotes();
+            model.addAttribute("notes", notes);
+        }
         return "notes/notes";
     }
 
@@ -78,13 +81,13 @@ public class NoteController {
     }
 
     @PostMapping("/search")
-    public String searchByWord(@RequestParam("word") String word, Model model, Principal prpl) {
+    public String searchByWord(@RequestParam("word") String word, RedirectAttributes redirectAttributes, Principal prpl) {
         var user = userRepository.findByUsername(prpl.getName());
 
         word = "%" + word + "%";
         var notes = noteRepository.search(user.getId(), word);
-        model.addAttribute("notes", notes);
-        return "/notes/notes";
+        redirectAttributes.addFlashAttribute("notes", notes);
+        return "redirect:/notes/all";
     }
 
 }

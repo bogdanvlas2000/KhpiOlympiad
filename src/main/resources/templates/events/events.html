@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Notes list</title>
+    <title>Events</title>
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/items.css">
 
@@ -20,12 +20,13 @@
     <div class="topnav">
         <div th:insert="fragments::auth"></div>
     </div>
-    <h1>Notes list</h1>
+    <h1>Events</h1>
     <div class="menu">
-        <div><a href="/notes/create">Create new note</a></div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/events/create">Create new event</a></div>
         <div class="search-container">
             <div class="search-container">
-                <form action="/notes/search" method="post" id="search-note">
+                <form action="/events/search" method="post" id="search-event">
                     <input name="word" type="text" placeholder="Search..">
                     <button type="submit">
                         <i class="fa fa-search"></i>
@@ -35,19 +36,19 @@
         </div>
     </div>
     <div class="items">
-        <div class="item" th:each="note : ${notes}">
+        <div class="item" th:each="event : ${events}">
             <div class="top">
                 <div style="align-self: flex-start;">
-                    </span> <span th:text="${note.label}"></span>
+                    </span> <span th:text="${event.name}"></span>
                 </div>
                 <div style="align-self: flex-end;">
                     <div>
-                        <a th:href="@{/notes/edit/{id}(id=${note.id})}" title="Edit">
+                        <a th:href="@{/events/edit/{id}(id=${event.id})}" title="Edit">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
                     <div>
-                        <a th:href="@{/notes/delete/{id}(id=${note.id})}"
+                        <a th:href="@{/notes/delete/{id}(id=${event.id})}"
                            onclick="return confirm()" title="Delete">
                             Delete
                         </a>
@@ -55,14 +56,14 @@
                 </div>
             </div>
             <div style="">
-                <textarea th:text="${note.message}" readonly="readonly" rows="6"></textarea>
+                <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     function search() {
-        document.getElementById("search-note").submit()
+        document.getElementById("search-event").submit()
     }
 </script>
 </body>

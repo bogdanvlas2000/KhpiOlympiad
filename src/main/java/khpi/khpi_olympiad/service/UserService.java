@@ -1,7 +1,6 @@
 package khpi.khpi_olympiad.service;
 
 import khpi.khpi_olympiad.model.Note;
-import khpi.khpi_olympiad.model.Role;
 import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.repository.RoleRepository;
 import khpi.khpi_olympiad.repository.UserRepository;
@@ -27,7 +26,7 @@ public class UserService {
 
     public User registerNewUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
-            throw new UsernameAlreadyExists(user.getUsername());
+            throw new UsernameAlreadyExistsException(user.getUsername());
         }
         var role = roleRepository.findById(1);
         List<Note> notes = new ArrayList<Note>();

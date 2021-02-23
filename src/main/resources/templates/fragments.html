@@ -7,20 +7,17 @@
     <link rel="stylesheet" href="/styles/navbar.css">
 </head>
 <body>
-<div th:fragment="navbar">
-    <div class="navbar">
-        <div class="box">
-            <div><a href="/">Home</a></div>
-            <div sec:authorize="isAuthenticated()"><a href="/notes/all">All notes</a></div>
-            <div sec:authorize="hasRole('ADMIN')"><a href="/users/all">Users</a></div>
-        </div>
-        <div class="box">
-            <a sec:authorize="isAnonymous()" href="/login">Login</a>
-            <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
-            <a onclick="return confirm('Logout?')"
-               sec:authorize="isAuthenticated()" href="/logout">Logout</a>
-        </div>
-    </div>
+<div th:fragment="pages">
+    <div><a href="/">Home</a></div>
+    <div sec:authorize="isAuthenticated()"><a href="/notes/all">Notes</a></div>
+    <div sec:authorize="isAuthenticated()"><a href="/events/all">Events</a></div>
+    <div sec:authorize="hasRole('ADMIN')"><a href="/users/all">Users</a></div>
+</div>
+<div th:fragment="auth" style="display: flex; flex-direction: row">
+    <a sec:authorize="isAnonymous()" href="/login">Login</a>
+    <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
+    <a onclick="return confirm('Logout?')"
+       sec:authorize="isAuthenticated()" href="/logout">Logout</a>
 </div>
 </body>
 </html>

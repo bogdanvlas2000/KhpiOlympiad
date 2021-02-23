@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Home page</title>
-<link rel="stylesheet" href="/styles/cnt.css">
-<link rel="stylesheet" href="/styles/navbar.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Home page</title>
+    <link rel="stylesheet" href="/styles/layout.css">
 </head>
 <body>
-	<header>
-		<div th:insert="fragments::navbar"></div>
-	</header>
-	<div class="cnt">
-		<h1 th:text="${message}"></h1>
-	</div>
+<div class="sidenav">
+    <div th:insert="fragments::pages"></div>
+</div>
+
+<div class="main">
+    <div class="topnav">
+        <div th:insert="fragments::auth"></div>
+    </div>
+    <div>
+        <h1 th:text="${message}"></h1>
+    </div>
+</div>
 </body>
 </html>

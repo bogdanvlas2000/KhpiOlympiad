@@ -46,6 +46,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Note> notes;
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "createdByUser", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Event> createdEvents;
+
+
     public User(String username, String password, String email, String name, int age, String gender) {
         this.name = name;
         this.age = age;
@@ -57,5 +62,10 @@ public class User {
     public void saveNote(Note note) {
         note.setUser(this);
         this.notes.add(note);
+    }
+
+    public void createNewEvent(Event event) {
+        event.setCreatedByUser(this);
+        this.createdEvents.add(event);
     }
 }

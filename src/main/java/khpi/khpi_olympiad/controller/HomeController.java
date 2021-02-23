@@ -4,12 +4,9 @@ import java.security.Principal;
 
 import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.service.UserService;
-import khpi.khpi_olympiad.service.UsernameAlreadyExists;
+import khpi.khpi_olympiad.service.UsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,7 +63,7 @@ public class HomeController {
             user = userService.registerNewUser(user);
             System.out.println(user + " registered!");
             request.login(user.getUsername(), password);
-        } catch (UsernameAlreadyExists e) {
+        } catch (UsernameAlreadyExistsException e) {
             attributes.addFlashAttribute("username_exists", "Username alredy exists!");
             attributes.addFlashAttribute("user", user);
             return "redirect:/signup";
