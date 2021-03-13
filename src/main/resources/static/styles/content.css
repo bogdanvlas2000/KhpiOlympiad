@@ -37,6 +37,14 @@
     resize: none;
 }
 
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+    background: #f1f1f1;
+}
 
 .menu {
     display: flex;
@@ -60,12 +68,8 @@
     background-color: #4CAF50;
 }
 
-.btns {
-    display: flex;
-    flex-direction: row;
-}
-
 .search-container {
+    float: right;
 }
 
 .search-container input[type=text] {
@@ -88,4 +92,9 @@
 
 .search-container button:hover {
     background: #ccc;
+}
+
+textarea {
+    border: none;
+    outline: none;
 }

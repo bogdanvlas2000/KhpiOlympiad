@@ -7,7 +7,7 @@ function openNav() {
 
 function closeNav() {
     document.getElementById("sidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0px";
+    document.getElementById("main").style.marginLeft = "0";
     document.getElementById("openNav").style.display = "block";
     document.getElementById("closeNav").style.display = "none"
 }

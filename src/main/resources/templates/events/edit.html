@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/content_form.css">
+</head>
+<body>
+<div class="cnt">
+    <form th:action="@{/events/change}" th:object="${event}" method="post">
+        <h1>Edit event</h1>
+        <input type="text" class="hide" th:field="*{id}">
+        <input type="text" class="hide" th:field="*{createdByUser}">
+
+        <p>
+            <input type="text" th:field="*{title}"
+                   autofocus="autofocus">
+        <p>
+            <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
+        <p>
+            <input type="submit" value="Apply" class="button"
+                   onclick="return checkForm()">
+    </form>
+</div>
+<script type="text/javascript" src="js/check_form.js"></script>
+</body>
+</html>

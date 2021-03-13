@@ -15,7 +15,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private String title;
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)

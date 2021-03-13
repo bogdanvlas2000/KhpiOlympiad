@@ -1,10 +1,8 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.Event;
-import khpi.khpi_olympiad.model.Note;
 import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.repository.EventRepository;
-import khpi.khpi_olympiad.repository.NoteRepository;
 import khpi.khpi_olympiad.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/events")
@@ -28,15 +25,19 @@ public class EventController {
     }
 
     @GetMapping("/all")
-    public String events(Model model) {
+    public String events(Principal prl, Model model) {
+        User user = userRepository.findByUsername(prl.getName());
         var events = eventRepository.findAll();
         model.addAttribute("events", events);
         return "events/events";
     }
 
+
+    //admin methods
+
     @GetMapping("/create")
     public String create() {
-        return "events/create";
+        return "/events/create";
     }
 
     @PostMapping("/add")
@@ -47,13 +48,13 @@ public class EventController {
         eventRepository.save(event);
         userRepository.save(user);
 
-        return "redirect:/events/all";
+        return "redirect:/admin/events/all";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         eventRepository.deleteById(id);
-        return "redirect:/events/all";
+        return "redirect:/admin/events/all";
     }
 
     @GetMapping("/edit/{id}")
@@ -72,13 +73,11 @@ public class EventController {
         return "redirect:/events/all";
     }
 
-    @PostMapping("/search")
-    public String searchByWord(@RequestParam("word") String word, Model model, Principal prpl) {
-        var user = userRepository.findByUsername(prpl.getName());
-
+    @GetMapping("/search")
+    public String searchAll(@RequestParam("word") String word, Model model) {
         word = "%" + word + "%";
-        var events = eventRepository.search(user.getId(), word);
-        model.addAttribute("notes", events);
+        var events = eventRepository.search(word);
+        model.addAttribute("events", events);
         return "/events/events";
     }
 

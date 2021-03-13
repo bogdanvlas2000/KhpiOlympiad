@@ -1,6 +1,6 @@
 package khpi.khpi_olympiad.service;
 
-import khpi.khpi_olympiad.model.Note;
+import khpi.khpi_olympiad.model.Event;
 import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.repository.RoleRepository;
 import khpi.khpi_olympiad.repository.UserRepository;
@@ -29,12 +29,12 @@ public class UserService {
             throw new UsernameAlreadyExistsException(user.getUsername());
         }
         var role = roleRepository.findById(1);
-        List<Note> notes = new ArrayList<Note>();
+        List<Event> createdEvents = new ArrayList<Event>();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setRole(role.get());
-        user.setNotes(notes);
+        user.setCreatedEvents(createdEvents);
 
         return userRepository.save(user);
     }

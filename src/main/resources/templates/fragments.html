@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:fragment="headerfiles">
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>KhPI</title>
     <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/content.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script type="application/javascript" src="/js/sidenav.js">
+    </script>
 </head>
 <body>
 <div id="sidenav" class="sidenav" th:fragment="sidenav">
-    <div><a href="/">Home <i class="fa fa-home"></i></a></div>
-    <div sec:authorize="isAuthenticated()"><a href="/notes/all">Notes</a></div>
-    <div sec:authorize="isAuthenticated()"><a href="/events/all">Events</a></div>
-    <div sec:authorize="hasRole('ADMIN')"><a href="/users/all">Users</a></div>
+    <div><a href="/">Home</a></div>
+    <div sec:authenticated="isAuthenticated()">
+        <a href="/events/all">Events</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a href="/users/all">Users</a>
+    </div>
 </div>
 
 <div class="topnav" th:fragment="topnav">
@@ -23,6 +29,9 @@
     <div class="block">
         <a sec:authorize="isAnonymous()" href="/login">Login</a>
         <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
+        <a sec:authorize="isAuthenticated()" href="/profile">
+            <i class="fa fa-user"></i> Profile
+        </a>
         <a onclick="return confirm('Logout?')"
            sec:authorize="isAuthenticated()" href="/logout">Logout</a>
     </div>

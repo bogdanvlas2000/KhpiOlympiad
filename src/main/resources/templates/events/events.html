@@ -2,31 +2,23 @@
 
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Events</title>
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/items.css">
-
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<head th:insert="fragments::headerfiles">
 </head>
 <body>
 
-<div class="sidenav">
-    <div th:insert="fragments::sidenav"></div>
+<div th:insert="fragments::sidenav">
 </div>
 
-<div class="main">
-    <div class="topnav">
-        <div th:insert="fragments::auth"></div>
+<div id="main" class="main">
+    <div th:insert="fragments::topnav">
     </div>
-    <h1>Events</h1>
-    <div class="menu">
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <a href="/events/create">Create new event</a></div>
-        <div class="search-container">
+    <div class="header">
+        <div>
+            <h1>Events list</h1>
+        </div>
+        <div>
             <div class="search-container">
-                <form action="/events/search" method="post" id="search-event">
+                <form action="/events/search">
                     <input name="word" type="text" placeholder="Search..">
                     <button type="submit">
                         <i class="fa fa-search"></i>
@@ -35,22 +27,25 @@
             </div>
         </div>
     </div>
+    <div class="menu">
+        <div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/events/create">Create new event</a></div>
+    </div>
     <div class="items">
         <div class="item" th:each="event : ${events}">
             <div class="top">
                 <div style="align-self: flex-start;">
-                    </span> <span th:text="${event.name}"></span>
+                    </span> <span th:text="${event.title}"></span>
                 </div>
-                <div style="align-self: flex-end;">
+                <div sec:authorize="hasRole('ROLE_ADMIN')" class="block">
                     <div>
                         <a th:href="@{/events/edit/{id}(id=${event.id})}" title="Edit">
                             <i class="fa fa-edit"></i>
                         </a>
                     </div>
                     <div>
-                        <a th:href="@{/notes/delete/{id}(id=${event.id})}"
+                        <a th:href="@{/events/delete/{id}(id=${event.id})}"
                            onclick="return confirm()" title="Delete">
-                            Delete
+                            <i class="fa fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
@@ -58,12 +53,17 @@
             <div style="">
                 <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>
             </div>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <form th:action="@{/events/subscribe/{id}(id=${event.id})}" method="post">
+                    <button type="submit">Subscribe <i class="fa fa-check"></i></button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     function search() {
-        document.getElementById("search-event").submit()
+        document.getElementById("search-note").submit()
     }
 </script>
 </body>

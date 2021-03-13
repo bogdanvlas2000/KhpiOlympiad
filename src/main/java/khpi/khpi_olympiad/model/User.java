@@ -42,9 +42,6 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Note> notes;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "createdByUser", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -56,12 +53,6 @@ public class User {
         this.age = age;
         this.gender = gender;
         this.enabled = true;
-        this.notes = new ArrayList<>();
-    }
-
-    public void saveNote(Note note) {
-        note.setUser(this);
-        this.notes.add(note);
     }
 
     public void createNewEvent(Event event) {
