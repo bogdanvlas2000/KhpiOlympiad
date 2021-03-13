@@ -7,13 +7,12 @@
     <title>Notes list</title>
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/items.css">
-
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="sidenav">
-    <div th:insert="fragments::pages"></div>
+    <div th:insert="fragments::sidenav"></div>
 </div>
 
 <div class="main">
@@ -40,7 +39,7 @@
                 <div style="align-self: flex-start;">
                     </span> <span th:text="${note.label}"></span>
                 </div>
-                <div style="align-self: flex-end;">
+                <div class="btns">
                     <div>
                         <a th:href="@{/notes/edit/{id}(id=${note.id})}" title="Edit">
                             <i class="fa fa-edit"></i>
@@ -49,7 +48,7 @@
                     <div>
                         <a th:href="@{/notes/delete/{id}(id=${note.id})}"
                            onclick="return confirm()" title="Delete">
-                            Delete
+                            <i class="fa fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>

@@ -2,21 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home page</title>
     <link rel="stylesheet" href="/styles/layout.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="sidenav">
-    <div th:insert="fragments::pages"></div>
+<div th:insert="fragments::sidenav">
 </div>
 
-<div class="main">
-    <div class="topnav">
-        <div th:insert="fragments::auth"></div>
+<div id="main" class="main">
+    <div th:insert="fragments::topnav">
     </div>
     <div>
         <h1 th:text="${message}"></h1>
     </div>
+    <div>
+        <i class="fa fa-trash-alt"></i>
+    </div>
 </div>
+<script type="application/javascript" src="/js/sidenav.js">
+</script>
 </body>
 </html>

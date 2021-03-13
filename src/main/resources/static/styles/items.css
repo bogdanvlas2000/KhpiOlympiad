@@ -60,6 +60,11 @@
     background-color: #4CAF50;
 }
 
+.btns {
+    display: flex;
+    flex-direction: row;
+}
+
 .search-container {
 }
 

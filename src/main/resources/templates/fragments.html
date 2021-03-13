@@ -4,20 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" href="/styles/navbar.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:fragment="pages">
-    <div><a href="/">Home</a></div>
+<div id="sidenav" class="sidenav" th:fragment="sidenav">
+    <div><a href="/">Home <i class="fa fa-home"></i></a></div>
     <div sec:authorize="isAuthenticated()"><a href="/notes/all">Notes</a></div>
     <div sec:authorize="isAuthenticated()"><a href="/events/all">Events</a></div>
     <div sec:authorize="hasRole('ADMIN')"><a href="/users/all">Users</a></div>
 </div>
-<div th:fragment="auth" style="display: flex; flex-direction: row">
-    <a sec:authorize="isAnonymous()" href="/login">Login</a>
-    <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
-    <a onclick="return confirm('Logout?')"
-       sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+
+<div class="topnav" th:fragment="topnav">
+    <div>
+        <a id="openNav" onclick="openNav()" style="display: none"><i class="fa fa-bars"></i></a>
+        <a id="closeNav" onclick="closeNav()"><i class="fa fa-times"></i></a>
+    </div>
+    <div class="block">
+        <a sec:authorize="isAnonymous()" href="/login">Login</a>
+        <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
+        <a onclick="return confirm('Logout?')"
+           sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+    </div>
 </div>
 </body>
 </html>

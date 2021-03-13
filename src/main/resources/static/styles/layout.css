@@ -1,45 +1,63 @@
 
 .sidenav {
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 160px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
     left: 0;
-    background-color: gray;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    background-color: cadetblue;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
-/* The navigation menu links */
 .sidenav a {
-    padding: 6px 8px 6px 16px;
+    padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: white;
     display: block;
+    transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    background: #4CAF50;
-    color: white;
+    background-color: darkcyan
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 /* Style page content */
 .main {
-    margin-left: 160px; /* Same as the width of the sidebar */
+    margin-left: 260px;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
+    transition: 0.5s;
 }
 
 .topnav {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    background: gray;
+    background: cadetblue;
 }
 
 .topnav a {
@@ -49,13 +67,18 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    transition: 0.3s;
 }
 
 /* Change the link color to #111 (black) on hover */
 .topnav a:hover {
-    background-color: #4CAF50;
+    background-color: darkcyan;
 }
 
+.block {
+    display: flex;
+    flex-direction: row;
+}
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
