@@ -1,6 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<title>Log in</title>
-<link rel="stylesheet" href="/styles/sign_form.css">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/sign_form.css">
 </head>
 <body>
 <form name="f" th:action="@{/login}" method="post">

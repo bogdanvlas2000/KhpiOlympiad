@@ -22,6 +22,7 @@
     padding: 10px;
     margin: 10px;
     min-width: 43%;
+    border: 1px black solid;
 }
 
 .top {
@@ -39,6 +40,8 @@
     font-size: 15px;
     width: 90%;
     resize: none;
+    border: none;
+    outline: none;
 }
 
 .header {
@@ -55,7 +58,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background: lightgray;
 }
 
 .menu a {
@@ -64,12 +66,16 @@
     color: black;
     text-align: center;
     padding: 14px 16px;
+    margin: 15px;
     text-decoration: none;
+    color: white;
+    background-color: cadetblue;
+    border-radius: 15px;
 }
 
 .menu a:hover {
     color: white;
-    background-color: #4CAF50;
+    background-color: darkcyan;
 }
 
 .search-container {
@@ -97,9 +103,4 @@
 
 .search-container button:hover {
     background: #ccc;
-}
-
-textarea {
-    border: none;
-    outline: none;
 }

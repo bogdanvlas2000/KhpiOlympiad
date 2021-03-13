@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments::headerfiles">
+</head>
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
     <link rel="stylesheet" href="/styles/sign_form.css">
 </head>
 <body>
@@ -42,24 +42,6 @@
             <input type="email" placeholder="example@mail.com" th:field="*{email}"
                    required="required">
         </div>
-        <div>Name
-            <input type="text" th:field="*{name}"
-                   pattern="^[a-zA-Zа-яёА-ЯЁ]+$"
-                   placeholder="Letters"
-                   required="required">
-        </div>
-        <div class="line">
-            <div>
-                <label> Age <input type="number" th:field="*{age}" min="1" max="150"
-                                   required="required">
-                </label>
-            </div>
-            <div>
-                Male <input id="m" type="radio" th:field="*{gender}" value="male" required>
-                Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
-            </div>
-        </div>
-        +
         <button type="submit" value="Sign up">Sign Up</button>
         <a href="/login">Do you have an account? Sign in</a>
     </div>

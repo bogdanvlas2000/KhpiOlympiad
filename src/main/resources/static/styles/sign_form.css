@@ -1,8 +1,5 @@
-@charset "UTF-8";
-
 form {
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     padding-left: 20px;
     padding-right: 20px;
     width: 40%;
@@ -33,6 +30,7 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
+    transition: 0.5s;
 }
 
 button:hover {

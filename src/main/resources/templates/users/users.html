@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/content.css">
+</head>
+<body>
+<div th:insert="fragments::topnav">
+</div>
+<div id="main" class="main">
+
+    <div class="header">
+        <div>
+            <h1>Users list</h1>
+        </div>
+        <div>
+            <div class="search-container">
+                <form action="/events/search">
+                    <input name="word" type="text" placeholder="Search.." autofocus="autofocus">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+    </div>
+    <div class="content">
+        <div class="items">
+            <div class="item" th:each="user : ${users}">
+                <div th:text="${user.username}"></div>
+                <div th:text="${user.email}"></div>
+                <div th:text="${user.name}"></div>
+                <div th:text="${user.age}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function search() {
+        document.getElementById("search-note").submit()
+    }
+</script>
+</body>
+
+</html>
