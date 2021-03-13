@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/content.css">
+    <link rel="stylesheet" href="/styles/profile.css">
+</head>
+<body>
+<div>
+    <div th:insert="fragments::sidenav"></div>
+    <div id="main" class="main">
+        <div th:insert="fragments::topnav"></div>
+        <div class="header">
+            <h1>Profile page</h1>
+        </div>
+        <div class="content">
+
+            <form th:object="${user}">
+                <div class="card">
+                    <div>
+                        <input th:field="*{username}">
+                    </div>
+                    <div>
+                        <input th:field="*{email}">
+                    </div>
+                    <div>
+                        <input th:field="*{name}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

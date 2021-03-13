@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.content {
+    background: #f1f1f1;
+}
+
 .items {
     display: flex;
     width: 100%;
@@ -7,7 +11,6 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     align-items: flex-start;
-    background: #f1f1f1;
 }
 
 

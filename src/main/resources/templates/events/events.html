@@ -33,37 +33,41 @@
     <div class="menu">
         <div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/events/create">Create new event</a></div>
     </div>
-    <div class="items">
-        <div class="item" th:each="event : ${events}">
-            <div class="top">
-                <div style="align-self: flex-start;">
-                    </span> <span th:text="${event.title}"></span>
-                </div>
-                <div sec:authorize="hasRole('ROLE_ADMIN')" class="block">
-                    <div>
-                        <a th:href="@{/events/edit/{id}(id=${event.id})}" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
+    <div class="content">
+        <div class="items">
+            <div class="item" th:each="event : ${events}">
+                <div class="top">
+                    <div style="align-self: flex-start;">
+                        </span> <span th:text="${event.title}"></span>
                     </div>
-                    <div>
-                        <a th:href="@{/events/delete/{id}(id=${event.id})}"
-                           onclick="return confirm()" title="Delete">
-                            <i class="fa fa-trash-alt"></i>
-                        </a>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="block">
+                        <div>
+                            <a th:href="@{/events/edit/{id}(id=${event.id})}" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a th:href="@{/events/delete/{id}(id=${event.id})}"
+                               onclick="return confirm()" title="Delete">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div style="">
-                <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>
-            </div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <span th:text="${event.subscribedUsers.size()}"></span>
-                <span> subscribed users</span>
-            </div>
-            <div sec:authorize="hasRole('ROLE_USER')">
-                <form th:action="@{/events/subscribe/{id}(id=${event.id})}" method="post">
-                    <button type="submit">Subscribe <i class="fa fa-check"></i></button>
-                </form>
+                <div style="">
+                    <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span th:text="${event.subscribedUsers.size()}"></span>
+                    <span> subscribed users</span>
+                </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <div sec:authentication=""></div>
+                    <form th:action="@{/events/subscribe/{id}(id=${event.id})}" method="post">
+                        <button type="submit">Subscribe <i class="fa fa-check"></i></button>
+                    </form>
+                    <div></div>
+                </div>
             </div>
         </div>
     </div>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("/users")
@@ -27,38 +29,21 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @GetMapping("/profile")
+    public String profile(Model model, Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        model.addAttribute("user", user);
+        return "/users/profile";
+    }
+
+    // admin methods
+
     @GetMapping("/all")
     public String usersList(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "/users/users";
     }
 
-    @GetMapping("/create")
-    public String createUser() {
-        return "/users/create_user";
-    }
 
-    @PostMapping("/add")
-    public String addUser(@ModelAttribute User user) {
-        /*
-         * Registration process
-         */
-        return "redirect:/users/all";
-    }
-
-    @GetMapping("/info/{id}")
-    public String userInfo(@PathVariable(name = "id") int id, Model model) {
-        /*
-         * Info about user
-         */
-        return "/users/user_info";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable(name = "id") int id) {
-        /*
-         * delete user
-         */
-        return "redirect:/users";
-    }
 }
