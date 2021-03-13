@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -27,11 +28,20 @@ public class EventController {
     @GetMapping("/all")
     public String events(Principal prl, Model model) {
         User user = userRepository.findByUsername(prl.getName());
-        var events = eventRepository.findAll();
-        model.addAttribute("events", events);
+        if (!model.containsAttribute("events")) {
+            var events = eventRepository.findAll();
+            model.addAttribute("events", events);
+        }
         return "events/events";
     }
 
+    @GetMapping("/search")
+    public String searchAll(@RequestParam("word") String word, RedirectAttributes attr) {
+        word = "%" + word + "%";
+        var events = eventRepository.search(word);
+        attr.addFlashAttribute("events", events);
+        return "redirect:/events/all";
+    }
 
     //admin methods
 
@@ -48,13 +58,13 @@ public class EventController {
         eventRepository.save(event);
         userRepository.save(user);
 
-        return "redirect:/admin/events/all";
+        return "redirect:/events/all";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         eventRepository.deleteById(id);
-        return "redirect:/admin/events/all";
+        return "redirect:/events/all";
     }
 
     @GetMapping("/edit/{id}")
@@ -71,14 +81,6 @@ public class EventController {
         eventRepository.save(event);
         userRepository.save(user);
         return "redirect:/events/all";
-    }
-
-    @GetMapping("/search")
-    public String searchAll(@RequestParam("word") String word, Model model) {
-        word = "%" + word + "%";
-        var events = eventRepository.search(word);
-        model.addAttribute("events", events);
-        return "/events/events";
     }
 
 }

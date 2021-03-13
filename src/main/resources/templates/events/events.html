@@ -4,6 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments::headerfiles">
 </head>
+<head>
+    <link rel="stylesheet" href="/styles/content.css">
+</head>
 <body>
 
 <div th:insert="fragments::sidenav">
@@ -19,7 +22,7 @@
         <div>
             <div class="search-container">
                 <form action="/events/search">
-                    <input name="word" type="text" placeholder="Search..">
+                    <input name="word" type="text" placeholder="Search.." autofocus>
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
