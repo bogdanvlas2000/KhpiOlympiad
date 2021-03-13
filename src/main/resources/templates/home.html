@@ -5,20 +5,13 @@
 <head>
     <link rel="stylesheet" href="/styles/content.css">
 </head>
-
 <body>
-<div th:insert="fragments::sidenav">
+<div th:insert="fragments::topnav">
 </div>
-<div id="main" class="main">
-    <div th:insert="fragments::topnav">
-    </div>
+<div class="main">
     <div>
         <h1 th:text="${message}"></h1>
     </div>
-    <div>
-        <i class="fa fa-trash-alt"></i>
-    </div>
 </div>
-
 </body>
 </html>

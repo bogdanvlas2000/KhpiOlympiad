@@ -19,11 +19,11 @@ public class Event {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable
     private Set<User> subscribedUsers;
 
-    public void addUser(User user){
+    public void addUser(User user) {
         subscribedUsers.add(user);
     }
 }

@@ -6,22 +6,19 @@
     <link rel="stylesheet" href="/styles/content_form.css">
 </head>
 <body>
-<div class="cnt">
-    <form th:action="@{/events/change}" th:object="${event}" method="post">
-        <h1>Edit event</h1>
-        <input type="text" class="hide" th:field="*{id}">
-        <input type="text" class="hide" th:field="*{createdByUser}">
+<form th:action="@{/events/change}" th:object="${event}" method="post">
+    <h1>Edit event</h1>
+    <input type="text" class="hide" th:field="*{id}">
 
-        <p>
-            <input type="text" th:field="*{title}"
-                   autofocus="autofocus">
-        <p>
-            <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
-        <p>
-            <input type="submit" value="Apply" class="button"
-                   onclick="return checkForm()">
-    </form>
-</div>
+    <p>
+        <input type="text" th:field="*{title}"
+               autofocus="autofocus">
+    <p>
+        <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
+    <p>
+        <input type="submit" value="Apply" class="button"
+               onclick="return checkForm()">
+</form>
 <script type="text/javascript" src="js/check_form.js"></script>
 </body>
 </html>

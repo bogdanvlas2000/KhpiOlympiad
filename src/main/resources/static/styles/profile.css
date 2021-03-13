@@ -6,4 +6,7 @@ input {
     display: flex;
     flex-direction: column;
     margin: 20px;
+    border: 1px black solid;
+    min-height: 70%;
+
 }

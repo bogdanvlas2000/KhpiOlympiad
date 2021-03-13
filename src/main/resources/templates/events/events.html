@@ -8,13 +8,10 @@
     <link rel="stylesheet" href="/styles/content.css">
 </head>
 <body>
-
-<div th:insert="fragments::sidenav">
+<div th:insert="fragments::topnav">
 </div>
-
 <div id="main" class="main">
-    <div th:insert="fragments::topnav">
-    </div>
+
     <div class="header">
         <div>
             <h1>Events list</h1>
@@ -22,7 +19,7 @@
         <div>
             <div class="search-container">
                 <form action="/events/search">
-                    <input name="word" type="text" placeholder="Search.." autofocus>
+                    <input name="word" type="text" placeholder="Search.." autofocus="autofocus">
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
@@ -40,7 +37,7 @@
                     <div style="align-self: flex-start;">
                         </span> <span th:text="${event.title}"></span>
                     </div>
-                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="block">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="row_block">
                         <div>
                             <a th:href="@{/events/edit/{id}(id=${event.id})}" title="Edit">
                                 <i class="fa fa-edit"></i>

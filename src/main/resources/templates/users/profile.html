@@ -8,17 +8,15 @@
     <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <body>
-<div>
-    <div th:insert="fragments::sidenav"></div>
-    <div id="main" class="main">
-        <div th:insert="fragments::topnav"></div>
-        <div class="header">
-            <h1>Profile page</h1>
-        </div>
-        <div class="content">
-
-            <form th:object="${user}">
-                <div class="card">
+<div id="main" class="main">
+    <div th:insert="fragments::topnav"></div>
+    <div class="header">
+        <h1>Profile page</h1>
+    </div>
+    <div class="content">
+        <form th:object="${user}">
+            <div class="row_block">
+                <div class="card" style="flex-grow: 1;">
                     <div>
                         <input th:field="*{username}">
                     </div>
@@ -29,8 +27,11 @@
                         <input th:field="*{name}">
                     </div>
                 </div>
-            </form>
-        </div>
+                <div class="card" style="flex-grow: 3;">
+                    <div>Some text here</div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </body>

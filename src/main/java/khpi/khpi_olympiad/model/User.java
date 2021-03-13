@@ -35,7 +35,7 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    @ManyToMany(mappedBy = "subscribedUsers")
+    @ManyToMany(mappedBy = "subscribedUsers", fetch = FetchType.EAGER)
     private Set<Event> events;
 
     public User(String username, String password, String email, String name, int age, String gender) {
