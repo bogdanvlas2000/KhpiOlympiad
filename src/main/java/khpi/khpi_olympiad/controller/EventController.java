@@ -43,6 +43,15 @@ public class EventController {
         return "redirect:/events/all";
     }
 
+    @PostMapping("/subscribe/{event_id}")
+    public String subscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        var event = eventRepository.findById(eventId).get();
+        user.subscribe(event);
+        userRepository.save(user);
+        return "redirect:/events/all";
+    }
+
     //admin methods
 
     @GetMapping("/create")
@@ -51,12 +60,9 @@ public class EventController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("event") Event event, Principal principal) {
+    public String add(@ModelAttribute("event") Event event) {
 
-        User user = userRepository.findByUsername(principal.getName());
-        user.createNewEvent(event);
         eventRepository.save(event);
-        userRepository.save(user);
 
         return "redirect:/events/all";
     }
@@ -75,12 +81,8 @@ public class EventController {
     }
 
     @PostMapping("/change")
-    public String change(@ModelAttribute(name = "event") Event event, Principal prl) {
-        User user = userRepository.findByUsername(prl.getName());
-        event.setCreatedByUser(user);
+    public String change(@ModelAttribute(name = "event") Event event) {
         eventRepository.save(event);
-        userRepository.save(user);
         return "redirect:/events/all";
     }
-
 }

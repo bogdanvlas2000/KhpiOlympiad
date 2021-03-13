@@ -9,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -29,12 +31,12 @@ public class UserService {
             throw new UsernameAlreadyExistsException(user.getUsername());
         }
         var role = roleRepository.findById(1);
-        List<Event> createdEvents = new ArrayList<Event>();
+        Set<Event> events = new HashSet<>();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setRole(role.get());
-        user.setCreatedEvents(createdEvents);
+        user.setEvents(events);
 
         return userRepository.save(user);
     }

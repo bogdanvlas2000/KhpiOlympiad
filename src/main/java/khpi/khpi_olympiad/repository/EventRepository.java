@@ -21,10 +21,10 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
             "select e from Event e WHERE e.title like :word or e.description like  :word")
     public List<Event> search(@Param("word") String word);
 
-    @Query(
-            "select e from Event e " +
-                    "where e.createdByUser.id = :user_id and " +
-                    "(e.title like :word or e.description like :word)")
-    public List<Event> searchByUserCreated(@Param("user_id") int userId, @Param("word") String word);
+//    @Query(
+//            "select e from Event e " +
+//                    "where e.createdByUser.id = :user_id and " +
+//                    "(e.title like :word or e.description like :word)")
+//    public List<Event> searchByUserCreated(@Param("user_id") int userId, @Param("word") String word);
 
 }

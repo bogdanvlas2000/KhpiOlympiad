@@ -1,10 +1,9 @@
 package khpi.khpi_olympiad.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +17,13 @@ public class Event {
     private String title;
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User createdByUser;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany
+    @JoinTable
+    private Set<User> subscribedUsers;
+
+    public void addUser(User user){
+        subscribedUsers.add(user);
+    }
 }

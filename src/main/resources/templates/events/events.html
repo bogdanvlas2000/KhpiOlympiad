@@ -56,6 +56,10 @@
             <div style="">
                 <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>
             </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <span th:text="${event.subscribedUsers.size()}"></span>
+                <span> subscribed users</span>
+            </div>
             <div sec:authorize="hasRole('ROLE_USER')">
                 <form th:action="@{/events/subscribe/{id}(id=${event.id})}" method="post">
                     <button type="submit">Subscribe <i class="fa fa-check"></i></button>

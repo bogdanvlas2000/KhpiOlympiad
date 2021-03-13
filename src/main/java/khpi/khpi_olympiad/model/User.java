@@ -2,16 +2,9 @@ package khpi.khpi_olympiad.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +21,7 @@ import lombok.ToString;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String username;
     private String password;
@@ -42,11 +35,8 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "createdByUser", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Event> createdEvents;
-
+    @ManyToMany(mappedBy = "subscribedUsers")
+    private Set<Event> events;
 
     public User(String username, String password, String email, String name, int age, String gender) {
         this.name = name;
@@ -55,8 +45,8 @@ public class User {
         this.enabled = true;
     }
 
-    public void createNewEvent(Event event) {
-        event.setCreatedByUser(this);
-        this.createdEvents.add(event);
+    public void subscribe(Event event) {
+        event.addUser(this);
+        this.events.add(event);
     }
 }
