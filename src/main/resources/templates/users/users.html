@@ -34,8 +34,11 @@
             <div class="item" th:each="user : ${users}">
                 <div th:text="${user.username}"></div>
                 <div th:text="${user.email}"></div>
-                <div th:text="${user.name}"></div>
-                <div th:text="${user.age}"></div>
+                <div th:if="${user.profile}">
+                    <div th:text="${user.profile.name}"></div>
+                    <div th:text="${user.profile.age}"></div>
+                </div>
+
             </div>
         </div>
     </div>
