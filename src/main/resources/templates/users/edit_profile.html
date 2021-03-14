@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/sign_form.css">
+</head>
+<body>
+<form id="edit_profile" th:object="${profile}" th:action="@{/users/profile/edit}" method="post"
+      onsubmit="return check()">
+    <div class="container">
+        <div id="error" class="error">
+        </div>
+
+
+        <h2>Edit your profile info, <span th:text="${username}"></span></h2>
+        <input type="number" th:field="*{id}" hidden>
+
+        <div>Name:
+            <input type="text" th:field="*{name}"
+                   id="name"
+                   placeholder="Name"
+                   pattern="[a-zA-ZА-Яа-яЁё ]+"
+                   required="required">
+        </div>
+        <div class="line">
+            <div>
+                <label> Age <input type="number" th:field="*{age}" min="1" max="150"
+                                   required="required">
+                </label>
+            </div>
+            <div>
+                Male <input id="m" type="radio" th:field="*{gender}" value="male" required>
+                Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
+            </div>
+        </div>
+        <button type="submit">Apply</button>
+    </div>
+    <script>
+        function check() {
+            let password = document.getElementById('password').value
+            let confirm_passsword = document.getElementById('confirm_password').value
+            let msg = document.getElementById('error')
+            msg.innerText = ''
+
+            if (password != confirm_passsword) {
+                msg.innerHTML = 'Confirm password does not match!'
+                return false
+            } else {
+                msg.innerText = ''
+                return true
+            }
+        }
+    </script>
+    <script type="application/javascript" src="js/register.js"></script>
+</form>
+</body>
+</html>

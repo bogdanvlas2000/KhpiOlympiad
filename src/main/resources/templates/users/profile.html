@@ -27,8 +27,10 @@
                     <div>
                         <div th:if="${ready}">
                             <div class="t1" style="align-self: center">My info</div>
-                            <div th:text="${user.name}"></div>
-                            <div th:text="${user.age}"></div>
+                            <div th:text="${profile.name}"></div>
+                            <div th:text="${profile.age}"></div>
+                            <div th:text="${profile.gender}"></div>
+
                         </div>
                         <div th:if="${not_ready}">
                             You should complete profile info
