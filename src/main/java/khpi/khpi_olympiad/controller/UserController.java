@@ -1,15 +1,11 @@
 package khpi.khpi_olympiad.controller;
 
-import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.repository.UserRepository;
 import khpi.khpi_olympiad.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -34,6 +30,12 @@ public class UserController {
     public String profile(Model model, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         model.addAttribute("user", user);
+        boolean isReady = user.checkReady();
+        if (isReady) {
+            model.addAttribute("ready", true);
+        } else {
+            model.addAttribute("not_ready", true);
+        }
         return "/users/profile";
     }
 

@@ -1,16 +1,10 @@
 package khpi.khpi_olympiad.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -24,13 +18,17 @@ public class User {
     private Integer id;
 
     private String username;
-    private String password;
-    private boolean enabled;
-
     private String email;
+
+    private String password;
+
     private String name;
     private int age;
     private String gender;
+
+
+    private boolean ready;
+    private boolean enabled;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
@@ -48,5 +46,20 @@ public class User {
     public void subscribe(Event event) {
         event.addUser(this);
         this.events.add(event);
+    }
+
+    public boolean checkReady() {
+        this.ready = true;
+        if (name == null || name.isEmpty()) {
+            ready = false;
+        }
+        if (age < 1) {
+            ready = false;
+        }
+        if (gender == null || (!gender.equals("male") && !gender.equals("female"))) {
+            ready = false;
+        }
+
+        return this.ready;
     }
 }

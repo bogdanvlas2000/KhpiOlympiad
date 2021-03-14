@@ -41,3 +41,16 @@ input {
     font-weight: bold;
     font-size: 30px;
 }
+
+.b1 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.b1:hover {
+    background-color: #429144;
+}
