@@ -14,24 +14,25 @@
         <h1>Profile page</h1>
     </div>
     <div class="content">
-        <form th:object="${user}">
-            <div class="row_block">
-                <div class="card" style="flex-grow: 1;">
-                    <div>
-                        <input th:field="*{username}">
+        <div class="row_block">
+            <div class="card" style="flex-grow: 1;">
+                <div class="column_block">
+                    <div class="img_wrap">
+                        <img src="/img/profile.png">
                     </div>
-                    <div>
-                        <input th:field="*{email}">
-                    </div>
-                    <div>
-                        <input th:field="*{name}">
-                    </div>
+                    <div th:text="${user.username}"></div>
+                    <div th:text="${user.email}"></div>
                 </div>
-                <div class="card" style="flex-grow: 3;">
-                    <div>Some text here</div>
+                <div class="column_block card_block">
+                    <div class="t1" style="align-self: center">My info</div>
+                    <div th:text="${user.name}"></div>
+                    <div th:text="${user.age}"></div>
                 </div>
             </div>
-        </form>
+            <div class="card" style="flex-grow: 3;">
+                <h1>My events</h1>
+            </div>
+        </div>
     </div>
 </div>
 </body>
