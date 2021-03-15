@@ -1,4 +1,4 @@
-package khpi.khpi_olympiad.service;
+package khpi.khpi_olympiad.exception;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
     public UsernameAlreadyExistsException(String msg) {

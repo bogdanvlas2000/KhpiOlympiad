@@ -1,0 +1,139 @@
+package khpi.khpi_olympiad.controller;
+
+import khpi.khpi_olympiad.exception.UsernameAlreadyExistsException;
+import khpi.khpi_olympiad.model.ConfirmationToken;
+import khpi.khpi_olympiad.model.User;
+import khpi.khpi_olympiad.repository.ConfirmationTokenRepository;
+import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.service.EmailSenderService;
+import khpi.khpi_olympiad.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+
+@Controller
+public class MainController {
+
+    private UserRepository userRepository;
+
+    private UserService userService;
+
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
+    private EmailSenderService emailSenderService;
+
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    public MainController(UserRepository userRepository,
+                          UserService userService,
+                          ConfirmationTokenRepository confirmationTokenRepository,
+                          EmailSenderService emailSenderService,
+                          AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.confirmationTokenRepository = confirmationTokenRepository;
+        this.emailSenderService = emailSenderService;
+        this.authenticationManager = authenticationManager;
+    }
+
+    @GetMapping
+    public String home(Model model, Principal user) {
+        if (user != null) {
+            model.addAttribute("message", "Welcome, " + user.getName());
+        } else {
+            model.addAttribute("message", "Welcome to my app!");
+        }
+        return "home";
+    }
+
+    @GetMapping("/login")
+    public String signIn() {
+        return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signUp(Model model, @ModelAttribute("username_exists") String msg) {
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new User());
+        }
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String registerNewUser(
+            @ModelAttribute("user") User user,
+            HttpServletRequest request,
+            RedirectAttributes attributes) {
+
+        String password = user.getPassword();
+        try {
+            user = userService.registerNewUser(user);
+            System.out.println(user + " registered!");
+            ///успех
+            var confirmationToken = new ConfirmationToken(user);
+            confirmationTokenRepository.save(confirmationToken);
+            // SEND MESSSAGE with Confirm token
+            var mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Complete registration!");
+            mailMessage.setFrom("khpi_default@mail.com");
+            mailMessage.setText("To confirm yout account click here: " +
+                    "http://localhost:8080/confirm-account?token=" + confirmationToken.getTokenString());
+
+            emailSenderService.sendEmail(mailMessage);
+
+            attributes.addFlashAttribute("email", user.getEmail());
+            return "redirect:/successful_registration";
+
+//            request.login(user.getUsername(), password);
+        } catch (UsernameAlreadyExistsException e) {
+            attributes.addFlashAttribute("username_exists", "Username alredy exists!");
+            attributes.addFlashAttribute("user", user);
+            return "redirect:/signup";
+        }
+//        catch (ServletException e) {
+//            e.printStackTrace();
+//        }
+//        return "redirect:/";
+    }
+
+
+    @GetMapping("/successful_registration")
+    public String succesfulRegistration(Model model, @ModelAttribute("email") String email) {
+        if (!model.containsAttribute("email")) {
+            model.addAttribute("email", email);
+        }
+        return "successful_registration";
+    }
+
+    @GetMapping("/confirm-account")
+    public String confirmUserAccount(Model model,
+                                     @RequestParam("token") String tokenString,
+                                     HttpServletRequest request) {
+        var confirmationToken = confirmationTokenRepository.findByTokenString(tokenString);
+        if (confirmationToken != null) {
+            var email = confirmationToken.getUser().getEmail();
+            var user = userRepository.findByEmailIgnoreCase(email);
+            user.setEnabled(true);
+            userRepository.save(user);
+            confirmationTokenRepository.deleteById(confirmationToken.getId());
+            return "account_verified";
+        } else {
+            model.addAttribute("message", "Link is invalid or broken!");
+            return "error";
+        }
+    }
+}
