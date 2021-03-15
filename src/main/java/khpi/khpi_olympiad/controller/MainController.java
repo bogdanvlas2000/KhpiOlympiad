@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
@@ -34,7 +32,6 @@ public class MainController {
 
     private EmailSenderService emailSenderService;
 
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     public MainController(UserRepository userRepository,
@@ -46,7 +43,6 @@ public class MainController {
         this.userService = userService;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSenderService = emailSenderService;
-        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping

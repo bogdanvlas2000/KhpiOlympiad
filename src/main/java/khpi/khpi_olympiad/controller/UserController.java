@@ -34,38 +34,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/profile")
-    public String profile(Model model, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        model.addAttribute("profile", user.getProfile());
-        model.addAttribute("user", user);
-        boolean isReady = user.checkReady();
-        if (isReady) {
-            model.addAttribute("ready", true);
-        } else {
-            model.addAttribute("not_ready", true);
-        }
-        return "/users/profile";
-    }
 
-    @GetMapping("/profile/edit")
-    public String editProfile(Model model, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        Profile profile = user.getProfile() != null ? user.getProfile() : new Profile();
-        model.addAttribute("profile", profile);
-        model.addAttribute("username", user.getUsername());
-
-        return "users/edit_profile";
-    }
-
-    @PostMapping("/profile/edit")
-    public String changeProfile(@ModelAttribute("profile") Profile profile, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        user.setProfile(profile);
-        profileRepository.save(profile);
-        userRepository.save(user);
-        return "redirect:/users/profile";
-    }
 
     // admin methods
 
