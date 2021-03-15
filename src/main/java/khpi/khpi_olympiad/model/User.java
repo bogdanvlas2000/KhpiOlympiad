@@ -35,14 +35,6 @@ public class User {
     @ManyToMany(mappedBy = "subscribedUsers", fetch = FetchType.EAGER)
     private Set<Event> events;
 
-//    public User(String username, String password, String email, String name, int age, String gender) {
-//        this.profile = new Profile()
-//        this.name = name;
-//        this.age = age;
-//        this.gender = gender;
-//        this.enabled = true;
-//    }
-
     public void subscribe(Event event) {
         event.addUser(this);
         this.events.add(event);
@@ -54,16 +46,11 @@ public class User {
     }
 
     public boolean checkReady() {
-        this.ready = true;
-        if (profile == null) {
-            ready = false;
+        if (this.profile == null) {
+            return false;
+        } else {
+            this.ready = profile.isComplete();
+            return this.ready;
         }
-//        if (age < 1) {
-//            ready = false;
-//        }
-//        if (gender == null || (!gender.equals("male") && !gender.equals("female"))) {
-//            ready = false;
-//        }
-        return this.ready;
     }
 }

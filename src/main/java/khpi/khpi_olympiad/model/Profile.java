@@ -20,4 +20,13 @@ public class Profile {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
+
+    public boolean isComplete() {
+        boolean complete = true;
+        if (name == null || name.isEmpty() || age < 1 ||
+                gender == null || (!gender.equals("male") && !gender.equals("female"))) {
+            complete = false;
+        }
+        return complete;
+    }
 }
