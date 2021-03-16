@@ -57,7 +57,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "login";
+        return "/auth/login";
     }
 
     @GetMapping("/signup")
@@ -65,13 +65,12 @@ public class MainController {
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", new User());
         }
-        return "signup";
+        return "/auth/signup";
     }
 
     @PostMapping("/signup")
     public String registerNewUser(
             @ModelAttribute("user") User user,
-            HttpServletRequest request,
             RedirectAttributes attributes) {
 
         String password = user.getPassword();
@@ -93,17 +92,11 @@ public class MainController {
 
             attributes.addFlashAttribute("email", user.getEmail());
             return "redirect:/successful_registration";
-
-//            request.login(user.getUsername(), password);
         } catch (UsernameAlreadyExistsException e) {
             attributes.addFlashAttribute("username_exists", "Username alredy exists!");
             attributes.addFlashAttribute("user", user);
             return "redirect:/signup";
         }
-//        catch (ServletException e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/";
     }
 
 
@@ -112,7 +105,7 @@ public class MainController {
         if (!model.containsAttribute("email")) {
             model.addAttribute("email", email);
         }
-        return "successful_registration";
+        return "/auth/successful_registration";
     }
 
     @GetMapping("/confirm-account")
@@ -126,10 +119,10 @@ public class MainController {
             user.setEnabled(true);
             userRepository.save(user);
             confirmationTokenRepository.deleteById(confirmationToken.getId());
-            return "account_verified";
+            return "/auth/account_verified";
         } else {
             model.addAttribute("message", "Link is invalid or broken!");
-            return "error";
+            return "/auth/error";
         }
     }
 }
