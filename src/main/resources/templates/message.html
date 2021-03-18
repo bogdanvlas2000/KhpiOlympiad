@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+</head>
+<style>
+    .wrapper {
+        margin: auto;
+        margin-top: 50px;
+        background-color: white;
+        width: 500px;
+        min-height: 200px;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .message {
+        font-size: 20px;
+    }
+
+    .error {
+        font-size: 20px;
+        color: red;
+    }
+</style>
+<body>
+<div class="wrapper">
+    <div th:if="${message}" th:text="${message}" class="message">
+        Some message here
+    </div>
+    <div th:if="${error}" th:text="${error}" class="error">
+        Some error here
+    </div>
+    <div>
+        <a th:if="${go_home}" href="/">Back to home page</a>
+        <a th:if="${go_login}" href="/login">Please, login with your credentialse</a>
+    </div>
+</div>
+</body>
+</html>

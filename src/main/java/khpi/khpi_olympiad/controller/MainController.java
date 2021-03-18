@@ -102,10 +102,10 @@ public class MainController {
 
     @GetMapping("/successful_registration")
     public String succesfulRegistration(Model model, @ModelAttribute("email") String email) {
-        if (!model.containsAttribute("email")) {
-            model.addAttribute("email", email);
-        }
-        return "/auth/successful_registration";
+        var msg = "Verification link sent to your email " + email;
+        model.addAttribute("message", msg);
+        model.addAttribute("go_home", true);
+        return "/message";
     }
 
     @GetMapping("/confirm-account")
@@ -119,10 +119,13 @@ public class MainController {
             user.setEnabled(true);
             userRepository.save(user);
             confirmationTokenRepository.deleteById(confirmationToken.getId());
-            return "/auth/account_verified";
+            model.addAttribute("message", "Congratulations! Your account has been activated!");
+            model.addAttribute("go_login", true);
+            return "/message";
         } else {
-            model.addAttribute("message", "Link is invalid or broken!");
-            return "/auth/error";
+            model.addAttribute("error", "Link is invalid or account has been activated!");
+            model.addAttribute("go_home", true);
+            return "/message";
         }
     }
 }
