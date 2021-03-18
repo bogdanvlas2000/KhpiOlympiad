@@ -6,16 +6,15 @@ import khpi.khpi_olympiad.model.User;
 import khpi.khpi_olympiad.repository.ConfirmationTokenRepository;
 import khpi.khpi_olympiad.repository.UserRepository;
 import khpi.khpi_olympiad.service.EmailSenderService;
+import khpi.khpi_olympiad.service.PasswordGenerator;
 import khpi.khpi_olympiad.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,17 +31,18 @@ public class MainController {
 
     private EmailSenderService emailSenderService;
 
+    private PasswordGenerator passwordGenerator;
+
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MainController(UserRepository userRepository,
-                          UserService userService,
-                          ConfirmationTokenRepository confirmationTokenRepository,
-                          EmailSenderService emailSenderService,
-                          AuthenticationManager authenticationManager) {
+    public MainController(UserRepository userRepository, UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, PasswordGenerator passwordGenerator, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.emailSenderService = emailSenderService;
+        this.passwordGenerator = passwordGenerator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -127,5 +127,32 @@ public class MainController {
             model.addAttribute("go_home", true);
             return "/message";
         }
+    }
+
+    @PostMapping("/psw_forgot")
+    public String generatePasswordAndSendEmail(@RequestParam("username") String username, RedirectAttributes attr) {
+        var user = userRepository.findByUsername(username);
+        if (user != null) {
+            var password = passwordGenerator.generatePassword(10);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            //SEND email with new password!!!!
+            var mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Your new password");
+            mailMessage.setFrom("khpi_default@mail.com");
+            mailMessage.setText("This is your new password: " + password);
+            emailSenderService.sendEmail(mailMessage);
+            attr.addFlashAttribute("email", user.getEmail());
+            return "redirect:/psw_sent";
+        }
+        return "redirect:/psw_sent";
+    }
+
+    @GetMapping("/psw_sent")
+    public String newPasswordSent(Model model, @ModelAttribute("email") String email) {
+        model.addAttribute("message", "New password sent to your email " + email);
+        model.addAttribute("go_home", true);
+        return "message";
     }
 }

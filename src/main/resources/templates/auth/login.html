@@ -5,27 +5,45 @@
     <link rel="stylesheet" href="/styles/sign_form.css">
 </head>
 <body>
-<form name="f" th:action="@{/login}" method="post">
-    <div class="container">
-        <div th:if="${param.error}" class="error">Invalid credentials!</div>
-        <div th:if="${param.access}" class="error">Access denied!</div>
+<div class="form_wrapper">
 
+    <div th:if="${param.error}" class="error">Invalid credentials!</div>
+    <div th:if="${param.access}" class="error">Access denied!</div>
+    <h2>Please sign in</h2>
+    <form name="f" th:action="@{/login}" method="post">
 
-        <h2>Please sign in</h2>
         <label>Username
-            <input type="text" placeholder="Enter Username" name="username"
-                   required="required"> </label>
+            <input type="text" placeholder="Enter Username" name="username" id="username"
+                   onkeyup="copyUsername()" required="required"> </label>
         <label>Password
             <input type="password"
                    placeholder="Enter Password" name="password" required="required">
         </label>
         <button type="submit">Login</button>
-        <div style="margin-bottom: 20px"><input type="checkbox" name="remember-me">
-            Remember me
-        </div>
-        <div><a href="/signup">Do you have no account? Sign up</a></div>
+    </form>
+    <form action="/psw_forgot" method="post">
+        <input type="hidden" name="username" id="copy_username">
+        <input type="submit" value="Forgot password">
+    </form>
+    <div><a href="/signup">Do you have no account? Sign up</a></div>
+</div>
+<script>
+    function copyUsername() {
+        let username = document.getElementById('username')
+        let copy_username = document.getElementById('copy_username')
+        copy_username.value = username.value
+    }
 
-    </div>
-</form>
+    function sendPostRequest() {
+        let xhr = new XMLHttpRequest()
+        let url = '/psw_forgot'
+        xhr.open('POST', url, true)
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onload = function () {
+            console.log(this.responseText)
+        }
+        xhr.send(document.getElementById('username').value)
+    }
+</script>
 </body>
 </html>
