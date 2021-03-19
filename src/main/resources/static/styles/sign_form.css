@@ -37,10 +37,6 @@ button:hover {
     background-color: #429144;
 }
 
-.container {
-    padding: 16px;
-}
-
 .line {
     display: flex;
     flex-direction: row;

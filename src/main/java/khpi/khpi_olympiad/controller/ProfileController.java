@@ -3,12 +3,12 @@ package khpi.khpi_olympiad.controller;
 import khpi.khpi_olympiad.model.Profile;
 import khpi.khpi_olympiad.repository.ProfileRepository;
 import khpi.khpi_olympiad.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -19,9 +19,13 @@ public class ProfileController {
 
     private ProfileRepository profileRepository;
 
-    public ProfileController(UserRepository userRepository, ProfileRepository profileRepository) {
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public ProfileController(UserRepository userRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -55,5 +59,36 @@ public class ProfileController {
         profileRepository.save(profile);
         userRepository.save(user);
         return "redirect:/profile";
+    }
+
+    @GetMapping("/psw_change")
+    public String changePassword(Model model, @ModelAttribute("error") String error) {
+        if (!model.containsAttribute("error")) {
+            model.addAttribute("error", error);
+        }
+        return "/profile/change_password";
+    }
+
+    @PostMapping("/psw_change")
+    public String resetPassword(Principal prl,
+                                @RequestParam("oldPassword") String oldPassword,
+                                @RequestParam("newPassword") String newPassword,
+                                RedirectAttributes attr) {
+        var user = userRepository.findByUsername(prl.getName());
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return "redirect:/profile/psw_changed";
+        } else {
+            attr.addFlashAttribute("error", "You should enter your actual password!");
+            return "redirect:/profile/psw_change";
+        }
+    }
+
+    @GetMapping("psw_changed")
+    public String passwordChanged(Model model) {
+        model.addAttribute("message", "Your password has been changed!");
+        model.addAttribute("go_profile", true);
+        return "message";
     }
 }
