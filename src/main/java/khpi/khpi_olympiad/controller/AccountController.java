@@ -8,19 +8,18 @@ import khpi.khpi_olympiad.repository.UserRepository;
 import khpi.khpi_olympiad.service.EmailSenderService;
 import khpi.khpi_olympiad.service.PasswordGenerator;
 import khpi.khpi_olympiad.service.UserService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.print.attribute.standard.PresentationDirection;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 @Controller
 public class AccountController {
@@ -124,7 +123,7 @@ public class AccountController {
     @PostMapping("/psw_forgot")
     public String generatePasswordAndSendEmail(@RequestParam("username") String username, RedirectAttributes attr) {
         var user = userRepository.findByUsername(username);
-        if (user != null) {
+        if (user != null && user.isEnabled()) {
             var password = passwordGenerator.generatePassword(10);
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
@@ -137,8 +136,16 @@ public class AccountController {
             emailSenderService.sendEmail(mailMessage);
             attr.addFlashAttribute("email", user.getEmail());
             return "redirect:/psw_sent";
+        } else {
+            return "redirect:/no_user";
         }
-        return "redirect:/psw_sent";
+    }
+
+    @GetMapping("/no_user")
+    public String noUserFound(Model model) {
+        model.addAttribute("error", "User doesn't exist or is not enabled!");
+        model.addAttribute("go_login", true);
+        return "message";
     }
 
     @GetMapping("/psw_sent")
