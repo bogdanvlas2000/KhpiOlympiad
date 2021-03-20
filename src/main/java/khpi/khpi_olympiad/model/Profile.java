@@ -16,6 +16,9 @@ public class Profile {
     private int age;
     private String gender;
 
+    @Lob
+    private byte[] image;
+
     @OneToOne(mappedBy = "profile")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

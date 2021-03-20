@@ -6,16 +6,13 @@
     <link rel="stylesheet" href="/styles/sign_form.css">
 </head>
 <body>
-<form id="edit_profile" th:object="${profile}" th:action="@{/profile/edit}" method="post"
-      onsubmit="return check()">
-    <div class="form_wrapper">
-        <div id="error" class="error">
-        </div>
-
-
-        <h2>Edit your profile info, <span th:text="${username}"></span></h2>
+<div class="wrapper">
+    <div id="error" class="error">
+    </div>
+    <h2>Edit your profile info, <span th:text="${username}"></span></h2>
+    <form id="profile_form" th:object="${profile}" action="/profile/edit" method="post" enctype="multipart/form-data"
+          onsubmit="return check()" onkeypress="checkPressedButton()">
         <input type="number" th:field="*{id}" hidden>
-
         <div>Name:
             <input type="text" th:field="*{name}"
                    id="name"
@@ -34,25 +31,40 @@
                 Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
             </div>
         </div>
-        <button type="submit">Apply</button>
-    </div>
-    <script>
-        function check() {
-            let password = document.getElementById('password').value
-            let confirm_passsword = document.getElementById('confirm_password').value
-            let msg = document.getElementById('error')
-            msg.innerText = ''
+        <input type="hidden" th:field="*{image}">
+        <input type="file" name="imageFile">
+    </form>
+    <button onclick="submitForms()" type="submit">Apply</button>
+</div>
+<script>
+    function check() {
+        let password = document.getElementById('password').value
+        let confirm_passsword = document.getElementById('confirm_password').value
+        let msg = document.getElementById('error')
+        msg.innerText = ''
 
-            if (password != confirm_passsword) {
-                msg.innerHTML = 'Confirm password does not match!'
-                return false
-            } else {
-                msg.innerText = ''
-                return true
-            }
+        if (password != confirm_passsword) {
+            msg.innerHTML = 'Confirm password does not match!'
+            return false
+        } else {
+            msg.innerText = ''
+            return true
         }
-    </script>
-    <script type="application/javascript" src="js/register.js"></script>
-</form>
+    }
+
+    function submitForms() {
+        if (confirm("Apply changes?")) {
+            document.getElementById('profile_form').submit()
+        }
+    }
+
+    function checkPressedButton(event) {
+        if (event.which == 13 || event.keyCode == 13) {
+            //code to execute here
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

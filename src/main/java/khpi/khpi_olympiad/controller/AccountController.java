@@ -151,7 +151,7 @@ public class AccountController {
     @GetMapping("/psw_sent")
     public String newPasswordSent(Model model, @ModelAttribute("email") String email) {
         model.addAttribute("message", "New password sent to your email " + email);
-        model.addAttribute("go_home", true);
+        model.addAttribute("go_login", true);
         return "message";
     }
 }
