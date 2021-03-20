@@ -1,0 +1,59 @@
+.select-box {
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+}
+
+.select-box .options-container {
+    background: #f1f1f1;
+    max-height: 0;
+    width: 100%;
+    opacity: 0%;
+    transition: all 0.5s;
+    border-radius: 8px;
+    overflow: hidden;
+    order: 1;
+}
+
+.selected {
+    background: #f1f1f1;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    position: relative;
+    order: 0;
+}
+
+
+.select-box .options-container.active {
+    max-height: 240px;
+    opacity: 1;
+    overflow-y: scroll;
+}
+
+.select-box .options-container::-webkit-scrollbar {
+    width: 8px;
+    background: #dddddd;
+
+}
+
+.select-box .options-container::-webkit-scrollbar-thumb {
+    background: #cccccc;
+}
+
+
+.select-box .option, .selected {
+    padding: 12px 24px;
+    cursor: pointer;
+}
+
+.select-box .option:hover {
+    background: #dddddd;
+}
+
+.select-box label {
+    cursor: pointer;
+}
+
+.select-box .option .radio {
+    display: none;
+}
