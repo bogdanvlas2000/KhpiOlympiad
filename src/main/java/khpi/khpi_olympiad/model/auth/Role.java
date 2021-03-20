@@ -1,9 +1,10 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.auth;
 
 import java.util.List;
 
 import javax.persistence.*;
 
+import khpi.khpi_olympiad.model.auth.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

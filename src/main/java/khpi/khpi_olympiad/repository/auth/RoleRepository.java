@@ -1,7 +1,6 @@
-package khpi.khpi_olympiad.repository;
+package khpi.khpi_olympiad.repository.auth;
 
-import khpi.khpi_olympiad.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import khpi.khpi_olympiad.model.auth.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

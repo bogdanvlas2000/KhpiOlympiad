@@ -1,6 +1,6 @@
-package khpi.khpi_olympiad.repository;
+package khpi.khpi_olympiad.repository.profile;
 
-import khpi.khpi_olympiad.model.Profile;
+import khpi.khpi_olympiad.model.profile.Profile;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

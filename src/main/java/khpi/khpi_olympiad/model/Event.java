@@ -1,5 +1,6 @@
 package khpi.khpi_olympiad.model;
 
+import khpi.khpi_olympiad.model.auth.User;
 import lombok.*;
 
 import javax.persistence.*;

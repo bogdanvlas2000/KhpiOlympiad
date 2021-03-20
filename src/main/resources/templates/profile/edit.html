@@ -32,7 +32,10 @@
             </div>
         </div>
         <input type="hidden" th:field="*{image}">
-        <input type="file" name="imageFile">
+        <label>
+            Select image
+            <input type="file" name="imageFile">
+        </label>
     </form>
     <button onclick="submitForms()" type="submit">Apply</button>
 </div>

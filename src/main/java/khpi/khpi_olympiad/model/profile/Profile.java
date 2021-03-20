@@ -1,5 +1,6 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.profile;
 
+import khpi.khpi_olympiad.model.auth.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,9 @@ public class Profile {
     private String name;
     private int age;
     private String gender;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private University university;
 
     @Lob
     private byte[] image;

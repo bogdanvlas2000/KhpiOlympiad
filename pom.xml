@@ -76,6 +76,13 @@
             <artifactId>commons-text</artifactId>
             <version>1.9</version>
         </dependency>
+        <!-- LIBRARY TO READ XLSX-->
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
 
     </dependencies>
 

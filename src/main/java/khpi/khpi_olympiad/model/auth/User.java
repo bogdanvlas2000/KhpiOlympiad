@@ -1,9 +1,11 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.auth;
 
 import java.util.Set;
 
 import javax.persistence.*;
 
+import khpi.khpi_olympiad.model.Event;
+import khpi.khpi_olympiad.model.profile.Profile;
 import lombok.*;
 
 @Data

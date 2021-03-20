@@ -1,10 +1,10 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.exception.UsernameAlreadyExistsException;
-import khpi.khpi_olympiad.model.ConfirmationToken;
-import khpi.khpi_olympiad.model.User;
-import khpi.khpi_olympiad.repository.ConfirmationTokenRepository;
-import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.model.auth.ConfirmationToken;
+import khpi.khpi_olympiad.model.auth.User;
+import khpi.khpi_olympiad.repository.auth.ConfirmationTokenRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.service.EmailSenderService;
 import khpi.khpi_olympiad.service.PasswordGenerator;
 import khpi.khpi_olympiad.service.UserService;

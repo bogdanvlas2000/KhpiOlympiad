@@ -1,9 +1,9 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.Event;
-import khpi.khpi_olympiad.model.User;
+import khpi.khpi_olympiad.model.auth.User;
 import khpi.khpi_olympiad.repository.EventRepository;
-import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

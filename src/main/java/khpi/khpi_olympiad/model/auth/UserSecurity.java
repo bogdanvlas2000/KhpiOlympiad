@@ -1,4 +1,4 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;

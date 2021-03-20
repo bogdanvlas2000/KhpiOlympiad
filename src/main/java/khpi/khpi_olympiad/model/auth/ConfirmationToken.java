@@ -1,5 +1,6 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.auth;
 
+import khpi.khpi_olympiad.model.auth.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

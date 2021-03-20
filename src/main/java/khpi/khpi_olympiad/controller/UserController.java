@@ -1,19 +1,13 @@
 package khpi.khpi_olympiad.controller;
 
-import khpi.khpi_olympiad.model.Profile;
-import khpi.khpi_olympiad.model.User;
-import khpi.khpi_olympiad.repository.ProfileRepository;
-import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.repository.profile.ProfileRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.security.Principal;
 
 
 @Controller

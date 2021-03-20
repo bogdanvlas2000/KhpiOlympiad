@@ -1,8 +1,8 @@
 package khpi.khpi_olympiad.controller;
 
-import khpi.khpi_olympiad.model.Profile;
-import khpi.khpi_olympiad.repository.ProfileRepository;
-import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.model.profile.Profile;
+import khpi.khpi_olympiad.repository.profile.ProfileRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

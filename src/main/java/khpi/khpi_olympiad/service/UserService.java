@@ -2,11 +2,11 @@ package khpi.khpi_olympiad.service;
 
 import khpi.khpi_olympiad.exception.UsernameAlreadyExistsException;
 import khpi.khpi_olympiad.model.Event;
-import khpi.khpi_olympiad.model.Profile;
-import khpi.khpi_olympiad.model.User;
-import khpi.khpi_olympiad.repository.ProfileRepository;
-import khpi.khpi_olympiad.repository.RoleRepository;
-import khpi.khpi_olympiad.repository.UserRepository;
+import khpi.khpi_olympiad.model.profile.Profile;
+import khpi.khpi_olympiad.model.auth.User;
+import khpi.khpi_olympiad.repository.profile.ProfileRepository;
+import khpi.khpi_olympiad.repository.auth.RoleRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
