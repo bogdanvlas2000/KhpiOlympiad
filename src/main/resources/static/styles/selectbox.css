@@ -49,18 +49,12 @@ body::-webkit-scrollbar {
     opacity: 1;
     overflow-y: scroll;
     margin-bottom: 20px;
+    margin-top: 54px;
 }
 
 .select-box .options-container.active + .selected::after {
     transform: rotateX(180deg);
     top: -6px;
-}
-
-.select-box .options-container.active {
-    margin-top: 54px;
-    max-height: 240px;
-    opacity: 1;
-    overflow-y: scroll;
 }
 
 .select-box .options-container::-webkit-scrollbar {
