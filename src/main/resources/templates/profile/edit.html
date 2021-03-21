@@ -13,7 +13,7 @@
     </div>
     <h2>Edit your profile info, <span th:text="${username}"></span></h2>
     <form id="profile_form" th:object="${profile}" action="/profile/edit" method="post" enctype="multipart/form-data"
-          onsubmit="return check()" onkeypress="checkPressedButton()">
+          onsubmit="return check()">
         <input type="number" th:field="*{id}" hidden>
         <div>Name:
             <input type="text" th:field="*{name}"
@@ -24,24 +24,8 @@
         </div>
         <div>
             City
-            <div class="select-box">
-                <div class="options-container">
-                    <div class="option">
-                        <input type="radio" class="radio" id="Kharkiv" name="cityElement">
-                        <label for="Kharkiv">Kharkiv</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="Kiiv" name="cityElement">
-                        <label for="Kiiv">Kiiv</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="Lviv" name="cityElement">
-                        <label for="Lviv">Lviv</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="Dnepr" name="cityElement">
-                        <label for="Dnepr">Dnepr</label>
-                    </div>
+            <div id="citySelectBox" class="select-box">
+                <div id="cityOptionsContainer" class="options-container">
                 </div>
                 <div class="selected">
                     Select city
@@ -54,24 +38,8 @@
         </div>
         <div>
             University
-            <div class="select-box">
-                <div class="options-container">
-                    <div class="option">
-                        <input type="radio" class="radio" id="khpi" name="universityElement">
-                        <label for="khpi">KhPI</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="khnure" name="universityElement">
-                        <label for="khnure">KhNURE</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="Karazin" name="universityElement">
-                        <label for="Karazin">Karazin</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="KhAI" name="universityElement">
-                        <label for="KhAI">KhAI</label>
-                    </div>
+            <div id="universitySelectBox" class="select-box">
+                <div id="universityOptionsContainer" class="options-container">
                 </div>
                 <div class="selected">
                     Select university
@@ -100,6 +68,7 @@
     </form>
     <button onclick="submitForms()" type="submit">Apply</button>
 </div>
+<script type="application/javascript" src="/js/load_cities.js"></script>
 <script type="application/javascript" src="/js/selectbox.js"></script>
 <script>
     function check() {
