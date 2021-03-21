@@ -1,5 +1,7 @@
 package khpi.khpi_olympiad.model.profile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class City {
     @OneToMany(mappedBy = "city")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @JsonIgnoreProperties(value = "universities")
     private List<University> universities;
 
     public City(String ukrName) {

@@ -1,8 +1,11 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.profile.Profile;
-import khpi.khpi_olympiad.repository.profile.ProfileRepository;
+import khpi.khpi_olympiad.model.profile.University;
 import khpi.khpi_olympiad.repository.auth.UserRepository;
+import khpi.khpi_olympiad.repository.profile.CityRepository;
+import khpi.khpi_olympiad.repository.profile.ProfileRepository;
+import khpi.khpi_olympiad.repository.profile.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -24,11 +27,17 @@ public class ProfileController {
 
     private PasswordEncoder passwordEncoder;
 
+    private UniversityRepository universityRepository;
+
+    private CityRepository cityRepository;
+
     @Autowired
-    public ProfileController(UserRepository userRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
+    public ProfileController(UserRepository userRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder, UniversityRepository universityRepository, CityRepository cityRepository) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.passwordEncoder = passwordEncoder;
+        this.universityRepository = universityRepository;
+        this.cityRepository = cityRepository;
     }
 
     @GetMapping
@@ -59,9 +68,13 @@ public class ProfileController {
         return "/profile/edit";
     }
 
+
+
     @PostMapping("/edit")
     public String changeProfile(@ModelAttribute("profile") Profile profile, Principal prl,
-                                @RequestParam("imageFile") MultipartFile image) throws IOException {
+                                @RequestParam("imageFile") MultipartFile image,
+                                @RequestParam("universityName") String universityName
+    ) throws IOException {
         var user = userRepository.findByUsername(prl.getName());
         if (!image.isEmpty()) {
             profile.setImage(image.getBytes());

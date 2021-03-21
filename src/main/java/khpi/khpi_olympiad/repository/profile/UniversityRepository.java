@@ -12,6 +12,8 @@ import java.util.List;
 public interface UniversityRepository extends CrudRepository<University, Integer> {
     public University findByEngName(String engName);
 
+    public Iterable<University> findByCityUkrName(String cityUkrName);
+
     @Query("SELECT u FROM University u WHERE" +
             " u.engName LIKE :word OR u.ukrName LIKE :word OR u.ukrShortName LIKE :word")
     public List<University> search(@Param("word") String word);

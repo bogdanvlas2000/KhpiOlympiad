@@ -24,49 +24,33 @@
         </div>
         <div>
             <div class="select-box">
-                <div class="options-container active">
+                <div class="options-container">
                     <div class="option">
-                        <input type="radio" class="radio" id="khpi" name="university">
+                        <input type="radio" class="radio" id="khpi" name="universityName">
                         <label for="khpi">KhPI</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="khnure" name="university">
+                        <input type="radio" class="radio" id="khnure" name="universityName">
                         <label for="khnure">KhNURE</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="first" name="university">
-                        <label for="first">first</label>
+                        <input type="radio" class="radio" id="Karazin" name="universityName">
+                        <label for="Karazin">Karazin</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="second" name="university">
-                        <label for="second">second</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="third" name="university">
-                        <label for="third">third</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="fourth" name="university">
-                        <label for="fourth">fourth</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="fifth" name="university">
-                        <label for="fifth">fifth</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="seventh" name="university">
-                        <label for="seventh">seventh</label>
-                    </div>
-                    <div class="option">
-                        <input type="radio" class="radio" id="eightn" name="university">
-                        <label for="eightn">eightn</label>
+                        <input type="radio" class="radio" id="KhAI" name="universityName">
+                        <label for="KhAI">KhAI</label>
                     </div>
                 </div>
                 <div class="selected">
                     Select university
                 </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Start typing...">
+                </div>
             </div>
         </div>
+        <input type="hidden" name="universityName" id="universityName">
         <div class="line">
             <div>
                 <label> Age <input type="number" th:field="*{age}" min="1" max="150"
@@ -78,14 +62,15 @@
                 Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
             </div>
         </div>
-        <input type="hidden" th:field="*{image}">
         <label>
             Select image
             <input type="file" name="imageFile">
         </label>
+        <input type="hidden" th:field="*{image}">
     </form>
     <button onclick="submitForms()" type="submit">Apply</button>
 </div>
+<script type="application/javascript" src="/js/selectbox.js"></script>
 <script>
     function check() {
         let password = document.getElementById('password').value
