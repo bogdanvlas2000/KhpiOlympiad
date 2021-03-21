@@ -19,10 +19,10 @@ selectedAll.forEach(selected => {
                 optionsContainer.classList.add("active")
             }
 
-            searchBox.value = ""
             filterList("")
             if (optionsContainer.classList.contains("active")) {
-                searchBox.focus()
+                searchBox.querySelector("input").value = ""
+                searchBox.querySelector("input").focus()
             }
         }
     )
@@ -30,7 +30,7 @@ selectedAll.forEach(selected => {
     optionsList.forEach(o => {
         o.addEventListener("click", () => {
             selected.innerHTML = o.querySelector("label").innerHTML
-            document.getElementById("universityName").value = selected.innerHTML
+            searchBox.nextElementSibling.value = selected.innerHTML
             optionsContainer.classList.remove("active")
         })
     })

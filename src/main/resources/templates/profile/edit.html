@@ -27,19 +27,19 @@
             <div class="select-box">
                 <div class="options-container">
                     <div class="option">
-                        <input type="radio" class="radio" id="Kharkiv" name="cityName">
+                        <input type="radio" class="radio" id="Kharkiv" name="cityElement">
                         <label for="Kharkiv">Kharkiv</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="Kiiv" name="cityName">
+                        <input type="radio" class="radio" id="Kiiv" name="cityElement">
                         <label for="Kiiv">Kiiv</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="Lviv" name="cityName">
+                        <input type="radio" class="radio" id="Lviv" name="cityElement">
                         <label for="Lviv">Lviv</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="Dnepr" name="cityName">
+                        <input type="radio" class="radio" id="Dnepr" name="cityElement">
                         <label for="Dnepr">Dnepr</label>
                     </div>
                 </div>
@@ -49,6 +49,7 @@
                 <div class="search-box">
                     <input type="text" placeholder="Start typing...">
                 </div>
+                <input type="hidden" name="cityName">
             </div>
         </div>
         <div>
@@ -56,19 +57,19 @@
             <div class="select-box">
                 <div class="options-container">
                     <div class="option">
-                        <input type="radio" class="radio" id="khpi" name="universityName">
+                        <input type="radio" class="radio" id="khpi" name="universityElement">
                         <label for="khpi">KhPI</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="khnure" name="universityName">
+                        <input type="radio" class="radio" id="khnure" name="universityElement">
                         <label for="khnure">KhNURE</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="Karazin" name="universityName">
+                        <input type="radio" class="radio" id="Karazin" name="universityElement">
                         <label for="Karazin">Karazin</label>
                     </div>
                     <div class="option">
-                        <input type="radio" class="radio" id="KhAI" name="universityName">
+                        <input type="radio" class="radio" id="KhAI" name="universityElement">
                         <label for="KhAI">KhAI</label>
                     </div>
                 </div>
@@ -78,19 +79,18 @@
                 <div class="search-box">
                     <input type="text" placeholder="Start typing...">
                 </div>
+                <input type="hidden" name="universityName">
             </div>
         </div>
-        <input type="hidden" name="universityName" id="universityName">
-        <div class="line">
-            <div>
-                <label> Age <input type="number" th:field="*{age}" min="1" max="150"
-                                   required="required">
-                </label>
-            </div>
-            <div>
-                Male <input id="m" type="radio" th:field="*{gender}" value="male" required>
-                Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
-            </div>
+        <div>
+            <label> Age <input type="number" th:field="*{age}" min="1" max="150"
+                               required="required">
+            </label>
+        </div>
+        <div>
+            Gender:
+            Male <input id="m" type="radio" th:field="*{gender}" value="male" required>
+            Female <input id="f" type="radio" th:field="*{gender}" value="female" required>
         </div>
         <label>
             Select image

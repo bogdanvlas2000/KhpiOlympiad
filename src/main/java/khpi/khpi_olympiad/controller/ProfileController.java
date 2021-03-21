@@ -69,10 +69,10 @@ public class ProfileController {
     }
 
 
-
     @PostMapping("/edit")
     public String changeProfile(@ModelAttribute("profile") Profile profile, Principal prl,
                                 @RequestParam("imageFile") MultipartFile image,
+                                @RequestParam("cityName") String cityName,
                                 @RequestParam("universityName") String universityName
     ) throws IOException {
         var user = userRepository.findByUsername(prl.getName());
