@@ -1,3 +1,10 @@
+const citySelected = document.getElementById("citySelected")
+
+const universitySelected = document.getElementById("universitySelected")
+
+const cityName = document.getElementById("cityName")
+
+
 async function fillElements(optionsContainer, elements) {
     elements.forEach(element => {
         let elementOption = document.createElement('div')
@@ -37,6 +44,14 @@ async function setEventListeners(selected) {
             selected.innerHTML = o.querySelector("label").innerHTML
             searchBox.nextElementSibling.value = selected.innerHTML
             optionsContainer.classList.remove("active")
+            if (selected.id == "citySelected") {
+                console.log("city selected!")
+                universitySelected.innerText = "Select university"
+                document.getElementById("universityName").value = ""
+                reloadUniversities()
+            } else {
+                console.log("university selected!")
+            }
         })
     })
     searchBox.addEventListener("keyup", function (e) {
@@ -55,6 +70,12 @@ async function setEventListeners(selected) {
     }
 }
 
+async function clearChildren(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.lastChild);
+    }
+}
+
 async function loadCities() {
     let response = await fetch("/api/cities")
     if (response.status == 200) {
@@ -64,13 +85,13 @@ async function loadCities() {
         //заполняет селектбокс городами
         await fillElements(cityOptionsContainer, cities.map(city => city.ukrName))
         //навешивает обработчики клика
-        await setEventListeners(document.getElementById("citySelected"))
+        await setEventListeners(citySelected)
         return cities
     }
     throw new Error(response.status)
 }
 
-async function loadUniversities() {
+async function reloadUniversities() {
     let city = document.getElementById("cityName").value.toString()
     console.log(city)
     let response = await fetch("/api/universities?city=" + city)
@@ -78,8 +99,9 @@ async function loadUniversities() {
         let universities = await response.json()
         console.log(universities)
         const universityOptionsContainer = document.getElementById("universityOptionsContainer")
+        await clearChildren(universityOptionsContainer)
         await fillElements(universityOptionsContainer, universities.map(u => u.ukrShortName))
-        await setEventListeners(document.getElementById("universitySelected"))
+        await setEventListeners(universitySelected)
         return universities
     }
     throw new Error(response.status)
@@ -87,33 +109,19 @@ async function loadUniversities() {
 
 
 async function loadData() {
+    let currentCity = document.getElementById("cityName").value
+    if (currentCity) {
+        citySelected.innerHTML = currentCity
+    }
+    let currentUniversity = document.getElementById("universityName").value
+    if (currentUniversity) {
+        universitySelected.innerHTML = currentUniversity
+    }
+
     await loadCities()
 
-    await loadUniversities()
+    await reloadUniversities()
+
 }
 
 loadData()
-
-// const universityOptionsContainer = document.getElementById("universityOptionsContainer")
-//
-// const universities = ['НТУ "ХПІ"', "ХНУРЕ", "ХАІ"]
-//
-// universities.forEach(university => {
-//     let universityOption = createNode('div')
-//     universityOption.classList.add("option")
-//     let input = document.createElement('input')
-//     input.type = "radio"
-//     input.classList.add("radio")
-//     input.id = university
-//     input.name = "universityElement"
-//
-//     append(universityOption, input)
-//
-//     let label = document.createElement('label')
-//     label.htmlFor = input.id
-//     label.innerHTML = university
-//
-//     append(universityOption, label)
-//
-//     append(universityOptionsContainer, universityOption)
-// })

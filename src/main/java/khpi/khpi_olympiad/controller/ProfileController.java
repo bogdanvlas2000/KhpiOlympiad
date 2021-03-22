@@ -47,10 +47,19 @@ public class ProfileController {
             var image = Base64.getMimeEncoder().encodeToString(user.getProfile().getImage());
             model.addAttribute("image", image);
         }
+
+
         model.addAttribute("user", user);
         model.addAttribute("profile", user.getProfile());
+
+
         boolean isReady = user.checkReady();
         if (isReady) {
+            var university = user.getProfile().getUniversity();
+            var city = university.getCity().getUkrName();
+
+            model.addAttribute("university", university.getUkrName());
+            model.addAttribute("city", city);
             model.addAttribute("ready", true);
         } else {
             model.addAttribute("not_ready", true);
@@ -64,7 +73,11 @@ public class ProfileController {
         Profile profile = user.getProfile() != null ? user.getProfile() : new Profile();
         model.addAttribute("profile", profile);
         model.addAttribute("username", user.getUsername());
-
+        var university = profile.getUniversity();
+        if (university != null) {
+            model.addAttribute("cityName", university.getCity().getUkrName());
+            model.addAttribute("universityName", university.getUkrShortName());
+        }
         return "/profile/edit";
     }
 
@@ -80,7 +93,7 @@ public class ProfileController {
             profile.setImage(image.getBytes());
         }
         var city = cityRepository.findByUkrName(cityName);
-        var university = universityRepository.findByUkrShortName(cityName);
+        var university = universityRepository.findByUkrShortName(universityName);
         if (university != null) {
             profile.setUniversity(university);
             university.addUserProfile(profile);

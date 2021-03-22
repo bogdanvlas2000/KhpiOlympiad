@@ -2,10 +2,7 @@ package khpi.khpi_olympiad.model.profile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,7 +24,11 @@ public class University {
     @JsonIgnoreProperties(value = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university", fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @JsonIgnoreProperties(value = "usersProfiles")
     private List<Profile> usersProfiles;
 
     public University(String engName, String ukrName, String ukrShortName, City city) {

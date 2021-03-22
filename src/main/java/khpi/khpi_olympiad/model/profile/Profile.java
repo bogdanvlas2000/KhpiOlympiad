@@ -31,7 +31,9 @@ public class Profile {
     public boolean isComplete() {
         boolean complete = true;
         if (name == null || name.isEmpty() || age < 1 ||
-                gender == null || (!gender.equals("male") && !gender.equals("female"))) {
+                gender == null || (!gender.equals("male") && !gender.equals("female"))
+                || university == null
+        ) {
             complete = false;
         }
         return complete;

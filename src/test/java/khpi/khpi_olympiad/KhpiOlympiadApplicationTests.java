@@ -58,4 +58,12 @@ class KhpiOlympiadApplicationTests {
         }
     }
 
+    @Test
+    @Disabled
+    void findUniversityTest(){
+        String name="НТУ \"ХПІ\"";
+        var university=universityRepository.findByUkrShortName(name);
+        System.out.println(university);
+    }
+
 }

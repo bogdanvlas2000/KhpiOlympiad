@@ -1,6 +1,7 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.profile.City;
+import khpi.khpi_olympiad.model.profile.Profile;
 import khpi.khpi_olympiad.model.profile.University;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.UniversityRepository;
