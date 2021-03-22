@@ -93,6 +93,7 @@ public class ProfileController {
             profile.setImage(image.getBytes());
         }
         var city = cityRepository.findByUkrName(cityName);
+        universityName = universityName.replaceAll("&nbsp;", " ");
         var university = universityRepository.findByUkrShortName(universityName);
         if (university != null) {
             profile.setUniversity(university);

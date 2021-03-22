@@ -18,6 +18,7 @@ public class Event {
     private String title;
     private String description;
 
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
