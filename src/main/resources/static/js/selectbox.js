@@ -1,6 +1,5 @@
 const selectedAll = document.querySelectorAll(".selected")
 
-
 selectedAll.forEach(selected => {
 
     const optionsContainer = selected.previousElementSibling

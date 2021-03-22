@@ -79,6 +79,12 @@ public class ProfileController {
         if (!image.isEmpty()) {
             profile.setImage(image.getBytes());
         }
+        var city = cityRepository.findByUkrName(cityName);
+        var university = universityRepository.findByUkrShortName(cityName);
+        if (university != null) {
+            profile.setUniversity(university);
+            university.addUserProfile(profile);
+        }
         user.setProfile(profile);
         profileRepository.save(profile);
         userRepository.save(user);
