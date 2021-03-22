@@ -11,8 +11,9 @@
     <div id="error" class="error">
     </div>
     <h2>Edit your profile info, <span th:text="${username}"></span></h2>
-    <form id="profile_form" th:object="${profile}" action="/profile/edit" method="post" enctype="multipart/form-data"
-          onsubmit="return check()">
+    <form id="profile_form" th:object="${profile}" action="/profile/edit" method="post"
+          enctype="multipart/form-data"
+          onsubmit="return check();">
         <input type="number" th:field="*{id}" hidden>
         <input type="hidden" th:field="*{university}">
         <div>Name:
@@ -65,30 +66,24 @@
             <input type="file" name="imageFile">
         </label>
         <input type="hidden" th:field="*{image}">
-        <button onclick="submitForms()" type="submit">Apply</button>
+        <button type="submit">Apply</button>
     </form>
 </div>
 <script type="application/javascript" src="/js/load_cities.js"></script>
 <script type="application/javascript" src="/js/selectbox.js"></script>
 <script>
     function check() {
-        let password = document.getElementById('password').value
-        let confirm_passsword = document.getElementById('confirm_password').value
-        let msg = document.getElementById('error')
-        msg.innerText = ''
+        let city = document.getElementById("cityName").value
+        let university = document.getElementById("universityName").value
 
-        if (password != confirm_passsword) {
-            msg.innerHTML = 'Confirm password does not match!'
+        if (!city) {
+            alert("Enter your city")
+            return false
+        } else if (!university) {
+            alert("Enter your university!")
             return false
         } else {
-            msg.innerText = ''
-            return true
-        }
-    }
-
-    function submitForms() {
-        if (confirm("Apply changes?")) {
-            document.getElementById('profile_form').submit()
+            return confirm('Submit data?')
         }
     }
 
