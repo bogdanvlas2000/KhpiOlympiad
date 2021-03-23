@@ -28,6 +28,7 @@ body::-webkit-scrollbar {
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1;
 }
 
 .topnav a {
@@ -124,6 +125,7 @@ body::-webkit-scrollbar {
     margin-top: 30px;
     padding: 20px;
     padding-top: 30px;
+    padding-left: 40px;
     background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 1000px;

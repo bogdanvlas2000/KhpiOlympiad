@@ -10,11 +10,17 @@
 <body>
 <div th:insert="fragments::topnav">
 </div>
-<div class="header">
-    <div>
-        <h1>Events list</h1>
-    </div>
-    <div>
+<div class="page" style="margin-top: 80px">
+    <div class="header">
+        <div class="row_block">
+            <div>
+                <h1>Events list</h1>
+            </div>
+            <div class="menu">
+                <div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/events/create">Create new event</a></div>
+            </div>
+        </div>
+
         <div class="search-container">
             <form action="/events/search">
                 <input name="word" type="text" placeholder="Search.." autofocus="autofocus">
@@ -23,13 +29,10 @@
                 </button>
             </form>
         </div>
-    </div>
-</div>
-<div class="menu">
-    <div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/events/create">Create new event</a></div>
-</div>
 
-<div class="page">
+
+    </div>
+
     <div class="items">
         <div class="item" th:each="event : ${events}">
             <div class="top">
@@ -49,6 +52,12 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div>
+                Created at: <span th:text="${event.createdDate}"></span>
+            </div>
+            <div>
+                Last modified at: <span th:text="${event.lastModifiedDate}"></span>
             </div>
             <div style="">
                 <textarea th:text="${event.description}" readonly="readonly" rows="6"></textarea>

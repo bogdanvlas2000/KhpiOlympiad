@@ -10,47 +10,43 @@
 <body>
 <div id="main" class="main">
     <div th:insert="fragments::topnav"></div>
-    <div class="header">
+    <div class="page">
         <h1>Profile page</h1>
-    </div>
-    <div class="content">
-        <div class="row_block">
-            <div class="card" style="flex-grow: 1;">
-                <div class="column_block">
-                    <div class="img_wrap">
-                        <img th:if="${image}" th:src="'data:image/jpeg;base64,'+${image}">
-                        <img th:unless="${image}" src="/img/profile.png">
-                    </div>
-                    <div th:text="${user.username}"></div>
-                    <div th:text="${user.email}"></div>
-                    <div><a href="/profile/psw_change">Change password</a></div>
+        <div class="row_block" style="width: 100%">
+            <div class="column_block">
+                <div class="img_wrap">
+                    <img th:if="${image}" th:src="'data:image/jpeg;base64,'+${image}">
+                    <img th:unless="${image}" src="/img/profile.png">
                 </div>
-                <div class="column_block card_block" style="justify-content: space-between">
-                    <div>
-                        <div th:if="${ready}">
-                            <div class="t1" style="align-self: center">My info</div>
-                            <div th:text="${profile.name}"></div>
-                            <div th:text="${university}"></div>
-                            <div th:text="${city}"></div>
-                            <div th:text="${profile.age}"></div>
-                            <div th:text="${profile.gender}"></div>
-                        </div>
-                        <div th:if="${not_ready}">
-                            You should complete profile info
-                        </div>
-                    </div>
-                    <div>
-                        <form action="/profile/edit">
-                            <button class="b1">Edit profile info <i class="fa fa-user"></i></button>
-                        </form>
-                    </div>
-                </div>
+                <div th:text="${user.username}"></div>
+                <div th:text="${user.email}"></div>
+                <div><a href="/profile/psw_change">Change password</a></div>
             </div>
-            <div class="card" style="flex-grow: 3;">
-                <h1>My events</h1>
+            <div class="column_block card_block" style="justify-content: space-between">
+                <div>
+                    <div th:if="${ready}">
+                        <div th:text="${profile.name}"></div>
+                        <div th:text="${university}"></div>
+                        <div th:text="${city}"></div>
+                        <div th:text="${profile.age}"></div>
+                        <div th:text="${profile.gender}"></div>
+                    </div>
+                    <div th:if="${not_ready}">
+                        You should complete profile info
+                    </div>
+                </div>
+                <div style="align-self: center">
+                    <form action="/profile/edit">
+                        <button class="b1">Edit profile info <i class="fa fa-user"></i></button>
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="column_block">
+            <h1>My events</h1>
+        </div>
     </div>
+</div>
 </div>
 </body>
 </html>

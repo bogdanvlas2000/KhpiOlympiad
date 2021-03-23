@@ -50,10 +50,10 @@
     justify-content: space-between;
     padding-left: 10px;
     align-items: center;
-    background: #f1f1f1;
-    margin: auto;
-    margin-top: 50px;
-    width: 1000px;
+    position: sticky;
+    top: 50px;
+    width: 100%;
+    background: white;
 }
 
 .menu {
@@ -82,15 +82,15 @@
 }
 
 .search-container {
-    float: right;
 }
 
 .search-container input[type=text] {
     padding: 6px;
     margin-top: 8px;
-    font-size: 17px;
-    border: none;
+    font-size: 16px;
+    border: 1px solid #dddddd;
     outline: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .search-container button {
@@ -102,6 +102,7 @@
     font-size: 17px;
     border: none;
     cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .search-container button:hover {

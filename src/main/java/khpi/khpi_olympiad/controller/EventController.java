@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/events")
@@ -62,6 +67,8 @@ public class EventController {
     @PostMapping("/add")
     public String add(@ModelAttribute("event") Event event) {
 
+        event.setCreatedDate(LocalDateTime.now());
+        event.setLastModifiedDate(LocalDateTime.now());
         eventRepository.save(event);
 
         return "redirect:/events/all";
@@ -77,11 +84,21 @@ public class EventController {
     public String edit(@PathVariable("id") int id, Model model) {
         Event event = eventRepository.findById(id).get();
         model.addAttribute("event", event);
+        model.addAttribute("createdDate", event.getCreatedDate());
+        model.addAttribute("lastModifiedDate", event.getLastModifiedDate());
+
         return "/events/edit";
     }
 
     @PostMapping("/change")
-    public String change(@ModelAttribute(name = "event") Event event) {
+    public String change(@ModelAttribute(name = "event") Event event,
+                         @RequestParam("cr_date") String createdDate,
+                         @RequestParam("l_mod_date") String lastModifiedDate) {
+        event.setCreatedDate(LocalDateTime.parse(createdDate));
+        event.setLastModifiedDate(LocalDateTime.parse(lastModifiedDate));
+        if (!event.equals(eventRepository.findById(event.getId()).get())) {
+            event.setLastModifiedDate(LocalDateTime.now());
+        }
         eventRepository.save(event);
         return "redirect:/events/all";
     }
