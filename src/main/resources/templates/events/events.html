@@ -68,7 +68,8 @@
             </div>
             <div sec:authorize="hasRole('ROLE_USER')">
                 <div sec:authentication=""></div>
-                <form th:action="@{/events/subscribe/{id}(id=${event.id})}" method="post">
+                <form th:action="@{/events/subscribe/{id}(id=${event.id})}" onsubmit="return confirm('subscribe?')"
+                      method="post">
                     <button type="submit">Subscribe <i class="fa fa-check"></i></button>
                 </form>
                 <div></div>
