@@ -58,6 +58,7 @@ public class ProfileController {
             var university = user.getProfile().getUniversity();
             var city = university.getCity().getUkrName();
 
+
             model.addAttribute("university", university.getUkrName());
             model.addAttribute("city", city);
             model.addAttribute("ready", true);

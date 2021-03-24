@@ -40,6 +40,21 @@ public class EventController {
         return "events/events";
     }
 
+    @GetMapping("/{id}")
+    public String eventPage(@PathVariable("id") int id, Model model, Principal prl) {
+
+        var event = eventRepository.findById(id).get();
+        var subscribers = event.getSubscribedUsers();
+        var user = userRepository.findByUsername(prl.getName());
+
+        if (subscribers.contains(user)) {
+            model.addAttribute("subscribed", true);
+        }
+        model.addAttribute("event", event);
+        model.addAttribute("subscribers", subscribers);
+        return "/events/event";
+    }
+
     @GetMapping("/search")
     public String searchAll(@RequestParam("word") String word, RedirectAttributes attr) {
         word = "%" + word + "%";
@@ -48,13 +63,26 @@ public class EventController {
         return "redirect:/events/all";
     }
 
-    @PostMapping("/subscribe/{event_id}")
+    @PostMapping("/{event_id}/subscribe")
     public String subscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
-        user.subscribe(event);
+        if (!event.getSubscribedUsers().contains(user)) {
+            user.subscribe(event);
+        }
         userRepository.save(user);
-        return "redirect:/events/all";
+        return "redirect:/events/" + event.getId();
+    }
+
+    @PostMapping("/{event_id}/unsubscribe")
+    public String unsubscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        var event = eventRepository.findById(eventId).get();
+        if (event.getSubscribedUsers().contains(user)) {
+            user.unsubscribe(event);
+        }
+        userRepository.save(user);
+        return "redirect:/events/" + event.getId();
     }
 
     //admin methods
@@ -74,7 +102,7 @@ public class EventController {
         return "redirect:/events/all";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         eventRepository.deleteById(id);
         return "redirect:/events/all";
@@ -100,6 +128,6 @@ public class EventController {
             event.setLastModifiedDate(LocalDateTime.now());
         }
         eventRepository.save(event);
-        return "redirect:/events/all";
+        return "redirect:/events/" + event.getId();
     }
 }

@@ -6,22 +6,26 @@
     <link rel="stylesheet" href="/styles/content_form.css">
 </head>
 <body>
-<form th:action="@{/events/change}" th:object="${event}" method="post">
-    <h1>Edit event</h1>
-    <input type="hidden" th:field="*{id}">
-    <input type="hidden" name="cr_date" th:value="${createdDate}">
-    <input type="hidden" name="l_mod_date" th:value="${lastModifiedDate}">
-
-
-    <p>
-        <input type="text" th:field="*{title}"
-               autofocus="autofocus">
-    <p>
-        <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
-    <p>
-        <input type="submit" value="Apply" class="button"
-               onclick="return checkForm()">
-</form>
+<div class="page">
+    <div style="align-self: flex-start">
+        <a th:href="@{/events/{id}(id=${event.id})}" onclick="return confirm('Return to event?')">Back</a>
+    </div>
+    <form th:action="@{/events/change}" th:object="${event}" method="post"
+          style="width:100%" onsubmit="return confirm('Apply changes?')">
+        <h1>Edit event</h1>
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" name="cr_date" th:value="${createdDate}">
+        <input type="hidden" name="l_mod_date" th:value="${lastModifiedDate}">
+        <p>
+            <input type="text" th:field="*{title}"
+                   autofocus="autofocus">
+        <p>
+            <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
+        <p>
+            <input type="submit" value="Apply" class="button"
+                   onclick="return checkForm()">
+    </form>
+</div>
 <script type="text/javascript" src="js/check_form.js"></script>
 </body>
 </html>

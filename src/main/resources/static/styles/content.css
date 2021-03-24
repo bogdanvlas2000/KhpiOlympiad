@@ -11,18 +11,19 @@
     flex-direction: column;
     justify-content: flex-start;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
 }
 
 
 .item {
     display: flex;
     flex-direction: column;
-    background: #ffffff;
-    padding: 10px;
+    background: white;
+    padding: 20px;
     margin: 10px;
     min-width: 43%;
     border: 1px black solid;
+    width: 80%;
 }
 
 .top {
@@ -36,27 +37,6 @@
     font-size: 20px;
 }
 
-.item textarea {
-    font-size: 15px;
-    width: 90%;
-    resize: none;
-    border: none;
-    outline: none;
-}
-
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-left: 10px;
-    align-items: center;
-    position: sticky;
-    top: 50px;
-    width: 100%;
-    background: white;
-    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.2);
-
-}
 
 .menu {
     display: flex;

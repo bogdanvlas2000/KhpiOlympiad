@@ -42,6 +42,11 @@ public class User {
         this.events.add(event);
     }
 
+    public void unsubscribe(Event event) {
+        event.removeUser(this);
+        this.events.remove(event);
+    }
+
     public void setProfile(Profile profile) {
         profile.setUser(this);
         this.profile = profile;

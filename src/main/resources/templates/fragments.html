@@ -23,7 +23,7 @@
     <div class="row_block">
         <a sec:authorize="isAnonymous()" href="/login">Login</a>
         <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
-        <a sec:authorize="isAuthenticated()" href="/profile">
+        <a sec:authorize="hasRole('ROLE_USER')" href="/profile">
             <i class="fa fa-user"></i> Profile
         </a>
         <a onclick="return confirm('Logout?')"

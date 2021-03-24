@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/content.css">
+</head>
+<body>
+<div th:insert="fragments::topnav">
+</div>
+<div class="page" style="margin-top: 80px">
+    <div class="header">
+        <div>
+            <div>
+                <a href="/events/all">Back</a>
+            </div>
+            <h1 th:text="${event.title}"></h1>
+            <div th:if="${subscribed}">You are subscribed on this event</div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
+            <button class="dropbtn">Actions <i class="fa fa-bars"> </i></button>
+            <div class="dropdown-content" style="width: 100%">
+                <a th:href="@{/events/edit/{id}(id=${event.id})}">
+                    Edit
+                </a>
+                <form id="do_edit" th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
+                    <a onclick="if(confirm('Delete this event?'))document.getElementById('do_edit').submit();">
+                        Delete
+                    </a>
+                </form>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_USER')" th:unless="${subscribed}">
+            <form th:action="@{/events/{id}/subscribe(id=${event.id})}" onsubmit="return confirm('subscribe?')"
+                  method="post">
+                <button class="btn1" type="submit">Subscribe <i class="fa fa-check"></i></button>
+            </form>
+        </div>
+        <div sec:authorize="hasRole('ROLE_USER')" th:if="${subscribed}">
+            <form th:action="@{/events/{id}/unsubscribe(id=${event.id})}" onsubmit="return confirm('unsubscribe?')"
+                  method="post">
+                <button class="btn1" type="submit">Unsubscribe</button>
+            </form>
+        </div>
+    </div>
+    <div class="column_block" style="width: 100%">
+        <textarea class="text" th:text="${event.description}" readonly="readonly"></textarea>
+        <div>
+            Created at:
+            <span th:text="${event.createdDate.toLocalDate()}"></span>,
+            <span th:text="${event.createdDate.toLocalTime()}"></span>
+        </div>
+        <div>
+            Last modified at:
+            <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
+            <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
+        </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <h2>Subscribers</h2>
+            <div th:each="user:${subscribers}">
+                <div th:text="${user.username}"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    function search() {
+        document.getElementById("search-note").submit()
+    }
+</script>
+</body>
+
+</html>

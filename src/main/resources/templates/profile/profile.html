@@ -35,7 +35,7 @@
                         You should complete profile info
                     </div>
                 </div>
-                <div style="align-self: center">
+                <div>
                     <form action="/profile/edit">
                         <button class="b1">Edit profile info <i class="fa fa-user"></i></button>
                     </form>
@@ -44,9 +44,11 @@
         </div>
         <div class="column_block">
             <h1>My events</h1>
+            <div th:each="event:${user.events}">
+                <div th:text="${event.title}"></div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

@@ -32,4 +32,8 @@ public class Event {
     public void addUser(User user) {
         subscribedUsers.add(user);
     }
+
+    public void removeUser(User user) {
+        subscribedUsers.remove(user);
+    }
 }
