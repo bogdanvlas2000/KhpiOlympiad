@@ -1,10 +1,13 @@
 package khpi.khpi_olympiad.model.auth;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.*;
 
-import khpi.khpi_olympiad.model.Event;
+import khpi.khpi_olympiad.model.event.Event;
+import khpi.khpi_olympiad.model.event.Subscription;
 import khpi.khpi_olympiad.model.profile.Profile;
 import lombok.*;
 
@@ -34,17 +37,17 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    @ManyToMany(mappedBy = "subscribedUsers", fetch = FetchType.EAGER)
-    private Set<Event> events;
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Subscription> subscriptions = new LinkedHashSet<>();
 
-    public void subscribe(Event event) {
-        event.addUser(this);
-        this.events.add(event);
+    public boolean addSubscription(Subscription subscription) {
+        return subscriptions.add(subscription);
     }
 
-    public void unsubscribe(Event event) {
-        event.removeUser(this);
-        this.events.remove(event);
+    public boolean removeSubscription(Subscription subscription) {
+        return subscriptions.remove(subscription);
     }
 
     public void setProfile(Profile profile) {

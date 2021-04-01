@@ -1,9 +1,11 @@
 package khpi.khpi_olympiad.controller;
 
-import khpi.khpi_olympiad.model.Event;
 import khpi.khpi_olympiad.model.auth.User;
-import khpi.khpi_olympiad.repository.EventRepository;
+import khpi.khpi_olympiad.model.event.Event;
+import khpi.khpi_olympiad.model.event.Subscription;
 import khpi.khpi_olympiad.repository.auth.UserRepository;
+import khpi.khpi_olympiad.repository.event.EventRepository;
+import khpi.khpi_olympiad.repository.event.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/events")
@@ -24,10 +23,16 @@ public class EventController {
 
     private UserRepository userRepository;
 
+    private SubscriptionRepository subscriptionRepository;
+
     @Autowired
-    public EventController(EventRepository eventRepository, UserRepository userRepository) {
+    public EventController(
+            EventRepository eventRepository,
+            UserRepository userRepository,
+            SubscriptionRepository subscriptionRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     @GetMapping("/all")
@@ -44,7 +49,7 @@ public class EventController {
     public String eventPage(@PathVariable("id") int id, Model model, Principal prl) {
 
         var event = eventRepository.findById(id).get();
-        var subscribers = event.getSubscribedUsers();
+        var subscribers = event.getSubscriptions().stream().map(s -> s.getUser()).collect(Collectors.toList());
         var user = userRepository.findByUsername(prl.getName());
 
         if (subscribers.contains(user)) {
@@ -67,10 +72,14 @@ public class EventController {
     public String subscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
-        if (!event.getSubscribedUsers().contains(user)) {
-            user.subscribe(event);
+        if (subscriptionRepository.findByUserAndEvent(user, event) == null) {
+            var subscription = new Subscription(user, event, LocalDateTime.now());
+            user.addSubscription(subscription);
+            event.addSubscription(subscription);
+            subscriptionRepository.save(subscription);
+            eventRepository.save(event);
+            userRepository.save(user);
         }
-        userRepository.save(user);
         return "redirect:/events/" + event.getId();
     }
 
@@ -78,10 +87,14 @@ public class EventController {
     public String unsubscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
-        if (event.getSubscribedUsers().contains(user)) {
-            user.unsubscribe(event);
+        var subscription = subscriptionRepository.findByUserAndEvent(user, event);
+        if (subscription != null) {
+            user.removeSubscription(subscription);
+            event.removeSubscription(subscription);
+            subscriptionRepository.delete(subscription);
+            eventRepository.save(event);
+            userRepository.save(user);
         }
-        userRepository.save(user);
         return "redirect:/events/" + event.getId();
     }
 
@@ -93,10 +106,11 @@ public class EventController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("event") Event event) {
+    public String add(@ModelAttribute("event") Event event, @RequestParam("date") String date) {
 
         event.setCreatedDate(LocalDateTime.now());
         event.setLastModifiedDate(LocalDateTime.now());
+        event.setEventDate(LocalDateTime.parse(date));
         eventRepository.save(event);
 
         return "redirect:/events/all";
@@ -121,9 +135,11 @@ public class EventController {
     @PostMapping("/change")
     public String change(@ModelAttribute(name = "event") Event event,
                          @RequestParam("cr_date") String createdDate,
-                         @RequestParam("l_mod_date") String lastModifiedDate) {
+                         @RequestParam("l_mod_date") String lastModifiedDate,
+                         @RequestParam("date") String eventDate) {
         event.setCreatedDate(LocalDateTime.parse(createdDate));
         event.setLastModifiedDate(LocalDateTime.parse(lastModifiedDate));
+        event.setEventDate(LocalDateTime.parse(eventDate));
         if (!event.equals(eventRepository.findById(event.getId()).get())) {
             event.setLastModifiedDate(LocalDateTime.now());
         }

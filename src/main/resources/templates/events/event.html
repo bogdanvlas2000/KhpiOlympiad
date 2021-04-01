@@ -57,11 +57,30 @@
             <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
             <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
         </div>
+        <div>
+            Event date:
+            <span th:text="${event.eventDate.toLocalDate()}"></span>,
+            <span th:text="${event.eventDate.toLocalTime()}"></span>
+        </div>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <h2>Subscribers</h2>
-            <div th:each="user:${subscribers}">
-                <div th:text="${user.username}"></div>
-            </div>
+            <table cellpadding="0">
+                <thead>
+                <th>Username</th>
+                <th>Name</th>
+                <th>University</th>
+                <th>Subscribed at</th>
+                </thead>
+                <tbody>
+                <tr th:each="user:${subscribers}">
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.profile.name}"></td>
+                    <td th:if="${user.profile.university}"
+                        th:text="${user.profile.university.ukrShortName}"></td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
 
     </div>

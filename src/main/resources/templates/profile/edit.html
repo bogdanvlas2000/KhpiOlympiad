@@ -10,6 +10,7 @@
 <div class="wrapper">
     <div id="error" class="error">
     </div>
+    <a href="/profile" onclick="return confirm('Return to profile?')" style="align-self: flex-start">Back</a>
     <h2>Edit your profile info, <span th:text="${username}"></span></h2>
     <form id="profile_form" th:object="${profile}" action="/profile/edit" method="post"
           enctype="multipart/form-data"

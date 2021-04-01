@@ -1,6 +1,6 @@
-package khpi.khpi_olympiad.repository;
+package khpi.khpi_olympiad.repository.event;
 
-import khpi.khpi_olympiad.model.Event;
+import khpi.khpi_olympiad.model.event.Event;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

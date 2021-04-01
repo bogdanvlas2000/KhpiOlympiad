@@ -2,6 +2,8 @@ package khpi.khpi_olympiad;
 
 import khpi.khpi_olympiad.model.profile.City;
 import khpi.khpi_olympiad.model.profile.University;
+import khpi.khpi_olympiad.repository.event.EventRepository;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.UniversityRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,10 +23,16 @@ class KhpiOlympiadApplicationTests {
 
     private CityRepository cityRepository;
 
+    private EventRepository eventRepository;
+
+    private UserRepository userRepository;
+
     @Autowired
-    public KhpiOlympiadApplicationTests(UniversityRepository universityRepository, CityRepository cityRepository) {
+    public KhpiOlympiadApplicationTests(UniversityRepository universityRepository, CityRepository cityRepository, EventRepository eventRepository, UserRepository userRepository) {
         this.universityRepository = universityRepository;
         this.cityRepository = cityRepository;
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     @Test
@@ -60,9 +68,9 @@ class KhpiOlympiadApplicationTests {
 
     @Test
     @Disabled
-    void findUniversityTest(){
-        String name="НТУ \"ХПІ\"";
-        var university=universityRepository.findByUkrShortName(name);
+    void findUniversityTest() {
+        String name = "НТУ \"ХПІ\"";
+        var university = universityRepository.findByUkrShortName(name);
         System.out.println(university);
     }
 

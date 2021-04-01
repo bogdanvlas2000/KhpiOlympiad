@@ -20,6 +20,10 @@
             <input type="text" th:field="*{title}"
                    autofocus="autofocus">
         <p>
+        <p>
+            <input type="datetime-local" name="date" th:value="*{eventDate}">
+        </p>
+        <p>
             <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
         <p>
             <input type="submit" value="Apply" class="button"

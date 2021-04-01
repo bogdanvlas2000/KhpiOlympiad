@@ -1,7 +1,7 @@
 package khpi.khpi_olympiad.service;
 
 import khpi.khpi_olympiad.exception.UsernameAlreadyExistsException;
-import khpi.khpi_olympiad.model.Event;
+import khpi.khpi_olympiad.model.event.Event;
 import khpi.khpi_olympiad.model.profile.Profile;
 import khpi.khpi_olympiad.model.auth.User;
 import khpi.khpi_olympiad.repository.profile.ProfileRepository;
@@ -43,7 +43,6 @@ public class UserService {
         user.setEnabled(false);
         user.setRole(role.get());
         user.setProfile(profile);
-        user.setEvents(events);
 
         return userRepository.save(user);
     }

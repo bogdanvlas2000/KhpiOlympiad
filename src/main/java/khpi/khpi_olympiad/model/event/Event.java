@@ -1,4 +1,4 @@
-package khpi.khpi_olympiad.model;
+package khpi.khpi_olympiad.model.event;
 
 import khpi.khpi_olympiad.model.auth.User;
 import lombok.*;
@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
@@ -22,18 +23,19 @@ public class Event {
     private String description;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+    private LocalDateTime eventDate;
 
+
+    @OneToMany(mappedBy = "event")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
-    private Set<User> subscribedUsers;
+    private Set<Subscription> subscriptions = new LinkedHashSet<>();
 
-    public void addUser(User user) {
-        subscribedUsers.add(user);
+    public boolean addSubscription(Subscription subscription) {
+        return subscriptions.add(subscription);
     }
 
-    public void removeUser(User user) {
-        subscribedUsers.remove(user);
+    public boolean removeSubscription(Subscription subscription) {
+        return subscriptions.remove(subscription);
     }
 }
