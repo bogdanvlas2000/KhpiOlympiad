@@ -1,5 +1,8 @@
 package khpi.khpi_olympiad.model.event;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import khpi.khpi_olympiad.model.auth.User;
 import lombok.*;
 
@@ -7,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -25,17 +29,8 @@ public class Event {
     private LocalDateTime lastModifiedDate;
     private LocalDateTime eventDate;
 
-
-    @OneToMany(mappedBy = "event")
+    @ManyToMany(mappedBy = "events")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Subscription> subscriptions = new LinkedHashSet<>();
-
-    public boolean addSubscription(Subscription subscription) {
-        return subscriptions.add(subscription);
-    }
-
-    public boolean removeSubscription(Subscription subscription) {
-        return subscriptions.remove(subscription);
-    }
+    private Set<User> subscribers = new HashSet<>();
 }

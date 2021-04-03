@@ -1,5 +1,8 @@
 package khpi.khpi_olympiad.model.event;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import khpi.khpi_olympiad.model.auth.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,29 +13,23 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "subscriptions")
+@IdClass(UserEventKey.class)
 @Data
 @NoArgsConstructor
 public class Subscription {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
-    private int id;
+    @Column(name = "user_id")
+    private int userId;
+    @Id
+    @Column(name = "event_id")
+    private int eventId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
-
-    @EqualsAndHashCode.Exclude
     private LocalDateTime subscriptionDate;
 
-
-    public Subscription(User user, Event event, LocalDateTime subscriptionDate) {
-        this.user = user;
-        this.event = event;
+    public Subscription(int userId, int eventId, LocalDateTime subscriptionDate) {
+        this.userId = userId;
+        this.eventId = eventId;
         this.subscriptionDate = subscriptionDate;
     }
 }

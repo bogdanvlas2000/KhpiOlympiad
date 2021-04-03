@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/events")
@@ -42,19 +44,30 @@ public class EventController {
             var events = eventRepository.findAll();
             model.addAttribute("events", events);
         }
+        if (user.getRole().getName().equals("ROLE_ADMIN")) {
+            model.addAttribute("subscriptionRepo", subscriptionRepository);
+        }
         return "events/events";
     }
 
     @GetMapping("/{id}")
-    public String eventPage(@PathVariable("id") int id, Model model, Principal prl) {
+    public String eventPage(@PathVariable("id") int eventId, Model model, Principal prl) {
 
-        var event = eventRepository.findById(id).get();
-        var subscribers = event.getSubscriptions().stream().map(s -> s.getUser()).collect(Collectors.toList());
+        var event = eventRepository.findById(eventId).get();
+        var subscriptions = subscriptionRepository.findByEventId(event.getId());
+
+        var subscribersIds = subscriptions.stream().map(s -> s.getUserId()).collect(Collectors.toList());
+
+        var subscribers = userRepository.findAllById(subscribersIds);
+
         var user = userRepository.findByUsername(prl.getName());
 
-        if (subscribers.contains(user)) {
-            model.addAttribute("subscribed", true);
-        }
+        subscribers.forEach(subscriber -> {
+            if (subscriber.equals(user)) {
+                model.addAttribute("subscribed", true);
+            }
+        });
+
         model.addAttribute("event", event);
         model.addAttribute("subscribers", subscribers);
         return "/events/event";
@@ -72,13 +85,13 @@ public class EventController {
     public String subscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
-        if (subscriptionRepository.findByUserAndEvent(user, event) == null) {
-            var subscription = new Subscription(user, event, LocalDateTime.now());
-            user.addSubscription(subscription);
-            event.addSubscription(subscription);
-            subscriptionRepository.save(subscription);
-            eventRepository.save(event);
+        if (subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId) == null) {
+            user.subscribe(event);
             userRepository.save(user);
+
+            var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
+            subscription.setSubscriptionDate(LocalDateTime.now());
+            subscriptionRepository.save(subscription);
         }
         return "redirect:/events/" + event.getId();
     }
@@ -87,12 +100,9 @@ public class EventController {
     public String unsubscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
-        var subscription = subscriptionRepository.findByUserAndEvent(user, event);
+        var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
         if (subscription != null) {
-            user.removeSubscription(subscription);
-            event.removeSubscription(subscription);
-            subscriptionRepository.delete(subscription);
-            eventRepository.save(event);
+            user.unsubscribe(event);
             userRepository.save(user);
         }
         return "redirect:/events/" + event.getId();
@@ -146,4 +156,6 @@ public class EventController {
         eventRepository.save(event);
         return "redirect:/events/" + event.getId();
     }
+
+
 }

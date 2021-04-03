@@ -58,7 +58,7 @@
                 <a th:href="@{/events/{id}(id=${event.id})}">Go to event</a>
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <span th:text="${event.subscriptions.size()}"></span>
+                <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>
                 <span> subscribed users</span>
             </div>
         </div>

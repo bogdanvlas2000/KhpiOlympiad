@@ -6,6 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import khpi.khpi_olympiad.model.event.Event;
 import khpi.khpi_olympiad.model.event.Subscription;
 import khpi.khpi_olympiad.model.profile.Profile;
@@ -37,17 +40,23 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany
+    @JoinTable(name = "subscriptions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Subscription> subscriptions = new LinkedHashSet<>();
+    private Set<Event> events = new HashSet<>();
 
-    public boolean addSubscription(Subscription subscription) {
-        return subscriptions.add(subscription);
+    public void subscribe(Event event) {
+        events.add(event);
+        event.getSubscribers().add(this);
     }
 
-    public boolean removeSubscription(Subscription subscription) {
-        return subscriptions.remove(subscription);
+    public void unsubscribe(Event event) {
+        events.remove(event);
+        event.getSubscribers().remove(this);
     }
 
     public void setProfile(Profile profile) {
