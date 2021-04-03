@@ -6,11 +6,14 @@ import khpi.khpi_olympiad.model.event.Subscription;
 import khpi.khpi_olympiad.model.profile.City;
 import khpi.khpi_olympiad.model.profile.Profile;
 import khpi.khpi_olympiad.model.profile.University;
+import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.repository.event.EventRepository;
 import khpi.khpi_olympiad.repository.event.SubscriptionRepository;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.UniversityRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class DataApiController {
     private UniversityRepository universityRepository;
     private EventRepository eventRepository;
     private SubscriptionRepository subscriptionRepository;
-
+    private UserRepository userRepository;
 
     @GetMapping("/cities")
     public Iterable<City> getCities() {
@@ -52,5 +55,15 @@ public class DataApiController {
     @GetMapping("/events")
     public Iterable<Event> getEvents() {
         return eventRepository.findAll();
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(@RequestParam("user_id") Integer userId) {
+        var user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

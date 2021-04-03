@@ -63,7 +63,7 @@
             <span th:text="${event.eventDate.toLocalDate()}"></span>,
             <span th:text="${event.eventDate.toLocalTime()}"></span>
         </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div sec:authorize="hasRole('ROLE_ADMIN')" id="admin_div">
             <h2>Subscribers</h2>
             <table cellpadding="0">
                 <thead>

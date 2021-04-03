@@ -27,10 +27,11 @@ public class User {
 
     private String username;
     private String email;
-
+    @JsonIgnore
     private String password;
-
+    @JsonIgnore
     private boolean ready;
+    @JsonIgnore
     private boolean enabled;
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -38,6 +39,7 @@ public class User {
     private Profile profile;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Role role;
 
     @ManyToMany
@@ -47,6 +49,7 @@ public class User {
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private Set<Event> events = new HashSet<>();
 
     public void subscribe(Event event) {

@@ -1,5 +1,6 @@
 package khpi.khpi_olympiad.model.profile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import khpi.khpi_olympiad.model.auth.User;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Profile {
     @OneToOne(mappedBy = "profile")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonIgnore
     private User user;
 
     public boolean isComplete() {
