@@ -17,6 +17,7 @@ public class EmailSenderService {
 
     @Async
     public void sendEmail(SimpleMailMessage email) {
+        System.out.println(Thread.currentThread().getName());
         javaMailSender.send(email);
     }
 }

@@ -101,6 +101,9 @@ public class ProfileController {
             university.addUserProfile(profile);
         }
         user.setProfile(profile);
+        if (profile.isComplete()) {
+            user.setReady(true);
+        }
         profileRepository.save(profile);
         userRepository.save(user);
         return "redirect:/profile";

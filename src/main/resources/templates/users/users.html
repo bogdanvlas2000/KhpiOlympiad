@@ -10,42 +10,39 @@
 <body>
 <div th:insert="fragments::topnav">
 </div>
-<div id="main" class="main">
-
+<div class="page">
     <div class="header">
         <div>
             <h1>Users list</h1>
         </div>
         <div>
             <div class="search-container">
-                <form action="/events/search">
-                    <input name="word" type="text" placeholder="Search.." autofocus="autofocus">
-                    <button type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
+                <input id="search" type="text" placeholder="Search.." autofocus="autofocus"
+                       onchange="search()">
+                <button type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </div>
     </div>
-    <div class="menu">
-    </div>
-    <div class="content">
-        <div class="items">
-            <div class="item" th:each="user : ${users}">
-                <div th:text="${user.username}"></div>
-                <div th:text="${user.email}"></div>
-                <div th:if="${user.profile}">
-                    <div th:text="${user.profile.name}"></div>
-                    <div th:text="${user.profile.age}"></div>
-                </div>
+    <table>
+        <thead>
+        <td>Username</td>
+        <td>Email</td>
+        <td>name</td>
+        <td>University</td>
+        <td>City</td>
+        </thead>
+        <tbody id="users">
 
-            </div>
-        </div>
-    </div>
+        </tbody>
+    </table>
 </div>
+<script type="text/javascript" src="/js/users.js"></script>
 <script type="text/javascript">
-    function search() {
-        document.getElementById("search-note").submit()
+    async function search() {
+        let word = document.getElementById("search").value
+        await fillUsers(word)
     }
 </script>
 </body>

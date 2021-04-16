@@ -6,6 +6,8 @@ import khpi.khpi_olympiad.repository.event.EventRepository;
 import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.UniversityRepository;
+import khpi.khpi_olympiad.service.EmailSenderService;
+import lombok.AllArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.SimpleMailMessage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,12 +30,15 @@ class KhpiOlympiadApplicationTests {
 
     private UserRepository userRepository;
 
+    private EmailSenderService emailSenderService;
+
     @Autowired
-    public KhpiOlympiadApplicationTests(UniversityRepository universityRepository, CityRepository cityRepository, EventRepository eventRepository, UserRepository userRepository) {
+    public KhpiOlympiadApplicationTests(UniversityRepository universityRepository, CityRepository cityRepository, EventRepository eventRepository, UserRepository userRepository, EmailSenderService emailSenderService) {
         this.universityRepository = universityRepository;
         this.cityRepository = cityRepository;
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     @Test
@@ -74,4 +80,18 @@ class KhpiOlympiadApplicationTests {
         System.out.println(university);
     }
 
+
+    @Test
+    void sendEmailTest(){
+        var mail = new SimpleMailMessage();
+        mail.setText("Some random test");
+        mail.setFrom("Bogdan");
+        mail.setTo("Kornei");
+        mail.setSubject("Test mail");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println("Begin sending....");
+        emailSenderService.sendEmail(mail);
+        System.out.println("Do something else....!");
+    }
 }

@@ -16,8 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -57,6 +60,16 @@ public class DataApiController {
         return eventRepository.findAll();
     }
 
+    @GetMapping("/users")
+    public List<User> getUsers(@RequestParam(name = "word", required = false) String word) {
+        if (word == null) {
+            var users = userRepository.findReadyUsers();
+            return users;
+        } else {
+            return userRepository.search("%" + word + "%");
+        }
+    }
+
     @GetMapping("/user")
     public ResponseEntity<User> getUser(@RequestParam("user_id") Integer userId) {
         var user = userRepository.findById(userId);
@@ -64,6 +77,49 @@ public class DataApiController {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/subscription")
+    public ResponseEntity<Subscription> getSubscription(
+            @RequestParam(name = "eventId") Integer eventId,
+            Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
+        if (subscription != null) {
+            return new ResponseEntity<>(subscription, HttpStatus.OK);
+        } else {
+            return null;
+        }
+    }
+
+    @PostMapping("/subscription")
+    public ResponseEntity<Subscription> subscribe(
+            @RequestBody Map<String, Integer> body,
+            Principal prl) {
+        Integer eventId = body.get("event_id");
+        var user = userRepository.findByUsername(prl.getName());
+        var event = eventRepository.findById(eventId).get();
+        if (user == null || event == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        user.subscribe(event);
+        userRepository.save(user);
+        var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
+        subscription.setSubscriptionDate(LocalDateTime.now());
+        return new ResponseEntity<>(subscription, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/subscription")
+    public void unsubscribe(@RequestBody Map<String, Integer> body, Principal prl) {
+        Integer eventId = body.get("event_id");
+        var user = userRepository.findByUsername(prl.getName());
+        var event = eventRepository.findById(eventId).get();
+
+        var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
+        if (subscription != null) {
+            user.unsubscribe(event);
+            userRepository.save(user);
         }
     }
 }

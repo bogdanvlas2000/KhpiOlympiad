@@ -1,18 +1,13 @@
 package khpi.khpi_olympiad.model.auth;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import khpi.khpi_olympiad.model.event.Event;
-import khpi.khpi_olympiad.model.event.Subscription;
 import khpi.khpi_olympiad.model.profile.Profile;
 import lombok.*;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,7 +24,6 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
-    @JsonIgnore
     private boolean ready;
     @JsonIgnore
     private boolean enabled;

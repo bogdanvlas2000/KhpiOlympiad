@@ -20,8 +20,6 @@ public class University {
     private String ukrShortName;
     @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
-    @JsonIgnore
-    @JsonIgnoreProperties(value = "city_id")
     private City city;
 
     @OneToMany(mappedBy = "university", fetch = FetchType.EAGER)

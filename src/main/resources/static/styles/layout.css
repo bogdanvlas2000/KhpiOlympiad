@@ -11,6 +11,10 @@ textarea {
     font-family: "Roboto", sans-serif;
 }
 
+input {
+    outline: none;
+}
+
 body::-webkit-scrollbar {
     width: 0px;
 }
@@ -202,3 +206,10 @@ table thead {
     background: #e9e9e9;
 }
 
+td {
+    padding: 10px;
+}
+
+input .wrong {
+    box-shadow: 0 0 5px red;
+}
