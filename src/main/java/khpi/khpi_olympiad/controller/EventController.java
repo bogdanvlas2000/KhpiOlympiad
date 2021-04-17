@@ -81,32 +81,6 @@ public class EventController {
         return "redirect:/events/all";
     }
 
-    @PostMapping("/{event_id}/subscribe")
-    public String subscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        var event = eventRepository.findById(eventId).get();
-        if (subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId) == null) {
-            user.subscribe(event);
-            userRepository.save(user);
-
-            var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
-            subscription.setSubscriptionDate(LocalDateTime.now());
-            subscriptionRepository.save(subscription);
-        }
-        return "redirect:/events/" + event.getId();
-    }
-
-    @PostMapping("/{event_id}/unsubscribe")
-    public String unsubscribe(@PathVariable("event_id") Integer eventId, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        var event = eventRepository.findById(eventId).get();
-        var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
-        if (subscription != null) {
-            user.unsubscribe(event);
-            userRepository.save(user);
-        }
-        return "redirect:/events/" + event.getId();
-    }
 
     //admin methods
 

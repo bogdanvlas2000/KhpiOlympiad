@@ -89,7 +89,7 @@ public class DataApiController {
         if (subscription != null) {
             return new ResponseEntity<>(subscription, HttpStatus.OK);
         } else {
-            return null;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -97,7 +97,7 @@ public class DataApiController {
     public ResponseEntity<Subscription> subscribe(
             @RequestBody Map<String, Integer> body,
             Principal prl) {
-        Integer eventId = body.get("event_id");
+        Integer eventId = body.get("eventId");
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
         if (user == null || event == null) {
@@ -107,19 +107,19 @@ public class DataApiController {
         userRepository.save(user);
         var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
         subscription.setSubscriptionDate(LocalDateTime.now());
+        subscriptionRepository.save(subscription);
         return new ResponseEntity<>(subscription, HttpStatus.OK);
     }
 
     @DeleteMapping("/subscription")
     public void unsubscribe(@RequestBody Map<String, Integer> body, Principal prl) {
-        Integer eventId = body.get("event_id");
+        Integer eventId = body.get("eventId");
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
 
         var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
         if (subscription != null) {
-            user.unsubscribe(event);
-            userRepository.save(user);
+            subscriptionRepository.delete(subscription);
         }
     }
 }

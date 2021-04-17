@@ -177,18 +177,30 @@ textarea.text {
 }
 
 .btn1 {
-    background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
+    outline: none;
     transition: 0.5s;
 }
 
-.btn1:hover {
+.subscribe {
+    background-color: #4CAF50;
+}
+
+.subscribe:hover {
     background-color: #429144;
+}
+
+.unsubscribe {
+    background-color: #ff7039;
+}
+
+.unsubscribe:hover {
+    background-color: orangered;
 }
 
 .grid-table {

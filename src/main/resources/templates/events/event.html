@@ -33,15 +33,9 @@
                 </form>
             </div>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')" th:unless="${subscribed}">
-            <button id="subscribe_btn" class="btn1" onclick="getSubscription()">Subscribe <i class="fa fa-check"></i>
+        <div sec:authorize="hasRole('ROLE_USER')">
+            <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Subscribe <i class="fa fa-check"></i>
             </button>
-        </div>
-        <div sec:authorize="hasRole('ROLE_USER')" th:if="${subscribed}">
-            <form th:action="@{/events/{id}/unsubscribe(id=${event.id})}" onsubmit="return confirm('unsubscribe?')"
-                  method="post">
-                <button class="btn1" type="submit">Unsubscribe</button>
-            </form>
         </div>
     </div>
     <div class="column_block" style="width: 100%">
