@@ -66,61 +66,9 @@ body::-webkit-scrollbar {
     flex-direction: column;
 }
 
-/* Dropdown menu*/
-.dropbtn {
-    background-color: cadetblue;
-    width: 200px;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    transition: 0.5s;
-    outline: none;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    transition: 0.5s;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 100%;
-    z-index: 1;
-    transition: 0.5s;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #dddddd;
-}
 
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-    background-color: darkcyan;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
 
 .wrapper {
     margin: auto;
@@ -159,7 +107,7 @@ body::-webkit-scrollbar {
     padding-bottom: 10px;
     margin-bottom: 20px;
     align-items: center;
-    position: sticky;
+    /*position: sticky;*/
     top: 50px;
     width: 100%;
     background: white;
@@ -179,28 +127,29 @@ textarea.text {
 .btn1 {
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    margin: 20px;
+    text-decoration: none;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 200px;
     outline: none;
     transition: 0.5s;
 }
 
-.subscribe {
+.active {
     background-color: #4CAF50;
 }
 
-.subscribe:hover {
+.active:hover {
     background-color: #429144;
 }
 
-.unsubscribe {
-    background-color: #ff7039;
+.used {
+    background-color: darkgrey;
 }
 
-.unsubscribe:hover {
-    background-color: orangered;
+.used:hover {
+    background-color: grey;
 }
 
 .grid-table {

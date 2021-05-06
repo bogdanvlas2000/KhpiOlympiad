@@ -1,5 +1,6 @@
 const subscribeButton = document.getElementById("subscribe_btn")
 const eventId = document.getElementById("event_id").innerText
+const message = document.getElementById("message")
 
 async function subscribe() {
     let body = {eventId: eventId}
@@ -11,9 +12,10 @@ async function subscribe() {
         },
         body: JSON.stringify(body)
     })
-    subscribeButton.classList.remove("subscribe")
-    subscribeButton.classList.add("unsubscribe")
+    subscribeButton.classList.remove("active")
+    subscribeButton.classList.add("used")
     subscribeButton.innerText = "Unsubscribe"
+    message.style.display = "block"
 }
 
 async function unsubscribe() {
@@ -26,13 +28,14 @@ async function unsubscribe() {
         },
         body: JSON.stringify(body)
     })
-    subscribeButton.classList.remove("unsubscribe")
-    subscribeButton.classList.add("subscribe")
+    subscribeButton.classList.remove("used")
+    subscribeButton.classList.add("active")
     subscribeButton.innerText = "Subscribe"
+    message.style.display = "none"
 }
 
 async function subscribeListener() {
-    if (subscribeButton.classList.contains("subscribe")) {
+    if (subscribeButton.classList.contains("active")) {
         await subscribe()
     } else {
         await unsubscribe()
@@ -56,14 +59,18 @@ async function getSubscription() {
 async function loadSubscribeButton() {
     let subscription = await getSubscription()
     if (subscription == null) {
-        subscribeButton.classList.add("subscribe")
-        subscribeButton.classList.remove("unsubscribe")
+        subscribeButton.classList.add("active")
+        subscribeButton.classList.remove("used")
         subscribeButton.innerText = "Subscribe"
+        message.style.display = "none"
     } else {
-        subscribeButton.classList.remove("subscribe")
-        subscribeButton.classList.add("unsubscribe")
+        subscribeButton.classList.remove("active")
+        subscribeButton.classList.add("used")
         subscribeButton.innerText = "Unsubscribe"
+        message.style.display = "block"
     }
 }
 
-loadSubscribeButton()
+if (document.getElementById("user_block")) {
+    loadSubscribeButton()
+}

@@ -45,24 +45,6 @@
     justify-content: space-between;
 }
 
-.menu a {
-    display: block;
-    font-size: 20px;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    margin: 15px;
-    text-decoration: none;
-    color: white;
-    background-color: cadetblue;
-    border-radius: 15px;
-}
-
-.menu a:hover {
-    color: white;
-    background-color: darkcyan;
-}
-
 .search-container {
 }
 

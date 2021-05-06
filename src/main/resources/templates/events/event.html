@@ -18,11 +18,11 @@
             </div>
             <div id="event_id" th:text="${event.id}" style="display: none"></div>
             <h1 th:text="${event.title}"></h1>
-            <div th:if="${subscribed}">You are subscribed on this event</div>
+            <div id="message" style="display: none">You are subscribed to this event!</div>
         </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
-            <button class="dropbtn">Actions <i class="fa fa-bars"> </i></button>
-            <div class="dropdown-content" style="width: 100%">
+        <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
+            <button class="dropbtn">Actions</button>
+            <div class="dropdown-content">
                 <a th:href="@{/events/edit/{id}(id=${event.id})}">
                     Edit
                 </a>
@@ -33,11 +33,13 @@
                 </form>
             </div>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')">
+
+        <div id="user_block" sec:authorize="hasRole('ROLE_USER')">
             <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Subscribe <i class="fa fa-check"></i>
             </button>
         </div>
     </div>
+
     <div class="column_block" style="width: 100%">
         <textarea class="text" th:text="${event.description}" readonly="readonly"></textarea>
         <div>
@@ -76,6 +78,7 @@
 </script>
 <script type="text/javascript" , src="/js/event.js">
 </script>
+<script type="text/javascript" src="/js/dropdown.js"></script>
 </body>
 
 </html>

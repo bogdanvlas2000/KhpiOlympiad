@@ -17,7 +17,9 @@
                 <h1>Events list</h1>
             </div>
             <div class="menu">
-                <div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/events/create">Create new event</a></div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="btn1 active" href="/events/create">Create new event</a>
+                </div>
             </div>
         </div>
         <div class="search-container">
@@ -69,6 +71,7 @@
         document.getElementById("search-note").submit()
     }
 </script>
+<div th:insert="fragments::scripts"></div>
 </body>
 
 </html>

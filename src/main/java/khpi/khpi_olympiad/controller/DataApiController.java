@@ -101,8 +101,7 @@ public class DataApiController {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
         if (user == null || event == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+         }
         user.subscribe(event);
         userRepository.save(user);
         var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
@@ -113,6 +112,7 @@ public class DataApiController {
 
     @DeleteMapping("/subscription")
     public void unsubscribe(@RequestBody Map<String, Integer> body, Principal prl) {
+
         Integer eventId = body.get("eventId");
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
