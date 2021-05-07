@@ -31,33 +31,15 @@
             </form>
         </div>
     </div>
-    <div class="items">
-        <div class="item" th:each="event : ${events}">
-            <div class="top">
-                <div style="align-self: flex-start;">
-                    </span> <span th:text="${event.title}"></span>
-                </div>
-            </div>
-            <div>
-                Created at:
-                <span th:text="${event.createdDate.toLocalDate()}"></span>,
-                <span th:text="${event.createdDate.toLocalTime()}"></span>
-            </div>
-            <div>
-                Last modified at:
-                <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
-                <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
-            </div>
-            <div>
-                Event date:
-                <span th:text="${event.eventDate.toLocalDate()}"></span>,
-                <span th:text="${event.eventDate.toLocalTime()}"></span>
+    <div id="events" class="items">
+        <div class="wrapper" th:each="event : ${events}">
+            <div class="header">
+                <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
             </div>
             <div>
                 <textarea class="text" th:text="${event.description}" readonly="readonly" rows="6"></textarea>
             </div>
             <div>
-                <a th:href="@{/events/{id}(id=${event.id})}">Go to event</a>
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>

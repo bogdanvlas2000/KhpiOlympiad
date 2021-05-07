@@ -35,10 +35,14 @@ async function unsubscribe() {
 }
 
 async function subscribeListener() {
-    if (subscribeButton.classList.contains("active")) {
-        await subscribe()
-    } else {
-        await unsubscribe()
+    if (await isReady()) {
+        if (subscribeButton.classList.contains("active")) {
+            if (confirm("Subscribe?"))
+                await subscribe()
+        } else {
+            if (confirm("Unsubscribe?"))
+                await unsubscribe()
+        }
     }
 }
 

@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -101,7 +98,7 @@ public class DataApiController {
         var user = userRepository.findByUsername(prl.getName());
         var event = eventRepository.findById(eventId).get();
         if (user == null || event == null) {
-         }
+        }
         user.subscribe(event);
         userRepository.save(user);
         var subscription = subscriptionRepository.findByUserIdAndEventId(user.getId(), eventId);
@@ -121,5 +118,15 @@ public class DataApiController {
         if (subscription != null) {
             subscriptionRepository.delete(subscription);
         }
+    }
+
+    @GetMapping("/ready")
+    public Boolean isReady(Principal prl) {
+        Map<String, Boolean> result = new HashMap<>();
+        if (prl != null) {
+            var user = userRepository.findByUsername(prl.getName());
+            return user.isReady() || user.getRole().getName().equals("ROLE_ADMIN");
+        }
+        return true;
     }
 }
