@@ -4,50 +4,70 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments::headerfiles">
 </head>
-<head>
-    <link rel="stylesheet" href="/styles/content.css">
-</head>
 <body>
-<div th:insert="fragments::topnav">
-</div>
-<div class="page">
-    <div class="header">
-        <div class="row_block">
-            <div>
-                <h1>События</h1>
-            </div>
-            <div class="menu">
-                <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="btn1 active" href="/events/create">Создать событие</a>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header th:replace="fragments::topnav">
+    </header>
+    <div th:replace="fragments::sidenav">
+    </div>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="page">
+                <div class="header">
+                    <h4>События</h4>
+                    <div class="row_block">
+                        <form action="/events/search">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                                <label class="mdl-button mdl-js-button mdl-button--icon" for="field">
+                                    <i class="material-icons">search</i>
+                                </label>
+                                <div class="mdl-textfield__expandable-holder">
+                                    <input class="mdl-textfield__input" name="word" onkeyup="search()" type="text"
+                                           id="field">
+                                    <label class="mdl-textfield__label" for="field">Expandable Input</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
+                            <button class="dropbtn">
+                                Действия
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/events/create">
+                                    Создать событие
+                                </a>
+                                <a href="#">
+                                    Тут будут другие
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="events" class="items">
+                    <div class="item" th:each="event : ${events}">
+                        <div class="header">
+                            <h5>
+                                <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
+                            </h5>
+                        </div>
+                        <div>
+                            <textarea class="text" th:text="${event.description}" readonly="readonly"
+                                      rows="4"></textarea>
+                        </div>
+                        <div>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <span>Участников:</span>
+                            <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="search-container">
-            <form action="/events/search">
-                <input name="word" type="text" placeholder="Поиск.." autofocus="autofocus">
-                <button type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-    <div id="events" class="items">
-        <div class="item" th:each="event : ${events}">
-            <div class="header">
-                <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
-            </div>
-            <div>
-                <textarea class="text" th:text="${event.description}" readonly="readonly" rows="6"></textarea>
-            </div>
-            <div>
-            </div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <span>Участников:</span>
-                <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>
-            </div>
-        </div>
-    </div>
+    </main>
 </div>
+
 <script type="text/javascript">
     function search() {
         document.getElementById("search-note").submit()

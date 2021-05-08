@@ -4,82 +4,98 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments::headerfiles">
 </head>
-<head>
-    <link rel="stylesheet" href="/styles/content.css">
-</head>
 <body>
-<div th:insert="fragments::topnav">
-</div>
-<div class="page" style="margin-top: 80px">
-    <div class="header">
-        <div>
-            <div>
-                <a href="/events/all">Назад</a>
-            </div>
-            <div id="event_id" th:text="${event.id}" style="display: none"></div>
-            <h1 th:text="${event.title}"></h1>
-            <div id="message" style="display: none">Вы подписаны на это событие!</div>
-        </div>
-        <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
-            <button class="dropbtn">Действия</button>
-            <div class="dropdown-content">
-                <a th:href="@{/events/edit/{id}(id=${event.id})}">
-                    Изменить
-                </a>
-                <form id="do_edit" th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
-                    <a onclick="if(confirm('Удалить это событие?'))document.getElementById('do_edit').submit();">
-                        Удалить
-                    </a>
-                </form>
-            </div>
-        </div>
-
-        <div id="user_block" sec:authorize="hasRole('ROLE_USER')">
-            <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Подписаться <i
-                    class="fa fa-check"></i>
-            </button>
-        </div>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header th:replace="fragments::topnav">
+    </header>
+    <div th:replace="fragments::sidenav">
     </div>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="page">
+                <div class="header">
+                    <div>
+                        <div>
+                            <a href="/events/all">Назад</a>
+                        </div>
+                        <div id="event_id" th:text="${event.id}" style="display: none"></div>
+                        <h4 th:text="${event.title}"></h4>
+                        <div id="message" style="display: none">Вы подписаны на это событие!</div>
+                    </div>
+                    <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
+                        <button class="dropbtn">Действия</button>
+                        <div class="dropdown-content">
+                            <a th:href="@{/events/edit/{id}(id=${event.id})}">
+                                Изменить
+                            </a>
+                            <form id="do_edit" th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
+                                <a onclick="if(confirm('Удалить это событие?'))document.getElementById('do_edit').submit();">
+                                    Удалить
+                                </a>
+                            </form>
+                        </div>
+                    </div>
 
-    <div class="column_block" style="width: 100%">
-        <textarea class="text" th:text="${event.description}" readonly="readonly"></textarea>
-        <div>
-            Создано:
-            <span th:text="${event.createdDate.toLocalDate()}"></span>,
-            <span th:text="${event.createdDate.toLocalTime()}"></span>
-        </div>
-        <div>
-            Последняя модификация:
-            <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
-            <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
-        </div>
-        <div>
-            Состоится:
-            <span th:text="${event.eventDate.toLocalDate()}"></span>,
-            <span th:text="${event.eventDate.toLocalTime()}"></span>
-        </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')" id="admin_div">
-            <h2>Подписчики</h2>
-            <table cellpadding="0">
-                <thead>
-                <th>Логин</th>
-                <th>Имя</th>
-                <th>Университет</th>
-                <th>Дата подписки</th>
-                </thead>
-                <tbody>
+                    <div id="user_block" sec:authorize="hasRole('ROLE_USER')">
+                        <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Подписаться <i
+                                class="fa fa-check"></i>
+                        </button>
+                    </div>
+                </div>
 
-                </tbody>
-            </table>
+                <div class="column_block" style="width: 100%">
+                    <textarea class="text" th:text="${event.description}" readonly="readonly"></textarea>
+                    <div>
+                        <table class="mdl-data-table">
+                            <thead>
+                            <tr>
+                                <th>Дата создания</th>
+                                <th>Последнее изменение</th>
+                                <th>Состоится</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><span th:text="${event.createdDate.toLocalDate()}"></span>,
+                                    <span th:text="${event.createdDate.toLocalTime()}"></span></td>
+                                <td>
+                                    <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
+                                    <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${event.eventDate.toLocalDate()}"></span>,
+                                    <span th:text="${event.eventDate.toLocalTime()}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" id="admin">
+                        <h4>Участники</h4>
+                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                            <thead>
+                            <th>Логин</th>
+                            <th>Почта</th>
+                            <th>Имя</th>
+                            <th>Университет</th>
+                            <th>Город</th>
+                            </thead>
+                            <tbody id="users">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript" src="/js/users.js"></script>
+            <script type="text/javascript" src="/js/loadSubscribers.js">
+            </script>
+            <script type="text/javascript" , src="/js/event.js">
+            </script>
+            <div th:insert="fragments::scripts"></div>
         </div>
-    </div>
+    </main>
 </div>
-<script type="text/javascript" src="/js/loadSubscriptions.js">
-</script>
-<script type="text/javascript" , src="/js/event.js">
-</script>
-<div th:insert="fragments::scripts"></div>
 </body>
-
 </html>

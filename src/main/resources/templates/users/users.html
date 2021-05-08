@@ -8,45 +8,53 @@
     <link rel="stylesheet" href="/styles/content.css">
 </head>
 <body>
-<div th:insert="fragments::topnav">
-</div>
-<div class="page">
-    <div class="header">
-        <div>
-            <h1>Участники</h1>
-        </div>
-        <div>
-            <div class="search-container">
-                <input id="search" type="text" placeholder="Search.." autofocus="autofocus"
-                       onchange="search()">
-                <button type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-        </div>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header th:replace="fragments::topnav">
+    </header>
+    <div th:replace="fragments::sidenav">
     </div>
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-        <thead>
-        <th>Логин</th>
-        <th>Почта</th>
-        <th>Имя</th>
-        <th>Университет</th>
-        <th>Город</th>
-        </thead>
-        <tbody id="users">
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="page">
+                <div class="header">
+                    <h5>Участники</h5>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                        <label class="mdl-button mdl-js-button mdl-button--icon" for="field">
+                            <i class="material-icons">search</i>
+                        </label>
+                        <div class="mdl-textfield__expandable-holder">
+                            <input class="mdl-textfield__input" onchange="search()" type="text" id="field">
+                            <label class="mdl-textfield__label" for="field">Expandable Input</label>
+                        </div>
+                    </div>
+                </div>
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead>
+                    <th>Логин</th>
+                    <th>Почта</th>
+                    <th>Имя</th>
+                    <th>Университет</th>
+                    <th>Город</th>
+                    </thead>
+                    <tbody id="users">
 
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
+            </div>
+
+            <script type="text/javascript" src="/js/users.js"></script>
+            <script type="text/javascript">
+                onLoadUsersPage()
+
+                async function search() {
+                    let word = document.getElementById("field").value
+                    await fillUsers(await loadUsers(word))
+                }
+            </script>
+            <div th:insert="fragments::scripts"></div>
+        </div>
+    </main>
 </div>
-<script type="text/javascript" src="/js/users.js"></script>
-<script type="text/javascript">
-    async function search() {
-        let word = document.getElementById("search").value
-        await fillUsers(word)
-    }
-</script>
-<div th:insert="fragments::scripts"></div>
-
 </body>
 
 </html>

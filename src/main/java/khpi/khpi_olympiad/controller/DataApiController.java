@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -50,9 +51,17 @@ public class DataApiController {
     }
 
     @GetMapping("/subscriptions")
-    public Iterable<Subscription> getSubscribers(@RequestParam("eventId") Integer eventId) {
+    public Iterable<Subscription> getSubscriptions(@RequestParam("eventId") Integer eventId) {
         List<Subscription> subscriptions = subscriptionRepository.findByEventId(eventId);
         return subscriptions;
+    }
+
+    @GetMapping("/subscribers")
+    public Iterable<User> getSubscribers(@RequestParam("eventId") Integer eventId) {
+        List<Subscription> subscriptions = subscriptionRepository.findByEventId(eventId);
+        List<Integer> userIds = subscriptions.stream().map(s -> s.getUserId()).collect(Collectors.toList());
+        Iterable<User> subscribers = userRepository.findAllById(userIds);
+        return subscribers;
     }
 
     @GetMapping("/events")

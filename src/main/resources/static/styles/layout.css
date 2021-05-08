@@ -2,12 +2,19 @@
 
 body {
     background-color: #f1f1f1;
-    font-size: 20px;
+}
+
+div {
+    font-size: 18px;
     font-family: "Roboto", sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 textarea {
-    font-size: 15px;
+    font-size: 16px;
     font-family: "Roboto", sans-serif;
     margin: 10px;
     padding: 10px;
@@ -23,30 +30,8 @@ body::-webkit-scrollbar {
     width: 0px;
 }
 
-.main {
-    display: flex;
-    flex-direction: column;
-    transition: 0.5s;
-    left: 0;
-    width: 100%;
-    padding: 16px;
-    margin-top: 30px;
-}
 
-.topnav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background: dodgerblue;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1;
-}
-
-.topnav a {
+header a {
     display: block;
     font-size: 20px;
     color: rgb(255, 255, 255);
@@ -56,13 +41,14 @@ body::-webkit-scrollbar {
     transition: 0.3s;
 }
 
-.topnav a:hover {
+header a:hover {
     background-color: #1372cd;
 }
 
 .row_block {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .column_block {
@@ -70,9 +56,18 @@ body::-webkit-scrollbar {
     flex-direction: column;
 }
 
+.items {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .item {
     margin: auto;
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: white;
     width: 80%;
     min-height: 200px;
@@ -98,7 +93,6 @@ body::-webkit-scrollbar {
 
 .page {
     margin: auto;
-    margin-top: 80px;
     padding: 20px;
     padding-top: 30px;
     padding-left: 40px;
@@ -117,9 +111,8 @@ body::-webkit-scrollbar {
     justify-content: space-between;
     padding-left: 10px;
     padding-bottom: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     align-items: center;
-    /*position: sticky;*/
     top: 50px;
     width: 100%;
     background: white;
@@ -130,10 +123,11 @@ textarea.text {
     border: 1px solid #cccccc;
     margin: 10px;
     padding: 8px;
-    width: 90%;
-    height: 200px;
+    width: 95%;
+    height: 100px;
     resize: none;
     outline: none;
+    overflow-y: scroll;
 }
 
 .btn1 {

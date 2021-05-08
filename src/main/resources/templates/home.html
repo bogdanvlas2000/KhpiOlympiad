@@ -1,22 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments::headerfiles">
 </head>
 <head>
     <link rel="stylesheet" href="/styles/content.css">
 </head>
 <body>
-<div th:insert="fragments::topnav">
-</div>
-<div class="page">
-    <h1 th:text="${message}"></h1>
-    <h2>This is your home page</h2>
-    <h3>Here you can get information about new events of our department</h3>
-    <div>Some long and boring description here</div>
-    <div>
-        <img src="/img/student.jpg">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header th:replace="fragments::topnav">
+    </header>
+    <div th:replace="fragments::sidenav">
     </div>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="page">
+                <h1 th:text="${message}"></h1>
+                <h2>This is your home page</h2>
+                <h3>Here you can get information about new events of our department</h3>
+                <div>Some long and boring description here</div>
+                <div>
+                    <img src="/img/student.jpg">
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
+
 <div th:insert="fragments::scripts"></div>
 </body>
 </html>

@@ -1,23 +1,20 @@
+let users = []
+
 async function loadUsers(param) {
     let url = `/api/users`
     if (param != null && param != undefined) {
         url += "?word=" + param
     }
     let response = await fetch(url)
-    if (response.status == 200) {
-        let users = await response.json()
-        return users
-    }
-    throw Error(response.status)
+    return await response.json()
 }
 
-async function fillUsers(param) {
-    let users = await loadUsers(param)
+function fillUsers(users) {
     let root = document.getElementById("users")
     while (root.firstChild) {
         root.removeChild(root.lastChild);
     }
-    users.forEach(u => {
+    for (let u of users) {
         let tr = document.createElement("tr")
         let username = document.createElement("td")
         username.innerText = u.username
@@ -38,7 +35,11 @@ async function fillUsers(param) {
             window.location.href = "/users/" + u.id
         }
         root.appendChild(tr)
-    })
+    }
 }
 
-fillUsers()
+async function onLoadUsersPage() {
+    users = await loadUsers()
+    fillUsers(users)
+}
+

@@ -9,32 +9,40 @@
     <link rel="stylesheet" href="/styles/selectbox.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-indigo.min.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </script>
 </head>
 <body>
 
-<div class="topnav" th:fragment="topnav">
-    <div class="dropdown">
-        <button class="dropbtn">Меню</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="/">Главная</a>
-            <a href="/events/all">События</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Участники</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/email">Рассылка</a>
-        </div>
+<header th:fragment="topnav" class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Меню</span>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/login">Войти</a>
+            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/signup">Регистрация</a>
+            <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_USER')" href="/profile">
+                <i class="fa fa-user"></i> Профиль
+            </a>
+            <a class="mdl-navigation__link" onclick="return confirm('Выйти?')"
+               sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
+        </nav>
     </div>
-    <div class="row_block">
-        <a sec:authorize="isAnonymous()" href="/login">Войти</a>
-        <a sec:authorize="isAnonymous()" href="/signup">Регистрация</a>
-        <a sec:authorize="hasRole('ROLE_USER')" href="/profile">
-            <i class="fa fa-user"></i> Профиль
-        </a>
-        <a onclick="return confirm('Выйти?')"
-           sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
-    </div>
+</header>
+
+<div th:fragment="sidenav" class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Меню</span>
+    <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="/">Главная</a>
+        <a class="mdl-navigation__link" href="/events/all">События</a>
+        <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Участники</a>
+        <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_ADMIN')" href="/email">Рассылка</a>
+    </nav>
 </div>
+
+
 <div th:fragment="scripts">
     <script type="text/javascript" src="/js/dropdown.js"></script>
     <script type="text/javascript" src="/js/user.js"></script>
