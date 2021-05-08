@@ -13,21 +13,22 @@
 
 <div class="topnav" th:fragment="topnav">
     <div class="dropdown">
-        <button class="dropbtn">Menu</button>
+        <button class="dropbtn">Меню</button>
         <div id="myDropdown" class="dropdown-content">
-            <a href="/">Home</a>
-            <a href="/events/all">Events</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users/all">Users</a>
+            <a href="/">Главная</a>
+            <a href="/events/all">События</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Участники</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/email">Рассылка</a>
         </div>
     </div>
     <div class="row_block">
-        <a sec:authorize="isAnonymous()" href="/login">Login</a>
-        <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
+        <a sec:authorize="isAnonymous()" href="/login">Войти</a>
+        <a sec:authorize="isAnonymous()" href="/signup">Регистрация</a>
         <a sec:authorize="hasRole('ROLE_USER')" href="/profile">
-            <i class="fa fa-user"></i> Profile
+            <i class="fa fa-user"></i> Профиль
         </a>
-        <a onclick="return confirm('Logout?')"
-           sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+        <a onclick="return confirm('Выйти?')"
+           sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
     </div>
 </div>
 <div th:fragment="scripts">

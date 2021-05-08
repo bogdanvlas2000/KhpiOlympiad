@@ -11,9 +11,11 @@ import khpi.khpi_olympiad.repository.event.EventRepository;
 import khpi.khpi_olympiad.repository.event.SubscriptionRepository;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.UniversityRepository;
+import khpi.khpi_olympiad.service.EmailSenderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -29,6 +31,7 @@ public class DataApiController {
     private EventRepository eventRepository;
     private SubscriptionRepository subscriptionRepository;
     private UserRepository userRepository;
+    private EmailSenderService emailSenderService;
 
     @GetMapping("/cities")
     public Iterable<City> getCities() {
@@ -128,5 +131,19 @@ public class DataApiController {
             return user.isReady() || user.getRole().getName().equals("ROLE_ADMIN");
         }
         return true;
+    }
+
+    @PostMapping("/emails")
+    public void sendMails(@RequestBody Map<String, Object> body) {
+        User user = (User) body.get("user");
+        String message = (String) body.get("message");
+
+        var mail = new SimpleMailMessage();
+        mail.setFrom("otp@mail.com");
+        mail.setTo(user.getEmail());
+        mail.setSubject("Student event at OTP department");
+        mail.setText(message);
+
+        emailSenderService.sendEmail(mail);
     }
 }

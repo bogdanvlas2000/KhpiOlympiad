@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments::headerfiles">
+</head>
+<head>
+    <link rel="stylesheet" href="/styles/content.css">
+</head>
+<body>
+<div th:insert="fragments::topnav">
+</div>
+<div class="page">
+    <div class="header">
+        Отправка писем
+    </div>
+    <div class="wrapper">
+    <textarea id="message" rows="10" cols="20" wrap="hard" placeholder="Введите сообщение">
+
+    </textarea>
+    </div>
+</div>
+
+
+<div th:insert="fragments::scripts">
+</div>
+</body>
+</html>

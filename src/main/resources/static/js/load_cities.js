@@ -10,6 +10,7 @@ async function fillElements(optionsContainer, elements) {
         let elementOption = document.createElement('div')
         elementOption.classList.add("option")
 
+
         let input = document.createElement('input')
         input.type = "radio"
         input.classList.add("radio")

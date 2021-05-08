@@ -20,18 +20,4 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
-    private UserRepository userRepository;
-
-    private ProfileRepository profileRepository;
-
-    private UserSecurityService userService;
-
-
-    // admin methods
-
-    @GetMapping("/all")
-    public String usersList(Model model) {
-        model.addAttribute("users", userRepository.findAll());
-        return "/users/users";
-    }
 }

@@ -14,7 +14,7 @@ async function subscribe() {
     })
     subscribeButton.classList.remove("active")
     subscribeButton.classList.add("used")
-    subscribeButton.innerText = "Unsubscribe"
+    subscribeButton.innerText = "Отписаться"
     message.style.display = "block"
 }
 
@@ -30,17 +30,17 @@ async function unsubscribe() {
     })
     subscribeButton.classList.remove("used")
     subscribeButton.classList.add("active")
-    subscribeButton.innerText = "Subscribe"
+    subscribeButton.innerText = "Подписаться"
     message.style.display = "none"
 }
 
 async function subscribeListener() {
     if (await isReady()) {
         if (subscribeButton.classList.contains("active")) {
-            if (confirm("Subscribe?"))
+            if (confirm("Подписаться?"))
                 await subscribe()
         } else {
-            if (confirm("Unsubscribe?"))
+            if (confirm("Отписаться?"))
                 await unsubscribe()
         }
     }
@@ -65,12 +65,12 @@ async function loadSubscribeButton() {
     if (subscription == null) {
         subscribeButton.classList.add("active")
         subscribeButton.classList.remove("used")
-        subscribeButton.innerText = "Subscribe"
+        subscribeButton.innerText = "Подписаться"
         message.style.display = "none"
     } else {
         subscribeButton.classList.remove("active")
         subscribeButton.classList.add("used")
-        subscribeButton.innerText = "Unsubscribe"
+        subscribeButton.innerText = "Отписаться"
         message.style.display = "block"
     }
 }

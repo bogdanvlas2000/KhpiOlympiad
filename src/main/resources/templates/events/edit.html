@@ -7,27 +7,32 @@
 </head>
 <body>
 <div class="page">
-    <div style="align-self: flex-start">
-        <a th:href="@{/events/{id}(id=${event.id})}" onclick="return confirm('Return to event?')">Back</a>
+    <div class="header">
+        <div>
+            <a th:href="@{/events/{id}(id=${event.id})}" onclick="return confirm('Return to event?')">Back</a>
+            <h1>Измените событие</h1>
+        </div>
     </div>
+
     <form th:action="@{/events/change}" th:object="${event}" method="post"
           style="width:100%" onsubmit="return confirm('Apply changes?')">
-        <h1>Edit event</h1>
         <input type="hidden" th:field="*{id}">
         <input type="hidden" name="cr_date" th:value="${createdDate}">
         <input type="hidden" name="l_mod_date" th:value="${lastModifiedDate}">
-        <p>
+        <div>
+            Название:
             <input type="text" th:field="*{title}"
                    autofocus="autofocus">
-        <p>
-        <p>
-            <input type="datetime-local" name="date" th:value="*{eventDate}">
-        </p>
-        <p>
+        </div>
+        <div>
+            Дата события: <input type="datetime-local" name="date" th:value="*{eventDate}">
+        </div>
+        <div>
+            Описание события:
             <textarea rows="10" cols="20" wrap="hard" th:field="*{description}"></textarea>
-        <p>
-            <input type="submit" value="Apply" class="button"
-                   onclick="return checkForm()">
+        </div>
+        <input type="submit" value="Сохранить" class="button"
+               onclick="return checkForm()">
     </form>
 </div>
 <script type="text/javascript" src="js/check_form.js"></script>

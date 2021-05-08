@@ -9,6 +9,10 @@ body {
 textarea {
     font-size: 15px;
     font-family: "Roboto", sans-serif;
+    margin: 10px;
+    padding: 10px;
+    outline: none;
+    resize: none;
 }
 
 input {
@@ -66,8 +70,7 @@ body::-webkit-scrollbar {
     flex-direction: column;
 }
 
-
-.wrapper {
+.item {
     margin: auto;
     margin-top: 50px;
     background-color: white;
@@ -80,9 +83,22 @@ body::-webkit-scrollbar {
     justify-content: space-around;
 }
 
+.wrapper {
+    margin: auto;
+    margin-top: 50px;
+    background-color: white;
+    width: 600px;
+    min-height: 200px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .page {
     margin: auto;
-    margin-top: 30px;
+    margin-top: 80px;
     padding: 20px;
     padding-top: 30px;
     padding-left: 40px;
@@ -155,7 +171,7 @@ textarea.text {
 
 table {
     width: 100%;
-    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 table thead {

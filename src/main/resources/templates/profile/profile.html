@@ -12,15 +12,15 @@
     <div th:insert="fragments::topnav"></div>
     <div class="page">
         <div class="header">
-            <div>Profile page</div>
+            <div>Профиль</div>
             <div th:if="${not_ready}">
-                You should complete profile info
+                Вы должны заполнить профиль!
             </div>
             <div class="dropdown">
-                <button class="dropbtn">Change</button>
+                <button class="dropbtn">Изменить</button>
                 <div id="myDropdown" class="dropdown-content">
-                    <a href="/profile/edit">Profile info</a>
-                    <a href="/profile/psw_change">Password</a>
+                    <a href="/profile/edit">Информация профиля</a>
+                    <a href="/profile/psw_change">Пароль</a>
                 </div>
             </div>
         </div>
@@ -44,19 +44,19 @@
                 </div>
             </div>
         </div>
-        <h1>My events</h1>
+        <h1>Мои события</h1>
         <div class="column_block" style="width: 100%">
             <table>
                 <thead>
-                <th>Event</th>
-                <th>Date</th>
+                <th>Событие</th>
+                <th>Дата</th>
                 </thead>
                 <tbody>
                 <tr th:each="event:${user.events}">
                     <td>
                         <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
                     </td>
-                    <td th:text="${event.createdDate.toLocalDate()}"></td>
+                    <td th:text="${event.eventDate.toLocalDate()}"></td>
                 </tr>
                 </tbody>
             </table>

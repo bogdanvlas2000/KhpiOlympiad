@@ -14,28 +14,29 @@
     <div class="header">
         <div>
             <div>
-                <a href="/events/all">Back</a>
+                <a href="/events/all">Назад</a>
             </div>
             <div id="event_id" th:text="${event.id}" style="display: none"></div>
             <h1 th:text="${event.title}"></h1>
-            <div id="message" style="display: none">You are subscribed to this event!</div>
+            <div id="message" style="display: none">Вы подписаны на это событие!</div>
         </div>
         <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
-            <button class="dropbtn">Actions</button>
+            <button class="dropbtn">Действия</button>
             <div class="dropdown-content">
                 <a th:href="@{/events/edit/{id}(id=${event.id})}">
-                    Edit
+                    Изменить
                 </a>
                 <form id="do_edit" th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
-                    <a onclick="if(confirm('Delete this event?'))document.getElementById('do_edit').submit();">
-                        Delete
+                    <a onclick="if(confirm('Удалить это событие?'))document.getElementById('do_edit').submit();">
+                        Удалить
                     </a>
                 </form>
             </div>
         </div>
 
         <div id="user_block" sec:authorize="hasRole('ROLE_USER')">
-            <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Subscribe <i class="fa fa-check"></i>
+            <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Подписаться <i
+                    class="fa fa-check"></i>
             </button>
         </div>
     </div>
@@ -43,28 +44,28 @@
     <div class="column_block" style="width: 100%">
         <textarea class="text" th:text="${event.description}" readonly="readonly"></textarea>
         <div>
-            Created at:
+            Создано:
             <span th:text="${event.createdDate.toLocalDate()}"></span>,
             <span th:text="${event.createdDate.toLocalTime()}"></span>
         </div>
         <div>
-            Last modified at:
+            Последняя модификация:
             <span th:text="${event.lastModifiedDate.toLocalDate()}"></span>,
             <span th:text="${event.lastModifiedDate.toLocalTime()}"></span>
         </div>
         <div>
-            Event date:
+            Состоится:
             <span th:text="${event.eventDate.toLocalDate()}"></span>,
             <span th:text="${event.eventDate.toLocalTime()}"></span>
         </div>
         <div sec:authorize="hasRole('ROLE_ADMIN')" id="admin_div">
-            <h2>Subscribers</h2>
+            <h2>Подписчики</h2>
             <table cellpadding="0">
                 <thead>
-                <th>Username</th>
-                <th>Name</th>
-                <th>University</th>
-                <th>Subscribed at</th>
+                <th>Логин</th>
+                <th>Имя</th>
+                <th>Университет</th>
+                <th>Дата подписки</th>
                 </thead>
                 <tbody>
 

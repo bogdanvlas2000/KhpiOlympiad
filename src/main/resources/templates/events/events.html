@@ -10,21 +10,21 @@
 <body>
 <div th:insert="fragments::topnav">
 </div>
-<div class="page" style="margin-top: 80px">
+<div class="page">
     <div class="header">
         <div class="row_block">
             <div>
-                <h1>Events list</h1>
+                <h1>События</h1>
             </div>
             <div class="menu">
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="btn1 active" href="/events/create">Create new event</a>
+                    <a class="btn1 active" href="/events/create">Создать событие</a>
                 </div>
             </div>
         </div>
         <div class="search-container">
             <form action="/events/search">
-                <input name="word" type="text" placeholder="Search.." autofocus="autofocus">
+                <input name="word" type="text" placeholder="Поиск.." autofocus="autofocus">
                 <button type="submit">
                     <i class="fa fa-search"></i>
                 </button>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div id="events" class="items">
-        <div class="wrapper" th:each="event : ${events}">
+        <div class="item" th:each="event : ${events}">
             <div class="header">
                 <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
             </div>
@@ -42,8 +42,8 @@
             <div>
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <span>Участников:</span>
                 <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>
-                <span> subscribed users</span>
             </div>
         </div>
     </div>
