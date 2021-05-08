@@ -48,7 +48,6 @@ public class ProfileController {
             model.addAttribute("image", image);
         }
 
-
         model.addAttribute("user", user);
         model.addAttribute("profile", user.getProfile());
 

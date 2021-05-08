@@ -34,6 +34,9 @@ async function fillUsers(param) {
         tr.appendChild(name)
         tr.appendChild(university)
         tr.appendChild(city)
+        tr.onclick = function () {
+            window.location.href = "/users/" + u.id
+        }
         root.appendChild(tr)
     })
 }

@@ -50,6 +50,47 @@ selectedAll.forEach(selected => {
     }
 })
 
+
+async function setEventListeners(selected) {
+    const optionsContainer = selected.previousElementSibling
+    const searchBox = selected.nextElementSibling
+
+    const optionsList = optionsContainer.querySelectorAll(".option")
+
+    selected.addEventListener("click", () => {
+        filterList("")
+    })
+
+    optionsList.forEach(o => {
+        o.addEventListener("click", () => {
+            selected.innerHTML = o.querySelector("label").innerHTML
+            searchBox.nextElementSibling.value = selected.innerHTML
+            searchBox.nextElementSibling.nextElementSibling.value = o.querySelector("span").innerText
+            optionsContainer.classList.remove("active")
+            // if (selected.id == "citySelected") {
+            //     universitySelected.innerText = "Select university"
+            //     document.getElementById("universityName").value = ""
+            //     reloadUniversities()
+            // }
+        })
+    })
+    searchBox.addEventListener("keyup", function (e) {
+        filterList(e.target.value)
+    })
+    const filterList = searchTerm => {
+        searchTerm = searchTerm.toLowerCase()
+        optionsList.forEach(option => {
+            let label = option.firstElementChild.nextElementSibling.innerText.toLowerCase()
+            if (label.indexOf(searchTerm) != -1) {
+                option.style.display = "block"
+            } else {
+                option.style.display = "none"
+            }
+        })
+    }
+}
+
+
 async function fillElements(optionsContainer, ids, elements) {
     for (let i = 0; i < ids.length; i++) {
         let elementOption = document.createElement('div')
@@ -69,5 +110,10 @@ async function fillElements(optionsContainer, ids, elements) {
         elementOption.appendChild(id)
 
         optionsContainer.appendChild(elementOption)
+    }
+}
+async function clearChildren(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.lastChild);
     }
 }

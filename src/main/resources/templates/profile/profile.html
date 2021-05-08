@@ -11,20 +11,29 @@
 <div id="main" class="main">
     <div th:insert="fragments::topnav"></div>
     <div class="page">
-        <div class="header">
+        <div class="header" sec:authorize="hasRole('ROLE_USER')">
             <div>Профиль</div>
             <div th:if="${not_ready}">
                 Вы должны заполнить профиль!
             </div>
             <div class="dropdown">
                 <button class="dropbtn">Изменить</button>
-                <div id="myDropdown" class="dropdown-content">
+                <div class="dropdown-content">
                     <a href="/profile/edit">Информация профиля</a>
                     <a href="/profile/psw_change">Пароль</a>
                 </div>
             </div>
         </div>
 
+        <div class="header" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div>Профиль пользователя <span th:text="${user.username}"></span></div>
+            <div class="dropdown">
+                <button class="dropbtn">Действия</button>
+                <div class="dropdown-content">
+                    <a href="#">Отправить письмо</a>
+                </div>
+            </div>
+        </div>
         <div class="row_block" style="width: 100%">
             <div class="img_wrap">
                 <img th:if="${image}" th:src="'data:image/jpeg;base64,'+${image}">
@@ -44,7 +53,6 @@
                 </div>
             </div>
         </div>
-        <h1>Мои события</h1>
         <div class="column_block" style="width: 100%">
             <table>
                 <thead>

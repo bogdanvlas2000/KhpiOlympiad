@@ -48,12 +48,6 @@ async function setEventListeners(selected) {
     }
 }
 
-async function clearChildren(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.lastChild);
-    }
-}
-
 async function loadCities() {
     let response = await fetch("/api/cities")
     if (response.status == 200) {
@@ -64,9 +58,26 @@ async function loadCities() {
         await fillElements(cityOptionsContainer, cities.map(c => c.id), cities.map(city => city.ukrName))
         //навешивает обработчики клика
         await setEventListeners(citySelected)
+
+        await setCityListener(citySelected)
         return cities
     }
     throw new Error(response.status)
+}
+
+async function setCityListener(selected) {
+    const optionsContainer = selected.previousElementSibling
+
+    const searchBox = selected.nextElementSibling
+
+    const optionsList = optionsContainer.querySelectorAll(".option")
+    optionsList.forEach(o => {
+        o.addEventListener("click", () => {
+            universitySelected.innerText = "Select university"
+            document.getElementById("universityName").value = ""
+            reloadUniversities()
+        })
+    })
 }
 
 async function reloadUniversities() {
@@ -85,14 +96,7 @@ async function reloadUniversities() {
     throw new Error(response.status)
 }
 
-function findUniversityId() {
-    let name = document.getElementById("universityName").value
-    name = name.replaceAll("&nbsp;", " ")
-    let res = universities.filter(u => u.id == 727).pop()
-    document.getElementById("university").value = res.id
-}
-
-async function loadData() {
+async function loadCitiesAndUniversities() {
     let currentCity = document.getElementById("cityName").value
     if (currentCity) {
         citySelected.innerHTML = currentCity
@@ -108,4 +112,4 @@ async function loadData() {
 
 }
 
-loadData()
+loadCitiesAndUniversities()
