@@ -87,15 +87,14 @@ public class ProfileController {
     public String changeProfile(@ModelAttribute("profile") Profile profile, Principal prl,
                                 @RequestParam("imageFile") MultipartFile image,
                                 @RequestParam("cityName") String cityName,
-                                @RequestParam("universityName") String universityName
+                                @RequestParam("universityId") int universityId
     ) throws IOException {
         var user = userRepository.findByUsername(prl.getName());
         if (!image.isEmpty()) {
             profile.setImage(image.getBytes());
         }
         var city = cityRepository.findByUkrName(cityName);
-        universityName = universityName.replaceAll("&nbsp;", " ");
-        var university = universityRepository.findByUkrShortName(universityName);
+        var university = universityRepository.findById(universityId).get();
         if (university != null) {
             profile.setUniversity(university);
             university.addUserProfile(profile);

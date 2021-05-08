@@ -48,6 +48,26 @@ selectedAll.forEach(selected => {
             }
         })
     }
-
 })
 
+async function fillElements(optionsContainer, ids, elements) {
+    for (let i = 0; i < ids.length; i++) {
+        let elementOption = document.createElement('div')
+        elementOption.classList.add("option")
+        let id = document.createElement("span")
+        id.innerText = ids[i]
+        id.hidden = "hidden"
+        let input = document.createElement('input')
+        input.type = "radio"
+        input.classList.add("radio")
+        input.id = elements[i]
+        elementOption.appendChild(input)
+        let label = document.createElement('label')
+        label.htmlFor = input.id
+        label.innerHTML = elements[i]
+        elementOption.appendChild(label)
+        elementOption.appendChild(id)
+
+        optionsContainer.appendChild(elementOption)
+    }
+}

@@ -4,31 +4,7 @@ const universitySelected = document.getElementById("universitySelected")
 
 const cityName = document.getElementById("cityName")
 
-
-async function fillElements(optionsContainer, elements) {
-    elements.forEach(element => {
-        let elementOption = document.createElement('div')
-        elementOption.classList.add("option")
-
-
-        let input = document.createElement('input')
-        input.type = "radio"
-        input.classList.add("radio")
-        input.id = element
-        input.name = "cityElement"
-
-        elementOption.appendChild(input)
-
-        let label = document.createElement('label')
-        label.htmlFor = input.id
-        label.innerHTML = element
-
-        elementOption.appendChild(label)
-
-        optionsContainer.appendChild(elementOption)
-    })
-}
-
+let universities = []
 
 async function setEventListeners(selected) {
     const optionsContainer = selected.previousElementSibling
@@ -44,6 +20,7 @@ async function setEventListeners(selected) {
         o.addEventListener("click", () => {
             selected.innerHTML = o.querySelector("label").innerHTML
             searchBox.nextElementSibling.value = selected.innerHTML
+            searchBox.nextElementSibling.nextElementSibling.value = o.querySelector("span").innerText
             optionsContainer.classList.remove("active")
             if (selected.id == "citySelected") {
                 console.log("city selected!")
@@ -84,7 +61,7 @@ async function loadCities() {
         console.log(cities.map(city => city.ukrName))
         const cityOptionsContainer = document.getElementById("cityOptionsContainer")
         //заполняет селектбокс городами
-        await fillElements(cityOptionsContainer, cities.map(city => city.ukrName))
+        await fillElements(cityOptionsContainer, cities.map(c => c.id), cities.map(city => city.ukrName))
         //навешивает обработчики клика
         await setEventListeners(citySelected)
         return cities
@@ -97,17 +74,23 @@ async function reloadUniversities() {
     console.log(city)
     let response = await fetch("/api/universities?city=" + city)
     if (response.status == 200) {
-        let universities = await response.json()
+        universities = await response.json()
         console.log(universities)
         const universityOptionsContainer = document.getElementById("universityOptionsContainer")
         await clearChildren(universityOptionsContainer)
-        await fillElements(universityOptionsContainer, universities.map(u => u.ukrShortName))
+        await fillElements(universityOptionsContainer, universities.map(u => u.id), universities.map(u => u.ukrShortName))
         await setEventListeners(universitySelected)
         return universities
     }
     throw new Error(response.status)
 }
 
+function findUniversityId() {
+    let name = document.getElementById("universityName").value
+    name = name.replaceAll("&nbsp;", " ")
+    let res = universities.filter(u => u.id == 727).pop()
+    document.getElementById("university").value = res.id
+}
 
 async function loadData() {
     let currentCity = document.getElementById("cityName").value
