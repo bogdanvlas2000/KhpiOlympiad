@@ -16,7 +16,7 @@
                 <div class="header">
                     <div>
                         <div>
-                            <a href="#" onclick="history.back()">Назад</a>
+                            <a href="/events/all">Назад</a>
                         </div>
                         <div id="event_id" th:text="${event.id}" style="display: none"></div>
                         <h4 th:text="${event.title}"></h4>
@@ -25,6 +25,7 @@
                     <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
                         <button class="dropbtn">Действия</button>
                         <div class="dropdown-content">
+                            <a href="#emailPopup" class="popup__link">Рассылка</a>
                             <a th:href="@{/events/edit/{id}(id=${event.id})}">
                                 Изменить
                             </a>
@@ -88,6 +89,7 @@
                     </div>
                 </div>
             </div>
+
             <script type="text/javascript" src="/js/users.js"></script>
             <script type="text/javascript" src="/js/loadSubscribers.js">
             </script>
@@ -96,6 +98,19 @@
             <div th:insert="fragments::scripts"></div>
         </div>
     </main>
+</div>
+<div id="emailPopup" class="popup">
+    <a href="##" class="popup__area"></a>
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
+            <h4>Сообщение получат участники текущего события</h4>
+            <div>
+                <textarea placeholder="Введите текст сообщения..." autofocus="autofocus" required></textarea>
+                <button class="btn1 blue">Отправить</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
