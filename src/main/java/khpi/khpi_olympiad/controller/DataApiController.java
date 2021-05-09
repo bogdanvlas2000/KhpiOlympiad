@@ -65,8 +65,17 @@ public class DataApiController {
     }
 
     @GetMapping("/events")
-    public Iterable<Event> getEvents() {
-        return eventRepository.findAll();
+    public List<Event> getEvents(@RequestParam(name = "word", required = false) String word) {
+        List<Event> events = new ArrayList<>();
+        if (word == null) {
+            for (Event e : eventRepository.findAll()) {
+                events.add(e);
+            }
+        } else {
+            events = eventRepository.search("%" + word + "%");
+        }
+        Collections.reverse(events);
+        return events;
     }
 
     @GetMapping("/users")

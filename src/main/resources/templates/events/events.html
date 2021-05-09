@@ -44,30 +44,12 @@
                     </div>
 
                 </div>
-                <div id="events" class="items">
-                    <div class="item" th:each="event : ${events}">
-                        <div class="header">
-                            <h5>
-                                <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.title}"></a>
-                            </h5>
-                        </div>
-                        <div>
-                            <textarea class="text" th:text="${event.description}" readonly="readonly"
-                                      rows="4"></textarea>
-                        </div>
-                        <div>
-                        </div>
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <span>Участников:</span>
-                            <span th:text="${subscriptionRepo.findByEventId(event.id).size()}"></span>
-                        </div>
-                    </div>
-                </div>
+                <div id="events" class="items"></div>
             </div>
         </div>
     </main>
 </div>
-
+<script type="text/javascript" src="/js/eventsPage.js"></script>
 <script type="text/javascript">
     function search() {
         document.getElementById("search-note").submit()

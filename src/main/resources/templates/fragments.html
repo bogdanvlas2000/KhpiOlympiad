@@ -41,7 +41,19 @@
         <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Участники</a>
     </nav>
 </div>
-
+<div th:fragment="emailPopup" id="emailPopup" class="popup">
+    <a href="##" class="popup__area"></a>
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
+            <h4>Участники получат это сообщение на почту</h4>
+            <div>
+                <textarea placeholder="Введите текст сообщения..." required></textarea>
+                <button class="btn1 blue">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div th:fragment="scripts">
     <script type="text/javascript" src="/js/dropdown.js"></script>
