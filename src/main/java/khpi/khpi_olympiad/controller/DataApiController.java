@@ -89,6 +89,15 @@ public class DataApiController {
         }
     }
 
+    @GetMapping("/ready")
+    public Boolean isReady(Principal prl) {
+        if (prl != null) {
+            var user = userRepository.findByUsername(prl.getName());
+            return user.isReady() || user.getRole().getName().equals("ROLE_ADMIN");
+        }
+        return true;
+    }
+
     @GetMapping("/subscription")
     public ResponseEntity<Subscription> getSubscription(
             @RequestParam(name = "eventId") Integer eventId,
@@ -132,26 +141,19 @@ public class DataApiController {
         }
     }
 
-    @GetMapping("/ready")
-    public Boolean isReady(Principal prl) {
-        Map<String, Boolean> result = new HashMap<>();
-        if (prl != null) {
-            var user = userRepository.findByUsername(prl.getName());
-            return user.isReady() || user.getRole().getName().equals("ROLE_ADMIN");
-        }
-        return true;
-    }
-
-    @PostMapping("/emails")
+    @PostMapping("/email")
     public void sendMails(@RequestBody Map<String, Object> body) {
-        User user = (User) body.get("user");
         String message = (String) body.get("message");
-
+        ArrayList<String> emails = (ArrayList<String>) body.get("emails");
+        String[] arr = new String[emails.size()];
+        for (int i = 0; i < emails.size(); i++) {
+            arr[i] = emails.get(i);
+        }
         var mail = new SimpleMailMessage();
-        mail.setFrom("otp@mail.com");
-        mail.setTo(user.getEmail());
-        mail.setSubject("Student event at OTP department");
+        mail.setTo(arr);
         mail.setText(message);
+        mail.setSubject("Новое сообщение от кафедры ВТП!");
+        mail.setFrom("khpi@Mail.com");
 
         emailSenderService.sendEmail(mail);
     }

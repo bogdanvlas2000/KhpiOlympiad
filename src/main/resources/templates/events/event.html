@@ -89,13 +89,6 @@
                     </div>
                 </div>
             </div>
-
-            <script type="text/javascript" src="/js/users.js"></script>
-            <script type="text/javascript" src="/js/loadSubscribers.js">
-            </script>
-            <script type="text/javascript" , src="/js/event.js">
-            </script>
-            <div th:insert="fragments::scripts"></div>
         </div>
     </main>
 </div>
@@ -106,11 +99,19 @@
             <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
             <h4>Сообщение получат участники текущего события</h4>
             <div>
-                <textarea placeholder="Введите текст сообщения..." autofocus="autofocus" required></textarea>
+                <textarea placeholder="Введите текст сообщения..." required></textarea>
                 <button class="btn1 blue">Отправить</button>
             </div>
         </div>
     </div>
 </div>
+<div th:insert="fragments::scripts"></div>
+<script type="text/javascript" src="/js/users.js"></script>
+<script type="text/javascript" src="/js/loadSubscribers.js">
+</script>
+<script type="text/javascript" , src="/js/event.js">
+</script>
+<script type="text/javascript" src="/js/emailForEvent.js"></script>
+
 </body>
 </html>

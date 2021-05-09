@@ -28,9 +28,4 @@ public class MainController {
         model.addAttribute("users", userRepository.findAll());
         return "/users/users";
     }
-
-    @GetMapping("/email")
-    public String emailPage() {
-        return "/users/email";
-    }
 }
