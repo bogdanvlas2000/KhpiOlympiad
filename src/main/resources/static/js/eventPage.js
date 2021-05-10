@@ -101,6 +101,16 @@ async function fillEventInfo() {
     date.innerText = event.eventDate.replace("T", ", ")
 }
 
+async function deleteEvent() {
+    if (confirm("Удалить это событие?")) {
+        let url = "/api/event/" + id
+        await fetch(url, {
+            method: "DELETE"
+        })
+        window.location.href = window.location.href.replace("/" + id, "");
+    }
+}
+
 async function onLoadEventPage() {
     await fillEventInfo()
 

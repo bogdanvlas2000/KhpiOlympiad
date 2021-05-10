@@ -16,7 +16,7 @@
                 <div class="header">
                     <div>
                         <div>
-                            <a href="/events/all">Назад</a>
+                            <a href="/events">Назад</a>
                         </div>
                         <div id="event_id" th:text="${event.id}" style="display: none"></div>
                         <h4 id="title"></h4>
@@ -27,12 +27,7 @@
                         <div class="dropdown-content">
                             <a href="#emailPopup" class="popup__link">Рассылка</a>
                             <a href="#eventPopup" class="popup__link">Изменить</a>
-
-                            <form id="do_edit" th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
-                                <a onclick="if(confirm('Удалить это событие?'))document.getElementById('do_edit').submit();">
-                                    Удалить
-                                </a>
-                            </form>
+                            <a href="#" onclick="deleteEvent()">Удалить</a>
                         </div>
                     </div>
 
@@ -89,9 +84,9 @@
 <div th:insert="fragments::emailPopup"></div>
 <div th:insert="fragments::eventPopup"></div>
 <div th:insert="fragments::scripts"></div>
-<script type="text/javascript" src="/js/users.js"></script>
-<script type="text/javascript" src="/js/emailPopup.js"></script>
-<script type="text/javascript" src="/js/eventPopup.js"></script>
-<script type="text/javascript" src="/js/eventPage.js"></script>
+<script type="text/javascript" src="/static/js/users.js"></script>
+<script type="text/javascript" src="/static/js/emailPopup.js"></script>
+<script type="text/javascript" src="/static/js/eventPopup.js"></script>
+<script type="text/javascript" src="/static/js/eventPage.js"></script>
 </body>
 </html>

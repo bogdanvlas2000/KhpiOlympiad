@@ -10,6 +10,7 @@ const applyButton = eventPopup.querySelector("button")
 applyButton.onclick = async function () {
     if (eventTitle.value == "" || eventDescription.value == "" || eventDate.value == "") {
         alert("Заполните всю информацию!")
+        return
     }
 
     let body = {
