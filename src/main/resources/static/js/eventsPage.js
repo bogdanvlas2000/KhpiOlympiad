@@ -43,7 +43,7 @@ function fillEvents(events) {
 
 async function search() {
     let word = document.getElementById("field").value
-    await fillUsers(await loadUsers(word))
+    await fillEvents(await loadEvents(word))
 }
 
 async function onLoadEventsPage() {
@@ -52,3 +52,6 @@ async function onLoadEventsPage() {
 }
 
 onLoadEventsPage()
+
+
+/// event popup scripts

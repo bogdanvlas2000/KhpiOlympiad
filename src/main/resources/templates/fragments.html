@@ -54,6 +54,21 @@
         </div>
     </div>
 </div>
+<div th:fragment="eventPopup" id="eventPopup" class="popup">
+    <a href="##" class="popup__area"></a>
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
+            <h4></h4>
+            <div>
+                <input type="text" class="title" name="">
+                <textarea placeholder="Описание события..." required></textarea>
+                Дата события: <input type="datetime-local">
+                <button class="btn1 blue"></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div th:fragment="scripts">
     <script type="text/javascript" src="/js/dropdown.js"></script>

@@ -4,7 +4,6 @@
 <head th:insert="fragments::headerfiles">
 </head>
 <head>
-    <link rel="stylesheet" href="/styles/content.css">
     <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <body>
@@ -19,7 +18,7 @@
                 <div class="header" sec:authorize="hasRole('ROLE_USER')">
                     <div>
                         <div>
-                            <a href="#" onclick="history.back()">Назад</a>
+                            <a href="/">Назад</a>
                         </div>
                         <h4>Профиль пользователя <span th:text="${user.username}"></span></h4>
                     </div>
@@ -42,7 +41,7 @@
                     <div class="dropdown">
                         <button class="dropbtn">Действия</button>
                         <div class="dropdown-content">
-                            <a href="#">Отправить письмо</a>
+                            <a href="#">Тут будут действия</a>
                         </div>
                     </div>
                 </div>

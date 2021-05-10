@@ -78,6 +78,33 @@ public class DataApiController {
         return events;
     }
 
+    @GetMapping("/event")
+    public Event getEvent(@RequestParam Integer id) {
+        var event = eventRepository.findById(id).get();
+        return event;
+    }
+
+    @PostMapping("/event")
+    public Event createEvent(@RequestBody Map<String, String> body) {
+        var event = new Event();
+        event.setTitle(body.get("title"));
+        event.setDescription(body.get("description"));
+        event.setCreatedDate(LocalDateTime.now());
+        event.setLastModifiedDate(LocalDateTime.now());
+        event.setEventDate(LocalDateTime.parse(body.get("date")));
+        return eventRepository.save(event);
+    }
+
+    @PutMapping("/event")
+    public Event putEvent(@RequestBody Map<String, String> body) {
+        var event = eventRepository.findById(Integer.parseInt(body.get("id"))).get();
+        event.setTitle(body.get("title"));
+        event.setDescription(body.get("description"));
+        event.setLastModifiedDate(LocalDateTime.now());
+        event.setEventDate(LocalDateTime.parse(body.get("date")));
+        return eventRepository.save(event);
+    }
+
     @GetMapping("/users")
     public List<User> getUsers(@RequestParam(name = "word", required = false) String word) {
         if (word == null) {

@@ -1,9 +1,13 @@
 const subscribeButton = document.getElementById("subscribe_btn")
-const eventId = document.getElementById("event_id").innerText
+const id = document.getElementById("event_id").innerText
+const title = document.getElementById("title")
+const description = document.getElementById("description")
+const modified = document.getElementById("modified")
+const date = document.getElementById("date")
 const message = document.getElementById("message")
 
 async function subscribe() {
-    let body = {eventId: eventId}
+    let body = {eventId: id}
     let url = "/api/subscription"
     let response = await fetch(url, {
         method: "POST",
@@ -19,7 +23,7 @@ async function subscribe() {
 }
 
 async function unsubscribe() {
-    let body = {eventId: eventId}
+    let body = {eventId: id}
     let url = "/api/subscription"
     let response = await fetch(url, {
         method: "DELETE",
@@ -48,8 +52,8 @@ async function subscribeListener() {
 
 
 async function getSubscription() {
-    let body = {eventId: eventId}
-    let url = "/api/subscription?eventId=" + eventId
+    let body = {eventId: id}
+    let url = "/api/subscription?eventId=" + id
     let response = await fetch(url)
     if (response.status == 200) {
         let result = await response.json()
@@ -75,6 +79,44 @@ async function loadSubscribeButton() {
     }
 }
 
-if (document.getElementById("user_block")) {
-    loadSubscribeButton()
+let subscribers = []
+
+async function loadSubscribers() {
+    let eventId = document.getElementById("event_id").innerText
+    let url = `/api/subscribers?eventId=` + eventId
+    let response = await fetch(url)
+    if (response.status == 200) {
+        let res = await response.json()
+        return res
+    }
 }
+
+async function fillEventInfo() {
+    let url = "/api/event?id=" + id
+    let response = await fetch(url)
+    let event = await response.json()
+    title.innerText = event.title
+    description.value = event.description
+    modified.innerText = event.lastModifiedDate.replace("T", ", ")
+    date.innerText = event.eventDate.replace("T", ", ")
+}
+
+async function onLoadEventPage() {
+    await fillEventInfo()
+
+    popupHeader.innerText = "Измените это событие"
+    applyButton.innerText = "Изменить"
+    eventTitle.value = title.innerText
+    eventDescription.value = description.value
+    eventDate.value = date.innerText.replace(", ", "T")
+
+    if (document.getElementById("user_block")) {
+        loadSubscribeButton()
+    }
+    if (document.getElementById("admin_block")) {
+        subscribers = await loadSubscribers()
+        fillUsers(subscribers)
+    }
+}
+
+onLoadEventPage()
