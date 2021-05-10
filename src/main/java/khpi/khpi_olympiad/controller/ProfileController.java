@@ -1,7 +1,6 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.profile.Profile;
-import khpi.khpi_olympiad.model.profile.University;
 import khpi.khpi_olympiad.repository.auth.UserRepository;
 import khpi.khpi_olympiad.repository.profile.CityRepository;
 import khpi.khpi_olympiad.repository.profile.ProfileRepository;
@@ -40,32 +39,7 @@ public class ProfileController {
         this.cityRepository = cityRepository;
     }
 
-    @GetMapping
-    public String profile(Model model, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        if (user.getProfile().getImage() != null) {
-            var image = Base64.getMimeEncoder().encodeToString(user.getProfile().getImage());
-            model.addAttribute("image", image);
-        }
 
-        model.addAttribute("user", user);
-        model.addAttribute("profile", user.getProfile());
-
-
-        boolean isReady = user.checkReady();
-        if (isReady) {
-            var university = user.getProfile().getUniversity();
-            var city = university.getCity().getUkrName();
-
-
-            model.addAttribute("university", university.getUkrName());
-            model.addAttribute("city", city);
-            model.addAttribute("ready", true);
-        } else {
-            model.addAttribute("not_ready", true);
-        }
-        return "/profile/profile";
-    }
 
     @GetMapping("/edit")
     public String editProfile(Model model, Principal prl) {

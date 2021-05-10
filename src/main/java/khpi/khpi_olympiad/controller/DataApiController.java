@@ -79,7 +79,6 @@ public class DataApiController {
     }
 
 
-
     @GetMapping("/users")
     public List<User> getUsers(@RequestParam(name = "word", required = false) String word) {
         if (word == null) {
@@ -91,12 +90,12 @@ public class DataApiController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<User> getUser(@RequestParam("user_id") Integer userId) {
-        var user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    public ResponseEntity<User> getCurrentUser(Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        if (user.getRole().getName().equals("ROLE_USER")) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

@@ -3,9 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments::headerfiles">
 </head>
-<head>
-    <link rel="stylesheet" href="/styles/content.css">
-</head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header th:replace="fragments::topnav">
@@ -15,12 +12,14 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class="page">
-                <h1 th:text="${message}"></h1>
-                <h2>This is your home page</h2>
-                <h3>Here you can get information about new events of our department</h3>
-                <div>Some long and boring description here</div>
+                <h3 th:text="${message}"></h3>
+                <h4>Это домашняя страница</h4>
                 <div>
-                    <img src="/static/img/student.jpg">
+                    Здесь будет длинная и познавательная инструкция,
+                    как пользоваться этим чудесным сайтом
+                </div>
+                <div>
+                    <img src="/img/student.jpg">
                 </div>
             </div>
         </div>

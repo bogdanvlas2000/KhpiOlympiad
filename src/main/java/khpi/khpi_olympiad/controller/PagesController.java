@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
+import java.util.Base64;
 import java.util.stream.Collectors;
 
 @Controller
@@ -67,5 +68,32 @@ public class PagesController {
     public String usersPage(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "/pages/users";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model, Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+        if (user.getProfile().getImage() != null) {
+            var image = Base64.getMimeEncoder().encodeToString(user.getProfile().getImage());
+            model.addAttribute("image", image);
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("profile", user.getProfile());
+
+
+        boolean isReady = user.checkReady();
+        if (isReady) {
+            var university = user.getProfile().getUniversity();
+            var city = university.getCity().getUkrName();
+
+
+            model.addAttribute("university", university.getUkrName());
+            model.addAttribute("city", city);
+            model.addAttribute("ready", true);
+        } else {
+            model.addAttribute("not_ready", true);
+        }
+        return "/pages/profile";
     }
 }
