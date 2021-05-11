@@ -73,7 +73,7 @@ async function setCityListener(selected) {
     const optionsList = optionsContainer.querySelectorAll(".option")
     optionsList.forEach(o => {
         o.addEventListener("click", () => {
-            universitySelected.innerText = "Select university"
+            universitySelected.innerText = "Выберите ВУЗ..."
             document.getElementById("universityName").value = ""
             reloadUniversities()
         })
@@ -100,11 +100,11 @@ async function reloadUniversities() {
 }
 
 async function loadCitiesAndUniversities() {
-    let currentCity = document.getElementById("cityName").value
+    let currentCity = cityField.value
     if (currentCity) {
         citySelected.innerHTML = currentCity
     }
-    let currentUniversity = document.getElementById("universityName").value
+    let currentUniversity = universityField.value
     if (currentUniversity) {
         universitySelected.innerHTML = currentUniversity
     }
@@ -115,4 +115,3 @@ async function loadCitiesAndUniversities() {
 
 }
 
-loadCitiesAndUniversities()

@@ -7,12 +7,16 @@ const gender = document.getElementById("gender")
 const age = document.getElementById("age")
 const image = document.getElementById("image")
 
+const profilePopup = document.getElementById("profilePopup")
 const nameField = document.getElementById("nameField")
 const cityField = document.getElementById("cityName")
 const universityField = document.getElementById("universityName")
+const universityId = document.getElementById("universityId")
 const ageField = document.getElementById("ageField")
 const genderField = document.getElementsByName("gender")
 const imageField = document.getElementsByName("imageField")
+
+const applyButton = profilePopup.querySelector("button")
 
 async function fillUserInfo() {
     let response = await fetch("/api/user")
@@ -24,8 +28,13 @@ async function fillUserInfo() {
         nameField.value = user.profile.name
 
         city.innerText = user.profile.university.city.ukrName
+        cityField.value = user.profile.university.city.ukrName
 
         university.innerText = user.profile.university.ukrName
+        universityField.value = user.profile.university.ukrShortName
+        universityId.value = user.profile.university.id
+
+        await loadCitiesAndUniversities()
 
         age.innerText = user.profile.age
         ageField.value = user.profile.age
@@ -39,10 +48,36 @@ async function fillUserInfo() {
 
         if (user.profile.image) {
             image.src = 'data:image/jpeg;base64,' + user.profile.image
-            imageField.value = user.profile.image
         }
 
     }
 }
 
 fillUserInfo()
+
+applyButton.onclick = async function () {
+    if (nameField.value == "" || cityField.value == ""
+        || universityField.value == "" || ageField.value == "" ||
+        !(genderField[0].checked || genderField[1].checked)
+    ) {
+        alert("Запрлните необходимую информацию!")
+    }
+    let url = "/api/profile"
+
+
+    let body = {
+        name: nameField.value,
+        universityId: universityId.value,
+        age: ageField.value
+    }
+    for (let i = 0; i < genderField.length; i++) {
+        if (genderField[i].checked) {
+            body.gender = genderField[i].value
+        }
+    }
+    if (imageField.value) {
+        body.image = imageField.value
+    }
+
+    console.log(body)
+}
