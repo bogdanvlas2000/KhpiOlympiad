@@ -15,30 +15,22 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class="page">
-                <div class="header" sec:authorize="hasRole('ROLE_USER')">
+                <div class="header">
                     <div>
                         <div>
                             <a href="/">Назад</a>
                         </div>
                         <h4>Профиль пользователя <span th:text="${user.username}"></span></h4>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" sec:authorize="hasRole('ROLE_USER')">
                         <button class="dropbtn">Изменить</button>
                         <div class="dropdown-content">
+                            <a href="#profilePopup">Профиль</a>
                             <a href="/profile/edit">Информация профиля</a>
                             <a href="/profile/psw_change">Пароль</a>
                         </div>
                     </div>
-                </div>
-
-                <div class="header" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <div>
-                        <div>
-                            <a href="#" onclick="history.back()">Назад</a>
-                        </div>
-                        <h4>Профиль пользователя <span th:text="${user.username}"></span></h4>
-                    </div>
-                    <div class="dropdown">
+                    <div class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <button class="dropbtn">Действия</button>
                         <div class="dropdown-content">
                             <a href="#">Тут будут действия</a>
@@ -58,6 +50,7 @@
                                 <div id="name"></div>
                                 <div id="university"></div>
                                 <div id="city"></div>
+                                <div id="gender" style="display: none"></div>
                                 <div>Возраст: <span id="age"></span></div>
                             </div>
                         </div>
@@ -83,7 +76,73 @@
         </div>
     </main>
 </div>
+<div id="profilePopup" class="popup">
+    <a href="##" class="popup__area"></a>
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
+            <h4>Заполните информацию профиля</h4>
+            <div class="inputs">
+                <div>Имя:
+                    <input type="text"
+                           id="nameField"
+                           placeholder="Введите имя..."
+                           pattern="[a-zA-ZА-Яа-яЁё ]+">
+                </div>
+                <div>
+                    Город
+                    <div id="citySelectBox" class="select-box">
+                        <div id="cityOptionsContainer" class="options-container">
+                        </div>
+                        <div id="citySelected" class="selected">
+                            Выбрать город
+                        </div>
+                        <div class="search-box">
+                            <input type="text" class="search-field" placeholder="Ввод...">
+                        </div>
+                        <input type="hidden" name="cityName" id="cityName">
+                        <input type="hidden" name="cityId" id="cityId">
+                    </div>
+                </div>
+                <div>
+                    ВУЗ
+                    <div id="universitySelectBox" class="select-box">
+                        <div id="universityOptionsContainer" class="options-container">
+                        </div>
+                        <div id="universitySelected" class="selected">
+                            Выбрать ВУЗ
+                        </div>
+                        <div class="search-box">
+                            <input type="text" class="search-field" placeholder="Ввод...">
+                        </div>
+                        <input type="hidden" name="universityName" id="universityName">
+                        <input type="hidden" name="universityId" id="universityId">
+                    </div>
+                </div>
+                <div>
+                    Возраст <input type="number" id="ageField" min="1" max="150">
+                </div>
+                <div class="row_block" style="justify-content: space-between">
+                    <div>
+                        Пол:
+                        <input id="m" type="radio" name="gender" value="male" required> М
+                        <input id="f" type="radio" name="gender" value="female" required> Ж
+                    </div>
+                    <div>
+                        Выбрать изображение:
+                        <input type="file" id="imageField">
+                    </div>
+                </div>
+                <button class="btn1 blue">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 <div th:insert="fragments::scripts"></div>
 <script type="text/javascript" src="/js/profilePage.js"></script>
+<script type="application/javascript" src="/js/selectUniversity.js"></script>
+<script type="application/javascript" src="/js/selectbox.js"></script>
 </body>
 </html>

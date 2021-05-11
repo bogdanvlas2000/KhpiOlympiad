@@ -89,7 +89,10 @@ async function reloadUniversities() {
         console.log(universities)
         const universityOptionsContainer = document.getElementById("universityOptionsContainer")
         await clearChildren(universityOptionsContainer)
-        await fillElements(universityOptionsContainer, universities.map(u => u.id), universities.map(u => u.ukrShortName))
+        await fillElements(universityOptionsContainer,
+            universities.map(u => u.id),
+            universities.map(u => u.ukrShortName),
+            universities.map(u => u.ukrName))
         await setEventListeners(universitySelected)
         return universities
     }

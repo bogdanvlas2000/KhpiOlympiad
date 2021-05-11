@@ -91,7 +91,7 @@ async function setEventListeners(selected) {
 }
 
 
-async function fillElements(optionsContainer, ids, elements) {
+async function fillElements(optionsContainer, ids, elements, titles) {
     for (let i = 0; i < ids.length; i++) {
         let elementOption = document.createElement('div')
         elementOption.classList.add("option")
@@ -106,12 +106,16 @@ async function fillElements(optionsContainer, ids, elements) {
         let label = document.createElement('label')
         label.htmlFor = input.id
         label.innerHTML = elements[i]
+        if (titles) {
+            label.title = titles[i]
+        }
         elementOption.appendChild(label)
         elementOption.appendChild(id)
 
         optionsContainer.appendChild(elementOption)
     }
 }
+
 async function clearChildren(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.lastChild);
