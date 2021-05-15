@@ -22,6 +22,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
             "u.role.name = 'ROLE_USER' AND u.ready = TRUE ")
     public List<User> findReadyUsers();
 
+    public List<User> findByRoleName(String roleName);
+
 
     @Query("SELECT u FROM User u " +
             "WHERE u.role.name = 'ROLE_USER' AND (" +

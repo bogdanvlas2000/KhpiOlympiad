@@ -86,7 +86,7 @@ public class DataApiController {
     @GetMapping("/users")
     public List<User> getUsers(@RequestParam(name = "word", required = false) String word) {
         if (word == null) {
-            var users = userRepository.findReadyUsers();
+            var users = userRepository.findByRoleName("ROLE_USER");
             return users;
         } else {
             return userRepository.search("%" + word + "%");

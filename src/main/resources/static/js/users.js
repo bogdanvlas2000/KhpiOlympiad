@@ -1,4 +1,8 @@
 let users = []
+const options = document.getElementsByName("options")
+for (let i = 0; i < options.length; i++) {
+    options[i].onchange = search
+}
 
 async function loadUsers(param) {
     let url = `/api/users`
@@ -14,7 +18,8 @@ function fillUsers(users) {
     while (root.firstChild) {
         root.removeChild(root.lastChild);
     }
-    for (let u of users) {
+    for (let i = 0; i < users.length; i++) {
+        let u = users[i]
         let tr = document.createElement("tr")
         let username = document.createElement("td")
         username.innerText = u.username
@@ -38,9 +43,46 @@ function fillUsers(users) {
     }
 }
 
+async function search() {
+    let option
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            option = options[i].value
+        }
+    }
+    let filtered
+    if (option == "all") {
+        filtered = users
+    }
+    if (option == "ready") {
+        filtered = users.filter(u => u.ready)
+    }
+    if (option == "not_ready") {
+        filtered = users.filter(u => !u.ready)
+    }
+
+    let word = document.getElementById("field").value
+    let pattern = ".*" + word + ".*"
+    filtered = filtered.filter(u => {
+        let answ1 = u.username.toLowerCase().match(pattern) ||
+            u.email.toLowerCase().match(pattern)
+        if (u.ready) {
+            return answ1 ||
+                u.profile.name.toLowerCase().match(pattern) ||
+                u.profile.university.ukrName.toLowerCase().match(pattern) ||
+                u.profile.university.ukrShortName.toLowerCase().match(pattern) ||
+                u.profile.university.engName.toLowerCase().match(pattern) ||
+                u.profile.university.city.ukrName.toLowerCase().match(pattern)
+        }
+        return answ1
+    })
+    await fillUsers(filtered)
+}
+
 async function onLoadUsersPage() {
     users = await loadUsers()
     fillUsers(users)
 }
+
 
 
