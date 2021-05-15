@@ -41,6 +41,6 @@ public class UserController {
         } else {
             model.addAttribute("not_ready", true);
         }
-        return "/main/resources/templates/pages/profile.html";
+        return "/pages/profile.html";
     }
 }

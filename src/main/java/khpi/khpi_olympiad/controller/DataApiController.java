@@ -14,10 +14,14 @@ import khpi.khpi_olympiad.repository.profile.UniversityRepository;
 import khpi.khpi_olympiad.service.EmailSenderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -89,14 +93,43 @@ public class DataApiController {
         }
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<User> getCurrentUser(Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+        var user = userRepository.findById(id).get();
         if (user.getRole().getName().equals("ROLE_USER")) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    @PostMapping("/profile")
+    public User user(@RequestBody Map<String, Object> body, Principal prl) {
+        var user = userRepository.findByUsername(prl.getName());
+
+        String name = (String) body.get("name");
+        String universityId = (String) body.get("universityId");
+        University university = universityRepository.findById(Integer.parseInt(universityId)).get();
+        String gender = (String) body.get("gender");
+        Integer age = Integer.parseInt((String) body.get("age"));
+
+        user.getProfile().setName(name);
+        user.getProfile().setUniversity(university);
+        user.getProfile().setAge(age);
+        user.getProfile().setGender(gender);
+
+        if (body.containsKey("image")) {
+            var image = body.keySet();
+        }
+        return userRepository.save(user);
+    }
+
+    @PostMapping("/loadAvatar")
+    public void uploadAvatar(@RequestParam MultipartFile avatar, Principal prl) throws IOException {
+        byte[] bytes = avatar.getBytes();
+        var user = userRepository.findByUsername(prl.getName());
+        user.getProfile().setImage(bytes);
+        userRepository.save(user);
     }
 
     @GetMapping("/ready")
@@ -167,4 +200,5 @@ public class DataApiController {
 
         emailSenderService.sendEmail(mail);
     }
+
 }

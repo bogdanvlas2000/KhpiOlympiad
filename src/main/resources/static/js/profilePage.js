@@ -1,3 +1,4 @@
+const id = document.getElementById("id")
 const username = document.getElementById("username")
 const email = document.getElementById("email")
 const name = document.getElementById("name")
@@ -14,12 +15,22 @@ const universityField = document.getElementById("universityName")
 const universityId = document.getElementById("universityId")
 const ageField = document.getElementById("ageField")
 const genderField = document.getElementsByName("gender")
-const imageField = document.getElementsByName("imageField")
+const imageField = document.getElementById("imageField")
+
+function encodeImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        console.log('RESULT', reader.result)
+        imageBinary.value = reader.result
+    }
+    reader.readAsDataURL(file);
+}
 
 const applyButton = profilePopup.querySelector("button")
 
 async function fillUserInfo() {
-    let response = await fetch("/api/user")
+    let response = await fetch("/api/user/" + id.innerText)
     let user = await response.json()
     username.innerText = user.username
     email.innerText = user.email
@@ -49,7 +60,6 @@ async function fillUserInfo() {
         if (user.profile.image) {
             image.src = 'data:image/jpeg;base64,' + user.profile.image
         }
-
     }
 }
 
@@ -62,8 +72,6 @@ applyButton.onclick = async function () {
     ) {
         alert("Запрлните необходимую информацию!")
     }
-    let url = "/api/profile"
-
 
     let body = {
         name: nameField.value,
@@ -75,9 +83,30 @@ applyButton.onclick = async function () {
             body.gender = genderField[i].value
         }
     }
-    if (imageField.value) {
-        body.image = imageField.value
-    }
+    console.log(imageField)
 
+    let files = imageField.files
+    if (files.length > 0) {
+        let formData = new FormData()
+        formData.append("avatar", files[0])
+        let response = await fetch("/api/loadAvatar", {
+            method: 'POST',
+            body: formData
+        })
+    }
     console.log(body)
+
+    let url = "/api/profile"
+
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(body)
+    })
+
+    alert("Информация профиля сохранена!")
+    window.location.href = window.location.href.replace("profilePopup", "");
+    fillUserInfo()
 }

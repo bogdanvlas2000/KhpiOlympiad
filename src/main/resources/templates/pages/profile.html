@@ -17,9 +17,6 @@
             <div class="page">
                 <div class="header">
                     <div>
-                        <div>
-                            <a href="/">Назад</a>
-                        </div>
                         <h4>Профиль пользователя <span th:text="${user.username}"></span></h4>
                     </div>
                     <div class="dropdown" sec:authorize="hasRole('ROLE_USER')">
@@ -43,10 +40,11 @@
                     </div>
                     <div class="column_block card_block" style="justify-content: space-between">
                         <div>
+                            <div id="id" th:text="${user.id}" style="display: none"></div>
                             <div id="username"></div>
                             <div id="email"></div>
                             <hr>
-                            <div th:if="${ready}">
+                            <div th:if="${user.ready}">
                                 <div id="name"></div>
                                 <div id="university"></div>
                                 <div id="city"></div>
@@ -86,6 +84,7 @@
                 <div>Имя:
                     <input type="text"
                            id="nameField"
+                           name="name"
                            placeholder="Введите имя..."
                            pattern="[a-zA-ZА-Яа-яЁё ]+">
                 </div>
@@ -130,10 +129,10 @@
                     </div>
                     <div>
                         Выбрать изображение:
-                        <input type="file" id="imageField">
+                        <input type="file" name="image" id="imageField"/>
                     </div>
                 </div>
-                <button class="btn1 blue">Сохранить</button>
+                <button type="submit" class="btn1 blue">Сохранить</button>
             </div>
         </div>
     </div>

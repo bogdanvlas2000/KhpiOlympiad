@@ -38,6 +38,10 @@ function fillEvents(events) {
         let date = event.querySelector("span")
         date.innerText = "Событие состоится: " + e.eventDate.split("T")[0]
         root.appendChild(event)
+
+        eventTitle.value = ""
+        eventDescription.value = ""
+        eventDate.value = ""
     }
 }
 
