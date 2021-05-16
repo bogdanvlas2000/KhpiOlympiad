@@ -21,7 +21,7 @@
                     </div>
                     <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
                         <button class="dropbtn">Действия</button>
-                        <div class="dropdown-content">
+                        <div id="dropdown-content" class="dropdown-content">
                             <a href="#emailPopup" class="popup__link">Рассылка</a>
                             <a href="#eventPopup" class="popup__link">Изменить</a>
                             <a href="#" onclick="deleteEvent()">Удалить</a>

@@ -28,6 +28,20 @@ public class EventController {
         return event.getEventStatus().equals(EventStatus.ACTIVE);
     }
 
+    @PostMapping("/active")
+    public Event activate(@RequestBody Map<String, Integer> body) {
+        var event = eventRepository.findById(body.get("id")).get();
+        event.setEventStatus(EventStatus.ACTIVE);
+        return eventRepository.save(event);
+    }
+
+    @DeleteMapping("/active")
+    public Event deactivate(@RequestBody Map<String, Integer> body) {
+        var event = eventRepository.findById(body.get("id")).get();
+        event.setEventStatus(EventStatus.NOT_ACTIVE);
+        return eventRepository.save(event);
+    }
+
     @PostMapping
     public Event createEvent(@RequestBody Map<String, String> body) {
         var event = new Event();
