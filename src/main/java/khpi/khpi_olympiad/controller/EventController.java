@@ -1,6 +1,7 @@
 package khpi.khpi_olympiad.controller;
 
 import khpi.khpi_olympiad.model.event.Event;
+import khpi.khpi_olympiad.model.event.EventStatus;
 import khpi.khpi_olympiad.repository.event.EventRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ public class EventController {
         return event;
     }
 
+    @GetMapping("/active")
+    public boolean isActive(@RequestParam Integer id) {
+        var event = eventRepository.findById(id).get();
+        return event.getEventStatus().equals(EventStatus.ACTIVE);
+    }
+
     @PostMapping
     public Event createEvent(@RequestBody Map<String, String> body) {
         var event = new Event();
@@ -29,6 +36,7 @@ public class EventController {
         event.setCreatedDate(LocalDateTime.now());
         event.setLastModifiedDate(LocalDateTime.now());
         event.setEventDate(LocalDateTime.parse(body.get("date")));
+        event.setEventStatus(EventStatus.ACTIVE);
         return eventRepository.save(event);
     }
 

@@ -28,6 +28,8 @@ public class Event {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private LocalDateTime eventDate;
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
 
     @ManyToMany(mappedBy = "events")
     @ToString.Exclude

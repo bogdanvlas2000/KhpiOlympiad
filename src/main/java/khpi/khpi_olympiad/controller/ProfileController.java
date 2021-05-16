@@ -41,45 +41,7 @@ public class ProfileController {
 
 
 
-    @GetMapping("/edit")
-    public String editProfile(Model model, Principal prl) {
-        var user = userRepository.findByUsername(prl.getName());
-        Profile profile = user.getProfile() != null ? user.getProfile() : new Profile();
-        model.addAttribute("profile", profile);
-        model.addAttribute("username", user.getUsername());
-        var university = profile.getUniversity();
-        if (university != null) {
-            model.addAttribute("cityName", university.getCity().getUkrName());
-            model.addAttribute("universityName", university.getUkrShortName());
-        }
-        return "/profile/edit";
-    }
 
-
-    @PostMapping("/edit")
-    public String changeProfile(@ModelAttribute("profile") Profile profile, Principal prl,
-                                @RequestParam("imageFile") MultipartFile image,
-                                @RequestParam("cityName") String cityName,
-                                @RequestParam("universityId") int universityId
-    ) throws IOException {
-        var user = userRepository.findByUsername(prl.getName());
-        if (!image.isEmpty()) {
-            profile.setImage(image.getBytes());
-        }
-        var city = cityRepository.findByUkrName(cityName);
-        var university = universityRepository.findById(universityId).get();
-        if (university != null) {
-            profile.setUniversity(university);
-            university.addUserProfile(profile);
-        }
-        user.setProfile(profile);
-        if (profile.isComplete()) {
-            user.setReady(true);
-        }
-        profileRepository.save(profile);
-        userRepository.save(user);
-        return "redirect:/profile";
-    }
 
     @GetMapping("/psw_change")
     public String changePassword(Model model, @ModelAttribute("error") String error) {

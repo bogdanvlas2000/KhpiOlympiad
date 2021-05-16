@@ -6,6 +6,8 @@ const modified = document.getElementById("modified")
 const date = document.getElementById("date")
 const message = document.getElementById("message")
 
+let event
+
 async function subscribe() {
     let body = {eventId: id}
     let url = "/api/subscription"
@@ -94,11 +96,16 @@ async function loadSubscribers() {
 async function fillEventInfo() {
     let url = "/api/event?id=" + id
     let response = await fetch(url)
-    let event = await response.json()
+    event = await response.json()
     title.innerText = event.title
     description.value = event.description
     modified.innerText = event.lastModifiedDate.replace("T", ", ")
     date.innerText = event.eventDate.replace("T", ", ")
+    if (event.eventStatus != "ACTIVE") {
+        message.innerText = "Это событие неактивно!"
+        message.style.display = "block"
+        subscribeButton.style.display = "none"
+    }
 }
 
 async function deleteEvent() {
@@ -120,12 +127,14 @@ async function onLoadEventPage() {
     eventDescription.value = description.value
     eventDate.value = date.innerText.replace(", ", "T")
 
-    if (document.getElementById("user_block")) {
-        loadSubscribeButton()
-    }
-    if (document.getElementById("admin_block")) {
-        subscribers = await loadSubscribers()
-        fillUsers(subscribers)
+    if (event.eventStatus == "ACTIVE") {
+        if (document.getElementById("user_block")) {
+            loadSubscribeButton()
+        }
+        if (document.getElementById("admin_block")) {
+            subscribers = await loadSubscribers()
+            fillUsers(subscribers)
+        }
     }
 }
 
