@@ -108,23 +108,6 @@ async function fillEventInfo() {
         if (subscribeButton) {
             subscribeButton.style.display = "none"
         }
-        let activate = document.createElement("a")
-        activate.href = "#"
-        activate.innerText = "Активировать"
-        activate.onclick = activateEvent
-        dropdownContent.appendChild(activate)
-    }
-    if (event.eventStatus == "ACTIVE") {
-        message.innerText = ""
-        message.style.display = "none"
-        if (subscribeButton) {
-            subscribeButton.style.display = "block"
-        }
-        let deactivate = document.createElement("a")
-        deactivate.href = "#"
-        deactivate.innerText = "Деактивировать"
-        deactivate.onclick = deactivateEvent
-        dropdownContent.appendChild(deactivate)
     }
 }
 
@@ -155,36 +138,6 @@ async function onLoadEventPage() {
             subscribers = await loadSubscribers()
             fillUsers(subscribers)
         }
-    }
-}
-
-async function activateEvent() {
-    if (confirm("Активировать событие?")) {
-        let body = {id: event.id}
-        let response = await fetch("/api/event/active", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(body)
-        })
-        dropdownContent.removeChild(dropdownContent.lastChild)
-        onLoadEventPage()
-    }
-}
-
-async function deactivateEvent() {
-    if (confirm("Деактивировать событие?")) {
-        let body = {id: event.id}
-        let response = await fetch("/api/event/active", {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(body)
-        })
-        dropdownContent.removeChild(dropdownContent.lastChild)
-        onLoadEventPage()
     }
 }
 
