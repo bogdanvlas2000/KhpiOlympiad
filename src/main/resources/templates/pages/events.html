@@ -14,7 +14,7 @@
         <div class="page-content">
             <div class="page">
                 <div class="header">
-                    <h4>События</h4>
+                    <h4>Події</h4>
                     <div class="row_block">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
                             <label class="mdl-button mdl-js-button mdl-button--icon" for="field">
@@ -28,14 +28,11 @@
                         </div>
                         <div sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
                             <button class="dropbtn">
-                                Действия
+                                Опції
                             </button>
                             <div class="dropdown-content">
                                 <a href="#eventPopup">
-                                    Создать событие
-                                </a>
-                                <a href="#">
-                                    Тут будут другие
+                                    Створити подію
                                 </a>
                             </div>
                         </div>
@@ -52,8 +49,8 @@
 <script type="text/javascript" src="/js/eventPopup.js"></script>
 <script type="text/javascript" src="/js/eventsPage.js"></script>
 <script type="text/javascript">
-    popupHeader.innerText = "Создайте новое событие"
-    applyButton.innerText = "Создать"
+    popupHeader.innerText = "Створити нову подію"
+    applyButton.innerText = "Створити"
 </script>
 </body>
 

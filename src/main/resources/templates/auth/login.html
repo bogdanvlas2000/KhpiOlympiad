@@ -7,25 +7,24 @@
 <body>
 <div class="wrapper">
 
-    <div th:if="${param.error}" class="error">Неверные логин или пароль!</div>
-    <div th:if="${param.access}" class="error">Нет прав доступа!</div>
-    <h2>Войдите в аккаунт</h2>
+    <div th:if="${param.error}" class="error">Неправильні логін або пароль!</div>
+    <div th:if="${param.access}" class="error">Не вистачає прав!</div>
+    <h2>Увійдіть до акаунту</h2>
     <form name="f" th:action="@{/login}" method="post">
-
-        <label>Логин
-            <input type="text" placeholder="Логин" name="username" id="username"
+        <label>Логін
+            <input type="text" placeholder="Логін" name="username" id="username"
                    onkeyup="copyUsername()" required="required"> </label>
         <label>Пароль
             <input type="password"
                    placeholder="Пароль" name="password" required="required">
         </label>
-        <button type="submit">Войти</button>
+        <button type="submit">Увійти</button>
     </form>
     <form action="/psw_forgot" method="post">
         <input type="hidden" name="username" id="copy_username">
-        <input type="submit" value="Забыл пароль">
+        <input type="submit" value="Забув пароль">
     </form>
-    <div><a href="/signup">Нет аккаунта? Зарегистрируйтесь</a></div>
+    <div><a href="/signup">Немає акаунту? Зареєструйтесь</a></div>
 </div>
 <script>
     function copyUsername() {

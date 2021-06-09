@@ -12,14 +12,36 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class="page">
-                <h3 th:text="${message}"></h3>
-                <h4>Это домашняя страница</h4>
-                <div>
-                    Здесь будет длинная и познавательная инструкция,
-                    как пользоваться этим чудесным сайтом
-                </div>
-                <div>
-                    <img src="/img/student.jpg">
+                <div class="row_block" style="width: 100%; justify-content: space-around">
+                    <div>
+                        Щоб прийняти участь в заході, виконайте наступні кроки:
+                        <ol>
+                            <li>
+                                <a href="/signup">Зареєструйтеся</a> чи
+                                <a href="/login">увійдіть до акаунту</a>
+                            </li>
+                            <li>
+                                Підтвердіть поштову адресу
+                            </li>
+                            <li>
+                                Заповніть необхідну інформацію
+                                <a href="/profile">профіля</a>
+                            </li>
+                            <li>
+                                Перейдіть до вкладки
+                                <a href="/events">"Події"</a>
+                            </li>
+                            <li>
+                                Перейдіть до активної події та натисніть кнопку "Підписатися"
+                            </li>
+                            <li>
+                                Чекайте від нас листа з інформацією про подію
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <img style="width: 300px" src="/img/khpi.png">
+                    </div>
                 </div>
             </div>
         </div>

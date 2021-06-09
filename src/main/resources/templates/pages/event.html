@@ -17,19 +17,19 @@
                     <div>
                         <div id="event_id" th:text="${event.id}" style="display: none"></div>
                         <h4 id="title"></h4>
-                        <div id="message" style="display: none">Вы подписаны на это событие!</div>
+                        <div id="message" style="display: none">Ви підписані на цю подію!</div>
                     </div>
                     <div id="admin_block" sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">
-                        <button class="dropbtn">Действия</button>
+                        <button class="dropbtn">Опції</button>
                         <div id="dropdown-content" class="dropdown-content">
-                            <a href="#emailPopup" class="popup__link">Рассылка</a>
-                            <a href="#eventPopup" class="popup__link">Изменить</a>
-                            <a href="#" onclick="deleteEvent()">Удалить</a>
+                            <a href="#emailPopup" class="popup__link">Розсилка</a>
+                            <a href="#eventPopup" class="popup__link">Змінити</a>
+                            <a href="#" onclick="deleteEvent()">Видалити</a>
                         </div>
                     </div>
 
                     <div id="user_block" sec:authorize="hasRole('ROLE_USER')">
-                        <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Подписаться <i
+                        <button id="subscribe_btn" class="btn1" onclick="subscribeListener()">Підписатися <i
                                 class="fa fa-check"></i>
                         </button>
                     </div>
@@ -42,9 +42,9 @@
                         <table class="mdl-data-table">
                             <thead>
                             <tr>
-                                <th>Дата создания</th>
-                                <th>Последнее изменение</th>
-                                <th>Состоится</th>
+                                <th>Дата створення</th>
+                                <th>Остання модифікація</th>
+                                <th>Дата проведення</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,14 +59,14 @@
                     </div>
 
                     <div sec:authorize="hasRole('ROLE_ADMIN')">
-                        <h4>Участники</h4>
+                        <h4>Учасники</h4>
                         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                             <thead>
-                            <th>Логин</th>
-                            <th>Почта</th>
-                            <th>Имя</th>
-                            <th>Университет</th>
-                            <th>Город</th>
+                            <th>Логін</th>
+                            <th>Пароль</th>
+                            <th>Ім'я</th>
+                            <th>Університет</th>
+                            <th>Місто</th>
                             </thead>
                             <tbody id="users">
 

@@ -20,6 +20,11 @@ a {
     font-size: 18px;
 }
 
+li {
+    font-size: 18px;
+    margin: 10px;
+}
+
 textarea {
     font-size: 16px;
     font-family: "Roboto", sans-serif;

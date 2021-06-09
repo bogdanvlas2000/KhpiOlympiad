@@ -13,33 +13,33 @@
             <span th:if="${username_exists}" th:text="${username_exists}"></span>
         </div>
 
-        <h2>Please sign up</h2>
-        <div>Username
+        <h2>Зареєструйтесь</h2>
+        <div>Логін
             <input type="text" th:field="*{username}"
                    id="username"
-                   placeholder="Letters, digits, _"
+                   placeholder="Букви та цифри"
                    pattern="[a-zA-Z0-9_]+">
             <span id="username_msg"></span>
         </div>
-        <div>Password
+        <div>Пароль
             <input type="password" th:field="*{password}"
                    id="password"
                    pattern="[a-zA-Z0-9]{8,}"
-                   placeholder="At least 8 letters or digits">
+                   placeholder="Букви та цифри (не менше 8)">
             <span id="password_msg"></span>
         </div>
-        <div>Confirm password
+        <div>Підтвердіть пароль
             <input type="password"
                    id="confirm_password"
                    pattern="[a-zA-Z0-9]{8,}"
-                   placeholder="At least 8 letters or digits">
+                   placeholder="Букви та цифри (не менше 8)">
             <span id="confirm_msg"></span>
         </div>
-        <div>Email
+        <div>Електронна пошта
             <input type="email" placeholder="example@mail.com" th:field="*{email}" id="email">
         </div>
-        <button type="button" value="Sign up" onclick="return submitForm()">Sign Up</button>
-        <a href="/login">Do you have an account? Sign in</a>
+        <button type="button" value="Зареєструватись" onclick="return submitForm()">Зареєструватись</button>
+        <a href="/login">Вже маєте акаунт? Увійдіть</a>
     </form>
 </div>
 <script type="application/javascript" src="js/signup.js"></script>

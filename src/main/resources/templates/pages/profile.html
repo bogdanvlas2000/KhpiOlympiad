@@ -17,19 +17,19 @@
             <div class="page">
                 <div class="header">
                     <div>
-                        <h4>Профиль пользователя <span th:text="${user.username}"></span></h4>
+                        <h4>Профіль учасника <span th:text="${user.username}"></span></h4>
                     </div>
                     <div class="dropdown" sec:authorize="hasRole('ROLE_USER')">
-                        <button class="dropbtn">Изменить</button>
+                        <button class="dropbtn">Змінити</button>
                         <div class="dropdown-content">
-                            <a href="#profilePopup">Профиль</a>
+                            <a href="#profilePopup">Профіль</a>
                             <a href="/profile/psw_change">Пароль</a>
                         </div>
                     </div>
                     <div class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <button class="dropbtn">Действия</button>
+                        <button class="dropbtn">Опції</button>
                         <div class="dropdown-content">
-                            <a href="#">Тут будут действия</a>
+                            <a href="#">Тут будуть опції</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <div id="university"></div>
                                 <div id="city"></div>
                                 <div id="gender" style="display: none"></div>
-                                <div>Возраст: <span id="age"></span></div>
+                                <div>Вік: <span id="age"></span></div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                 <div class="column_block" style="width: 100%">
                     <table class="mdl-data-table">
                         <thead>
-                        <th>Событие</th>
+                        <th>Подія</th>
                         <th>Дата</th>
                         </thead>
                         <tbody>
@@ -78,9 +78,9 @@
     <div class="popup__body">
         <div class="popup__content">
             <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
-            <h4>Заполните информацию профиля</h4>
+            <h4>Заповніть інформацію профіля</h4>
             <div class="inputs">
-                <div>Имя:
+                <div>Ім'я:
                     <input type="text"
                            id="nameField"
                            name="name"
@@ -88,50 +88,50 @@
                            pattern="[a-zA-ZА-Яа-яЁё ]+">
                 </div>
                 <div>
-                    Город
+                    Місто
                     <div id="citySelectBox" class="select-box">
                         <div id="cityOptionsContainer" class="options-container">
                         </div>
                         <div id="citySelected" class="selected">
-                            Выбрать город
+                            Обрати місто
                         </div>
                         <div class="search-box">
-                            <input type="text" class="search-field" placeholder="Ввод...">
+                            <input type="text" class="search-field" placeholder="Ввести...">
                         </div>
                         <input type="hidden" name="cityName" id="cityName">
                         <input type="hidden" name="cityId" id="cityId">
                     </div>
                 </div>
                 <div>
-                    ВУЗ
+                    ВНЗ
                     <div id="universitySelectBox" class="select-box">
                         <div id="universityOptionsContainer" class="options-container">
                         </div>
                         <div id="universitySelected" class="selected">
-                            Выбрать ВУЗ
+                            Обрати ВНЗ
                         </div>
                         <div class="search-box">
-                            <input type="text" class="search-field" placeholder="Ввод...">
+                            <input type="text" class="search-field" placeholder="Ввести...">
                         </div>
                         <input type="hidden" name="universityName" id="universityName">
                         <input type="hidden" name="universityId" id="universityId">
                     </div>
                 </div>
                 <div>
-                    Возраст <input type="number" id="ageField" min="1" max="150">
+                    Вік <input type="number" id="ageField" min="1" max="150">
                 </div>
                 <div class="row_block" style="justify-content: space-between">
                     <div>
-                        Пол:
+                        Стать:
                         <input id="m" type="radio" name="gender" value="male" required> М
                         <input id="f" type="radio" name="gender" value="female" required> Ж
                     </div>
                     <div>
-                        Выбрать изображение:
+                        Обрати зображення:
                         <input type="file" name="image" id="imageField"/>
                     </div>
                 </div>
-                <button type="submit" class="btn1 blue">Сохранить</button>
+                <button type="submit" class="btn1 blue">Зберегти</button>
             </div>
         </div>
     </div>

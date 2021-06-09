@@ -22,13 +22,13 @@
         <span class="mdl-layout-title">Меню</span>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/login">Войти</a>
-            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/signup">Регистрация</a>
+            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/login">Увійти</a>
+            <a class="mdl-navigation__link" sec:authorize="isAnonymous()" href="/signup">Реєстрація</a>
             <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_USER')" href="/profile">
-                <i class="fa fa-user"></i> Профиль
+                <i class="fa fa-user"></i> Профіль
             </a>
             <a class="mdl-navigation__link" onclick="return confirm('Выйти?')"
-               sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
+               sec:authorize="isAuthenticated()" href="/logout">Вийти</a>
         </nav>
     </div>
 </header>
@@ -36,9 +36,9 @@
 <div th:fragment="sidenav" class="mdl-layout__drawer">
     <span class="mdl-layout-title">Меню</span>
     <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="/">Главная</a>
-        <a class="mdl-navigation__link" href="/events">События</a>
-        <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Участники</a>
+        <a class="mdl-navigation__link" href="/">Головна</a>
+        <a class="mdl-navigation__link" href="/events">Події</a>
+        <a class="mdl-navigation__link" sec:authorize="hasRole('ROLE_ADMIN')" href="/users">Учасники</a>
     </nav>
 </div>
 <div th:fragment="emailPopup" id="emailPopup" class="popup">
@@ -46,10 +46,10 @@
     <div class="popup__body">
         <div class="popup__content">
             <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
-            <h4>Участники получат это сообщение на почту</h4>
+            <h4>Учасники отрамають це повідомлення на пошту</h4>
             <div>
                 <textarea placeholder="Введите текст сообщения..." required></textarea>
-                <button class="btn1 blue">Отправить</button>
+                <button class="btn1 blue">Відправити</button>
             </div>
         </div>
     </div>
@@ -62,8 +62,8 @@
             <h4></h4>
             <div>
                 <input type="text" class="title" name="">
-                <textarea placeholder="Описание события..." required></textarea>
-                Дата события: <input type="datetime-local">
+                <textarea placeholder="Опис події..." required></textarea>
+                Дата події: <input type="datetime-local">
                 <button class="btn1 blue"></button>
             </div>
         </div>

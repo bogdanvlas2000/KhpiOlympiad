@@ -3,6 +3,8 @@ package khpi.khpi_olympiad.controller;
 import khpi.khpi_olympiad.model.event.Event;
 import khpi.khpi_olympiad.model.event.EventStatus;
 import khpi.khpi_olympiad.repository.event.EventRepository;
+import khpi.khpi_olympiad.sheduler.Scheduler;
+import khpi.khpi_olympiad.sheduler.SchedulerTask;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,8 @@ import java.util.Map;
 public class EventController {
 
     private EventRepository eventRepository;
+
+    private Scheduler scheduler;
 
     @GetMapping
     public Event getEvent(@RequestParam Integer id) {
@@ -51,7 +55,10 @@ public class EventController {
         event.setLastModifiedDate(LocalDateTime.now());
         event.setEventDate(LocalDateTime.parse(body.get("date")));
         event.setEventStatus(EventStatus.ACTIVE);
-        return eventRepository.save(event);
+        event = eventRepository.save(event);
+        var schedulerTask = new SchedulerTask(event, eventRepository);
+        scheduler.addTask(schedulerTask);
+        return event;
     }
 
     @PutMapping
