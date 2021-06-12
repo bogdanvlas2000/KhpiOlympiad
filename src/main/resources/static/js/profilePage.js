@@ -17,6 +17,12 @@ const ageField = document.getElementById("ageField")
 const genderField = document.getElementsByName("gender")
 const imageField = document.getElementById("imageField")
 
+
+const oldPasswordField = document.getElementById("oldPassword")
+const newPasswordField = document.getElementById("newPassword")
+const confirmPasswordField = document.getElementById("confirmPassword")
+
+
 function encodeImageFileAsURL(element) {
     var file = element.files[0];
     var reader = new FileReader();
@@ -109,4 +115,45 @@ applyButton.onclick = async function () {
     alert("Информация профиля сохранена!")
     window.location.href = window.location.href.replace("profilePopup", "");
     fillUserInfo()
+}
+
+
+async function matchOldPassword() {
+    let url = "/profile/match_password?password=" + oldPasswordField.value
+    let response = await fetch(url)
+    let matches = await response.json()
+    return matches
+}
+
+async function changePassword() {
+    if (oldPasswordField.value == ""
+        || newPasswordField.value == ""
+        || confirmPasswordField.value == "") {
+        alert("Заповніть необхідні дані!")
+        return
+    }
+    if (await matchOldPassword() != true) {
+        alert("Старий пароль не підтверджено!")
+        return
+    }
+    if (newPasswordField.value != confirmPasswordField.value) {
+        alert("Паролі не співпадають!")
+        return
+    }
+    let url = "/profile/change_password"
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            oldPassword: oldPasswordField.value,
+            newPassword: newPasswordField.value
+        })
+    })
+    alert("Пароль змінений успішно!")
+    oldPasswordField.value = ""
+    newPasswordField.value = ""
+    confirmPasswordField.value = ""
+    window.location.href = window.location.href.replace("passwordPopup", "");
 }

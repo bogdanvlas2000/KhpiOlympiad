@@ -23,6 +23,7 @@
                         <button class="dropbtn">Змінити</button>
                         <div class="dropdown-content">
                             <a href="#profilePopup">Профіль</a>
+                            <a href="#passwordPopup">Пароль</a>
                             <a href="/profile/psw_change">Пароль</a>
                         </div>
                     </div>
@@ -136,8 +137,41 @@
         </div>
     </div>
 </div>
+<div id="passwordPopup" class="popup">
+    <a href="##" class="popup__area"></a>
+    <div class="popup__body">
+        <div class="popup__content">
+            <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
+            <h4>Змінити пароль</h4>
+            <div class="inputs">
+                <div>Старий пароль
+                    <input type="password"
+                           id="oldPassword"
+                           pattern="[a-zA-Z0-9]{8,}"
+                           placeholder="Ваш старий пароль"
+                           required="required">
+                </div>
+                <div>Новий пароль
+                    <input type="password"
+                           id="newPassword"
+                           pattern="[a-zA-Z0-9]{8,}"
+                           placeholder="Символи та цифри (не менше 8)"
+                           required="required">
+                </div>
+                <div>Підтвердіть новий пароль
+                    <input type="password"
+                           id="confirmPassword"
+                           pattern="[a-zA-Z0-9]{8,}"
+                           placeholder="Символи та цифри (не менше 8)"
+                           required="required">
+                </div>
+                <div>
+                    <button type="submit" class="btn1 blue" onclick="changePassword()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 <div th:insert="fragments::scripts"></div>
 <script type="text/javascript" src="/js/profilePage.js"></script>
 <script type="application/javascript" src="/js/selectUniversity.js"></script>

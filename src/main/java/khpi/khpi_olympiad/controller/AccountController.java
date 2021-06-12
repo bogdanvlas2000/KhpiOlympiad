@@ -62,6 +62,7 @@ public class AccountController {
     @PostMapping("/signup")
     public String registerNewUser(
             @ModelAttribute("user") User user,
+            @ModelAttribute("url") String url,
             RedirectAttributes attributes) {
 
         String password = user.getPassword();
@@ -71,13 +72,16 @@ public class AccountController {
             ///успех
             var confirmationToken = new ConfirmationToken(user);
             confirmationTokenRepository.save(confirmationToken);
+            String confirmLink = url.replace(
+                    "signup",
+                    "confirm-account?token=" + confirmationToken.getTokenString());
             // SEND MESSSAGE with Confirm token
             var mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete registration!");
             mailMessage.setFrom("khpi_default@mail.com");
             mailMessage.setText("To confirm yout account click here: " +
-                    "http://localhost:8080/confirm-account?token=" + confirmationToken.getTokenString());
+                    confirmLink);
 
             emailSenderService.sendEmail(mailMessage);
 

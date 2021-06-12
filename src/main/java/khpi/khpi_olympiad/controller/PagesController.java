@@ -22,11 +22,13 @@ public class PagesController {
     private SubscriptionRepository subscriptionRepository;
 
     @GetMapping
-    public String homePage(Model model, Principal user) {
-        if (user != null) {
-            model.addAttribute("message", "Welcome, " + user.getName());
-        } else {
-            model.addAttribute("message", "Welcome to my app!");
+    public String homePage(Model model, Principal prl) {
+        if (prl != null) {
+            User user = userRepository.findByUsername(prl.getName());
+            model.addAttribute("user", user);
+            if (user.getRole().getName().equals("ROLE_ADMIN")) {
+                model.addAttribute("admin", true);
+            }
         }
         return "/pages/home";
     }

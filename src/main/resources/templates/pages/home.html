@@ -13,14 +13,14 @@
         <div class="page-content">
             <div class="page">
                 <div class="row_block" style="width: 100%; justify-content: space-around">
-                    <div>
+                    <div th:unless="${admin}">
                         Щоб прийняти участь в заході, виконайте наступні кроки:
                         <ol>
-                            <li>
+                            <li th:unless="${user}">
                                 <a href="/signup">Зареєструйтеся</a> чи
                                 <a href="/login">увійдіть до акаунту</a>
                             </li>
-                            <li>
+                            <li th:unless="${user}">
                                 Підтвердіть поштову адресу
                             </li>
                             <li>
@@ -39,8 +39,47 @@
                             </li>
                         </ol>
                     </div>
+                    <div th:if="${admin}">
+                        <h5>Щоб створити нову подію</h5>
+                        <ol>
+                            <li>
+                                Перейдіть до вкладки
+                                <a href="/events">"Події"</a>
+                            </li>
+                            <li>
+                                Оберіть "Опції" та "Створити подію"
+                            </li>
+                            <li>
+                                Вкажіть необхідні дані
+                            </li>
+                        </ol>
+                        <h5>Щоб виконати розсилку учасникам події</h5>
+                        <ol>
+                            <li>
+                                Перейдіть до активної події
+                            </li>
+                            <li>
+                                Оберіть "Опції" та "Розсилка"
+                            </li>
+                        </ol>
+                        <h5>Щоб вибрати учасників для розсилки вручну</h5>
+                        <ol>
+                            <li>
+                                Перейдіть до вкладки
+                                <a href="/users">Користувачі</a>
+                            </li>
+                            <li>
+                                Оберіть необхідних учасників
+                            </li>
+                            <li>
+                                Оберіть "Опції" та "Розсилка"
+                            </li>
+                        </ol>
+                    </div>
                     <div>
-                        <img style="width: 300px" src="/img/khpi.png">
+                        <a href="https://web.kpi.kharkov.ua/otp/ru/">
+                            <img style="width: 300px" src="/img/khpi.png">
+                        </a>
                     </div>
                 </div>
             </div>

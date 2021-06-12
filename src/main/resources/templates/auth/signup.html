@@ -12,8 +12,7 @@
         <div id="error" class="error">
             <span th:if="${username_exists}" th:text="${username_exists}"></span>
         </div>
-
-        <h2>Зареєструйтесь</h2>
+        <h4>Реєстрація</h4>
         <div>Логін
             <input type="text" th:field="*{username}"
                    id="username"
@@ -37,6 +36,9 @@
         </div>
         <div>Електронна пошта
             <input type="email" placeholder="example@mail.com" th:field="*{email}" id="email">
+        </div>
+        <div>
+            <input type="hidden" name="url" id="url">
         </div>
         <button type="button" value="Зареєструватись" onclick="return submitForm()">Зареєструватись</button>
         <a href="/login">Вже маєте акаунт? Увійдіть</a>

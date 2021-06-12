@@ -1,6 +1,8 @@
 let form = document.getElementById("signup_form")
 
 async function submitForm() {
+    let urlInput = document.getElementById("url")
+    urlInput.value = window.location.href
     let inputs = form.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].value == "") {
@@ -65,12 +67,4 @@ async function checkForm() {
 
     console.log("correct data!")
     return true
-}
-
-form.onkeyup = function (event) {
-    let elem = event.target
-    if (elem.classList.contains('wrong')) {
-        elem.classList.remove("wrong")
-        elem.style["boxShadow"] = ""
-    }
 }
