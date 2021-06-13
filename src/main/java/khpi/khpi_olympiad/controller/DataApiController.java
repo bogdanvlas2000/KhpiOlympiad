@@ -107,14 +107,25 @@ public class DataApiController {
     public User user(@RequestBody Map<String, Object> body, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
 
-        String name = (String) body.get("name");
+        String firstName = (String) body.get("firstName");
+        String patronymicName = (String) body.get("patronymicName");
+        String secondName = (String) body.get("secondName");
+        String phoneNumber = (String) body.get("phoneNumber");
+
         String universityId = (String) body.get("universityId");
         University university = universityRepository.findById(Integer.parseInt(universityId)).get();
+
+        int courseNumber = Integer.parseInt((String) body.get("courseNumber"));
+
         String gender = (String) body.get("gender");
         Integer age = Integer.parseInt((String) body.get("age"));
 
-        user.getProfile().setName(name);
+        user.getProfile().setFirstName(firstName);
+        user.getProfile().setPatronymicName(patronymicName);
+        user.getProfile().setSecondName(secondName);
+        user.getProfile().setPhoneNumber(phoneNumber);
         user.getProfile().setUniversity(university);
+        user.getProfile().setCourseNumber(courseNumber);
         user.getProfile().setAge(age);
         user.getProfile().setGender(gender);
 

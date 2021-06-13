@@ -45,6 +45,13 @@
                             <hr>
                             <div th:if="${user.ready}">
                                 <div id="name"></div>
+                                <div>
+                                    <span id="secondName"></span>
+                                    <span id="firstName"></span>
+                                    <span id="patronymicName"></span>
+                                </div>
+                                <div id="phoneNumber"></div>
+                                <div>Курс: <span id="courseNumber"></span></div>
                                 <div id="university"></div>
                                 <div id="city"></div>
                                 <div id="gender" style="display: none"></div>
@@ -80,11 +87,29 @@
             <a href="##" class="popup__close"><i class="material-icons">cancel</i></a>
             <h4>Заповніть інформацію профіля</h4>
             <div class="inputs">
+                <div>Фамілія:
+                    <input type="text"
+                           id="secondNameField"
+                           name="secondName"
+                           placeholder="Іванов"
+                           pattern="[a-zA-ZА-Яа-яЁё ]+">
+                </div>
                 <div>Ім'я:
                     <input type="text"
-                           id="nameField"
-                           name="name"
-                           placeholder="Введите имя..."
+                           id="firstNameField"
+                           placeholder="Іван"
+                           pattern="[a-zA-ZА-Яа-яЁё ]+">
+                </div>
+                <div>По-батькові:
+                    <input type="text"
+                           id="patronymicNameField"
+                           placeholder="Іванивич"
+                           pattern="[a-zA-ZА-Яа-яЁё ]+">
+                </div>
+                <div>Мобільний телефон::
+                    <input type="text"
+                           id="phoneNumberField"
+                           placeholder="+380971234567"
                            pattern="[a-zA-ZА-Яа-яЁё ]+">
                 </div>
                 <div>
@@ -117,14 +142,28 @@
                         <input type="hidden" name="universityId" id="universityId">
                     </div>
                 </div>
-                <div>
-                    Вік <input type="number" id="ageField" min="1" max="150">
-                </div>
-                <div class="row_block" style="justify-content: space-between">
+                <div class="row_block" style="justify-content: space-around">
                     <div>
+                        Курс
+                        <select id="courseNumberField">
+                            <option></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    </div>
+                    <div>
+                        Вік <input type="number" id="ageField" min="1" max="150">
+                    </div>
+                    <div>Стать:
                         <input id="m" type="radio" name="gender" value="male" required> Чол
                         <input id="f" type="radio" name="gender" value="female" required> Жін
                     </div>
+                </div>
+                <div class="row_block" style="justify-content: space-between">
                     <div>
                         Обрати зображення:
                         <input type="file" name="image" id="imageField"/>

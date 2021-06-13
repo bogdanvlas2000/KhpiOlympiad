@@ -15,8 +15,13 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String firstName;
+    private String patronymicName;
+    private String secondName;
     private int age;
     private String gender;
+    private int courseNumber;
+    private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private University university;

@@ -1,18 +1,26 @@
 const id = document.getElementById("id")
 const username = document.getElementById("username")
 const email = document.getElementById("email")
-const name = document.getElementById("name")
+const firstName = document.getElementById("firstName")
+const patronymicName = document.getElementById("patronymicName")
+const secondName = document.getElementById("secondName")
+const phoneNumber = document.getElementById("phoneNumber")
 const university = document.getElementById("university")
 const city = document.getElementById("city")
+const courseNumber = document.getElementById("courseNumber")
 const gender = document.getElementById("gender")
 const age = document.getElementById("age")
 const image = document.getElementById("image")
 
 const profilePopup = document.getElementById("profilePopup")
-const nameField = document.getElementById("nameField")
+const firstNameField = document.getElementById("firstNameField")
+const patronymicNameField = document.getElementById("patronymicNameField")
+const secondNameField = document.getElementById("secondNameField")
+const phoneNumberField = document.getElementById("phoneNumberField")
 const cityField = document.getElementById("cityName")
 const universityField = document.getElementById("universityName")
 const universityId = document.getElementById("universityId")
+const courseNumberField = document.getElementById("courseNumberField")
 const ageField = document.getElementById("ageField")
 const genderField = document.getElementsByName("gender")
 const imageField = document.getElementById("imageField")
@@ -41,8 +49,17 @@ async function fillUserInfo() {
     username.innerText = user.username
     email.innerText = user.email
     if (user.ready) {
-        name.innerText = user.profile.name
-        nameField.value = user.profile.name
+        firstName.innerText = user.profile.firstName
+        firstNameField.value = user.profile.firstName
+
+        patronymicName.innerText = user.profile.patronymicName
+        patronymicNameField.value = user.profile.patronymicName
+
+        secondName.innerText = user.profile.secondName
+        secondNameField.value = user.profile.secondName
+
+        phoneNumber.innerText = user.profile.phoneNumber
+        phoneNumberField.value = user.profile.phoneNumber
 
         city.innerText = user.profile.university.city.ukrName
         cityField.value = user.profile.university.city.ukrName
@@ -51,8 +68,12 @@ async function fillUserInfo() {
         universityField.value = user.profile.university.ukrShortName
         universityId.value = user.profile.university.id
 
+        courseNumber.innerText = user.profile.courseNumber
+        courseNumberField.value = user.profile.courseNumber
+
         age.innerText = user.profile.age
         ageField.value = user.profile.age
+
         gender.innerText = user.profile.gender
 
         genderField.forEach(f => {
@@ -71,16 +92,53 @@ async function fillUserInfo() {
 fillUserInfo()
 
 applyButton.onclick = async function () {
-    if (nameField.value == "" || cityField.value == ""
-        || universityField.value == "" || ageField.value == "" ||
-        !(genderField[0].checked || genderField[1].checked)
-    ) {
-        alert("Заповніть необхідну інформацію!")
+    if (secondNameField.value == "" ||
+        !secondNameField.value.match("[a-zA-ZА-Яа-яЁё]+")) {
+        alert("Введіть фамілію у коректонму форматі!")
+        return
+    }
+    if (firstNameField.value == "" ||
+        !firstNameField.value.match("[a-zA-ZА-Яа-яЁё]+")) {
+        alert("Введіть ім'я у коректонму форматі!")
+        return
+    }
+    if (patronymicNameField.value == "" ||
+        !patronymicNameField.value.match("[a-zA-ZА-Яа-яЁё ]+")) {
+        alert("Введіть по-батькові у коректонму форматі!")
+        return
+    }
+    if (phoneNumberField.value == "" ||
+        !phoneNumberField.value.match("^((\\+)?(3)?(8)?[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?\\d{3}[\\- ]?\\d{2}[\\- ]?\\d{2}$")) {
+        alert("Вкажіть мобільний телефон в коректному форматі!")
+        return
+    }
+    if (cityField.value == "") {
+        alert("Оберіть місто!")
+        return
+    }
+    if (universityField.value == "") {
+        alert("Оберіть ВНЗ!")
+        return
+    }
+    if (ageField.value == "") {
+        alert("Оберіть вік!")
+        return
+    }
+    if (courseNumberField.value == "") {
+        alert("Вкажіть номер курсу!")
+        return
+    }
+    if (!(genderField[0].checked || genderField[1].checked)) {
+        alert("Оберіть стать!")
     }
 
     let body = {
-        name: nameField.value,
+        firstName: firstNameField.value,
+        patronymicName: patronymicNameField.value,
+        secondName: secondNameField.value,
+        phoneNumber: phoneNumberField.value,
         universityId: universityId.value,
+        courseNumber: courseNumberField.value,
         age: ageField.value
     }
     for (let i = 0; i < genderField.length; i++) {
@@ -111,10 +169,12 @@ applyButton.onclick = async function () {
         body: JSON.stringify(body)
     })
 
-    alert("Інформація профілю збережена!")
-    window.location.href = window.location.href.replace("profilePopup", "");
-    document.location.reload();
-    await fillUserInfo()
+    if (confirm("Зберегти профіль?")) {
+        alert("Інформація профілю збережена!")
+        window.location.href = window.location.href.replace("profilePopup", "");
+        document.location.reload();
+        await fillUserInfo()
+    }
 }
 
 
