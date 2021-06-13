@@ -51,8 +51,6 @@ async function fillUserInfo() {
         universityField.value = user.profile.university.ukrShortName
         universityId.value = user.profile.university.id
 
-        await loadCitiesAndUniversities()
-
         age.innerText = user.profile.age
         ageField.value = user.profile.age
         gender.innerText = user.profile.gender
@@ -67,6 +65,7 @@ async function fillUserInfo() {
             image.src = 'data:image/jpeg;base64,' + user.profile.image
         }
     }
+    await loadCitiesAndUniversities()
 }
 
 fillUserInfo()
@@ -76,7 +75,7 @@ applyButton.onclick = async function () {
         || universityField.value == "" || ageField.value == "" ||
         !(genderField[0].checked || genderField[1].checked)
     ) {
-        alert("Запрлните необходимую информацию!")
+        alert("Заповніть необхідну інформацію!")
     }
 
     let body = {
@@ -112,9 +111,10 @@ applyButton.onclick = async function () {
         body: JSON.stringify(body)
     })
 
-    alert("Информация профиля сохранена!")
+    alert("Інформація профілю збережена!")
     window.location.href = window.location.href.replace("profilePopup", "");
-    fillUserInfo()
+    document.location.reload();
+    await fillUserInfo()
 }
 
 

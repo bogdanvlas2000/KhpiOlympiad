@@ -21,7 +21,7 @@ async function subscribe() {
     })
     subscribeButton.classList.remove("active")
     subscribeButton.classList.add("used")
-    subscribeButton.innerText = "Отписаться"
+    subscribeButton.innerText = "Відписатися"
     message.style.display = "block"
 }
 
@@ -37,17 +37,17 @@ async function unsubscribe() {
     })
     subscribeButton.classList.remove("used")
     subscribeButton.classList.add("active")
-    subscribeButton.innerText = "Подписаться"
+    subscribeButton.innerText = "Підписатися"
     message.style.display = "none"
 }
 
 async function subscribeListener() {
     if (await isReady()) {
         if (subscribeButton.classList.contains("active")) {
-            if (confirm("Подписаться?"))
+            if (confirm("Підписатися?"))
                 await subscribe()
         } else {
-            if (confirm("Отписаться?"))
+            if (confirm("Відписатися?"))
                 await unsubscribe()
         }
     }
@@ -72,12 +72,12 @@ async function loadSubscribeButton() {
     if (subscription == null) {
         subscribeButton.classList.add("active")
         subscribeButton.classList.remove("used")
-        subscribeButton.innerText = "Подписаться"
+        subscribeButton.innerText = "Підписатися"
         message.style.display = "none"
     } else {
         subscribeButton.classList.remove("active")
         subscribeButton.classList.add("used")
-        subscribeButton.innerText = "Отписаться"
+        subscribeButton.innerText = "Відписатися"
         message.style.display = "block"
     }
 }
@@ -103,7 +103,7 @@ async function fillEventInfo() {
     modified.innerText = event.lastModifiedDate.replace("T", ", ")
     date.innerText = event.eventDate.replace("T", ", ")
     if (event.eventStatus != "ACTIVE") {
-        message.innerText = "Это событие неактивно!"
+        message.innerText = "Ця подія неактивна!"
         message.style.display = "block"
         if (subscribeButton) {
             subscribeButton.style.display = "none"
@@ -112,7 +112,7 @@ async function fillEventInfo() {
 }
 
 async function deleteEvent() {
-    if (confirm("Удалить это событие?")) {
+    if (confirm("Видалити цю подію?")) {
         let url = "/api/event/" + id
         await fetch(url, {
             method: "DELETE"
@@ -124,8 +124,8 @@ async function deleteEvent() {
 async function onLoadEventPage() {
     await fillEventInfo()
 
-    popupHeader.innerText = "Измените это событие"
-    applyButton.innerText = "Изменить"
+    popupHeader.innerText = "Змінити цю подію"
+    applyButton.innerText = "Змінити"
     eventTitle.value = title.innerText
     eventDescription.value = description.value
     eventDate.value = date.innerText.replace(", ", "T")

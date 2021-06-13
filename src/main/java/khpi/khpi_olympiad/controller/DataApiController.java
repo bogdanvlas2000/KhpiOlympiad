@@ -121,6 +121,7 @@ public class DataApiController {
         if (body.containsKey("image")) {
             var image = body.keySet();
         }
+        user.setReady(true);
         return userRepository.save(user);
     }
 

@@ -27,7 +27,7 @@ applyButton.onclick = async function () {
             },
             body: JSON.stringify(body)
         });
-        alert("Событие изменено!")
+        alert("Подію змінено!")
         onLoadEventPage()
     } else {
         let response = await fetch(url, {
