@@ -72,10 +72,20 @@ public class PagesController {
         return "/pages/users";
     }
 
+    @GetMapping("/users/{id}")
+    public String userPage(Model model, @PathVariable int id) {
+        var user = userRepository.findById(id).get();
+        model.addAttribute("user", user);
+        return "/pages/profile";
+    }
+
+
     @GetMapping("/profile")
     public String profile(Model model, Principal prl) {
         var user = userRepository.findByUsername(prl.getName());
         model.addAttribute("user", user);
         return "/pages/profile";
     }
+
+
 }

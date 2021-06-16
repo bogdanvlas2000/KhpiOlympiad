@@ -36,7 +36,7 @@ function fillEvents(events) {
         let description = event.querySelector("textarea")
         description.value = e.description
         let date = event.querySelector("span")
-        date.innerText = "Событие состоится: " + e.eventDate.split("T")[0]
+        date.innerText = "Подія відбудеться: " + e.eventDate.split("T")[0]
         root.appendChild(event)
 
         eventTitle.value = ""

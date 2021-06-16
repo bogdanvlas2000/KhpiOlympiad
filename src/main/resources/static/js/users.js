@@ -21,17 +21,22 @@ function fillUsers(users) {
     for (let i = 0; i < users.length; i++) {
         let u = users[i]
         let tr = document.createElement("tr")
-        let username = document.createElement("td")
-        username.innerText = u.username
+        let name = document.createElement("td")
+        if (u.profile) {
+            let secondName = u.profile.secondName
+            let firstName = u.profile.firstName
+            let patronymicName = u.profile.patronymicName
+            if (secondName && firstName && patronymicName) {
+                let fullName = secondName + " " + firstName.charAt(0) + ". " + patronymicName.charAt(0) + "."
+                name.innerText = fullName
+            }
+        }
         let email = document.createElement("td")
         email.innerText = u.email
-        let name = document.createElement("td")
-        name.innerText = u.profile ? u.profile.name : "no info"
         let university = document.createElement("td")
         university.innerText = u.profile.university ? u.profile.university.ukrShortName : ""
         let city = document.createElement("td")
         city.innerText = u.profile.university ? u.profile.university.city.ukrName : ""
-        tr.appendChild(username)
         tr.appendChild(email)
         tr.appendChild(name)
         tr.appendChild(university)
@@ -68,7 +73,9 @@ async function search() {
             u.email.toLowerCase().match(pattern)
         if (u.ready) {
             return answ1 ||
-                u.profile.name.toLowerCase().match(pattern) ||
+                u.profile.firstName.toLowerCase().match(pattern) ||
+                u.profile.secondName.toLowerCase().match(pattern) ||
+                u.profile.patronymicName.toLowerCase().match(pattern) ||
                 u.profile.university.ukrName.toLowerCase().match(pattern) ||
                 u.profile.university.ukrShortName.toLowerCase().match(pattern) ||
                 u.profile.university.engName.toLowerCase().match(pattern) ||
