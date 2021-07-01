@@ -10,7 +10,7 @@ sendButton.onclick = async function () {
             let users = document.getElementById("users").children
             let emails = []
             for (let u of users) {
-                let email = u.firstChild.nextSibling.innerText
+                let email = u.firstChild.innerText
                 emails.push(email)
             }
             let url = "/api/email"
